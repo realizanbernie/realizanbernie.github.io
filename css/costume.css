@@ -1,0 +1,170 @@
+/* buttonsUbscribe */
+.subscribe-btn {
+  border: 1px solid transparent !important;
+  background-color: #f1db25 !important;
+  color: #ffffff !important;
+  -webkit-transition: all 0.3s !important;
+  transition: all 0.3s !important;
+}
+
+.subscribe-btn:hover {
+  background-color: #ffffff !important;
+  border-color: #f1db25 !important;
+  color: #f1db25 !important;
+}
+
+/* Change social_box color on hover */
+.fa-facebook {
+  transition: transform 0.5s !important;
+}
+.fa-facebook:hover {
+  color: rgb(36, 36, 236) !important; /* Change color on hover */
+  transform: scale(1.1) !important;
+  text-shadow: -1px 1px 0 #ffffff !important;
+}
+
+.fa-twitter {
+  transition: transform 0.5s !important;
+}
+
+.fa-twitter:hover {
+  transform: scale(1.1) !important;
+  color: #1DA1F2 !important;
+  text-shadow: -1px 1px 0 #ffffff !important;
+}
+
+.fa-youtube {
+  transition: transform 0.3s !important;
+}
+
+.fa-youtube:hover {
+  color: rgb(255, 0, 0) !important; /* Change color on hover */
+  text-shadow: -1px 1px 0 #ffffff !important;
+  transform: scale(1.1) !important;
+}
+
+.fa-tiktok {
+  transition: transform 0.5s !important;
+}
+
+.fa-tiktok:hover {
+  transform: scale(1) !important;
+  color: #000000 !important; /* Main text color */
+  text-shadow: 
+      1px 1px 0 #ff0050 , /* Cyan shadow */
+      -1px -1px 0 #00f2ea , /* Pink shadow */
+      1px -1px 0 #00f2ea , /* Pink shadow */
+      -1px 1px 0 #ff0050 !important; /* Cyan shadow */
+}
+
+.fa-instagram {
+  transition: transform 0.3s !important;
+  cursor: pointer !important;
+}
+
+.fa-instagram:hover {
+  transform: scale(1.1) !important;
+  font-weight: bold !important;
+  text-shadow: -1px 1px 0 #24111128 !important;
+  background: linear-gradient(90deg, 
+   #405DE6, #5B51D8, #833AB4, 
+    #C13584, #E1306C, #FD1D1D,
+     #F56040, #F77737, #FCAF45, 
+      #FFDC80) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+.inf {
+  color: #ffffff !important;
+}
+
+.inf:hover {
+  color: #f1db25 !important;
+}
+
+/* img1 layout */
+.img1 {
+  display: block !important;
+  text-align: center !important;
+  margin-top: 0 !important; /* Add some spacing between BR-Tech and the image */
+}
+
+#img1 {
+  max-width: 170px !important; /* Adjust the image width as needed */
+  height: auto !important; /* This will maintain the aspect ratio */
+}
+/* General Styles */
+
+body {
+  background-color: #ffffff; /* Dark Blue Background */
+  color: #ada5a5; /* Light Gray Text */
+  transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transitions for color changes */
+}
+
+/* Toggled Styles */
+body.toggled {
+  background-color: #eaeaea; /* Light Gray Background */
+  color: #1a1a2e; /* Dark Blue Text */
+}
+
+/* Button Styles */
+#toggle-button {
+  margin: 20px; /* Add some margin */
+  padding: 10px 20px; /* Add padding for better appearance */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #f9a826; /* Button color */
+  color: #ffffff; /* Button text color */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+#toggle-button:hover {
+  background-color: #ff4757; /* Change button color on hover */
+}
+/* Fade In Effect */
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-in; /* Fade in transition */
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+/* Original Text Color */
+.original-color {
+  color:  rgb(163, 163, 163); /* Original Light Gray Text */
+  opacity: 0;
+  transition: opacity 1s ease-in; /* Fade in transition */
+}
+
+/* Hover Effects for Links */
+.navbar-nav .nav-link {
+  opacity: 1;
+  color: #ff0000; /* Light Gray Text */
+  transition: color 1s ease, transform 1s ease; /* Smooth color and transform transitions */
+}
+
+.navbar-nav .nav-link:hover {
+  opacity: 1;
+  color: #f9a826; /* Bright Yellow on Hover */
+  transform: scale(1.1); /* Scale up slightly on hover */
+}
+
+/* Active Link Color */
+.navbar-nav .nav-link.active {
+  color: #ff4757; /* Bright Red for Active Links */
+}
+
+/* Fade Out Effect */
+.fade-out {
+  opacity: 1;
+  transition: opacity 5s ease-out; /* Fade out transition */
+}
+
+.fade-out.hidden {
+  opacity: 0;
+}
