@@ -45,7 +45,7 @@ body {
   position: relative;
   font-weight: bold;
   text-transform: uppercase;
-  padding-bottom: 10px;
+  padding-bottom: 11px;
 }
 
 .heading_container h2::before {
@@ -439,10 +439,10 @@ a:focus {
 }
 
 .about_section .detail-box {
-  background-color: #ffffff;
+  background-color: #ffffffd7;
   padding: 45px 25px;
-  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
-          box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 2 1 5px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 3 4 50px 0 rgb(0, 0, 0);
   position: relative;
   margin-left: -45px;
 }
@@ -478,25 +478,25 @@ a:focus {
 
 .service_section .box {
   background-color: #ffffff;
-  padding: 25px 15px;
+  padding: 30px 15px;
   text-align: center;
   -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
-  margin-top: 45px;
+  margin-top: 50px;
 }
 
 .service_section .box .img-box svg {
-  width: 75px;
+  width: 300px;
   height: auto;
-  fill: #1c1c1c;
+  fill: #0a0a0a;
 }
 
 .service_section .box .detail-box {
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .service_section .box .detail-box h6 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 20px;
@@ -510,7 +510,7 @@ a:focus {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   border: 1px solid transparent;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .service_section .box .detail-box a:hover {
