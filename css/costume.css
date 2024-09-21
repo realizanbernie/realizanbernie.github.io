@@ -100,7 +100,7 @@
 body {
   background-color: #ffffff; /* Dark Blue Background */
   color: #ada5a5; /* Light Gray Text */
-  transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transitions for color changes */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transitions for color changes */
 }
 
 /* Toggled Styles */
@@ -118,7 +118,7 @@ body.toggled {
   background-color: #f9a826; /* Button color */
   color: #ffffff; /* Button text color */
   cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth background transition */
+  transition: background-color 0.2s ease; /* Smooth background transition */
 }
 
 #toggle-button:hover {
@@ -127,7 +127,7 @@ body.toggled {
 /* Fade In Effect */
 .fade-in {
   opacity: 0;
-  transition: opacity 1s ease-in; /* Fade in transition */
+  transition: opacity 0.5s ease-in; /* Fade in transition */
 }
 
 .fade-in.visible {
@@ -138,7 +138,7 @@ body.toggled {
 .original-color {
   color:  rgb(163, 163, 163); /* Original Light Gray Text */
   opacity: 0;
-  transition: opacity 1s ease-in; /* Fade in transition */
+  transition: opacity 0.5s ease-in; /* Fade in transition */
 }
 
 /* Hover Effects for Links */
@@ -162,7 +162,7 @@ body.toggled {
 /* Fade Out Effect */
 .fade-out {
   opacity: 1;
-  transition: opacity 2s ease-out; /* Fade out transition */
+  transition: opacity 1s ease-out; /* Fade out transition */
 }
 
 .fade-out.hidden {
