@@ -162,7 +162,7 @@ body.toggled {
 /* Fade Out Effect */
 .fade-out {
   opacity: 1;
-  transition: opacity 5s ease-out; /* Fade out transition */
+  transition: opacity 2s ease-out; /* Fade out transition */
 }
 
 .fade-out.hidden {
