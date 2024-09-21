@@ -32,7 +32,7 @@
     <!-- header section strats -->
     <div class="hero_bg_box">
       <div class="img-box">
-        <img src="images/i-ie-scaled.jpg" alt="">
+        <img src="/images/i-ie-scaled.jpg" alt="">
       </div>
     </div>
 
@@ -49,7 +49,7 @@
             <a href="tel:+639506849848" class="contact_link2">
               <i class="fa fa-phone" aria-hidden="true"></i>
               <span>
-                  +63 950 684 984
+                  +63 9506 849 848
               </span>
             </a>
             <a href="mailto:realizanbernie6@gmail.com" class="contact_link3">
@@ -82,10 +82,10 @@
                   <a class="nav-link" href="about me.html">About Me</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="service.html">Portfolio</a>
+                  <a class="nav-link" href="portfolio.html">Portfolio</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="guard.html">Blog</a>
+                  <a class="nav-link" href="service.html">Services</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="contact.html">Contact</a>
@@ -302,17 +302,16 @@
   </section>
 
   <!-- end about section -->
-
-<!-- service section -->
-
   <section class="service_section layout_padding ">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          skills & Services Offered
+         Skills and Services Offer
         </h2>
       </div>
-      <div class="row">
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
         <div class="col-md-4">
           <div class="box ">
             <div class="img-box">
@@ -353,7 +352,9 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
+        <div class="carousel-item ">
         <div class="col-md-4">
           <div class="box ">
             <div class="img-box">
@@ -385,6 +386,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="carousel-item ">
         <div class="col-md-4">
           <div class="box ">
             <div class="img-box">
@@ -434,6 +437,8 @@
             </div>
           </div>
         </div>
+        </div>
+        <div class="carousel-item ">
         <div class="col-md-4">
           <div class="box ">
             <div class="img-box">
@@ -466,6 +471,8 @@
             </div>
           </div>
         </div>
+        </div>
+        <div class="carousel-item ">
         <div class="col-md-4">
           <div class="box ">
             <div class="img-box">
@@ -498,80 +505,6 @@
             </div>
           </div>
         </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- end service section -->
-
-
-
-  <!-- client section -->
-
-  <section class="client_section layout_padding">
-    <div class="container ">
-      <div class="heading_container heading_center">
-        <h2>
-          What is says our clients
-        </h2>
-      </div>
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="box">
-              <div class="img-box">
-                <img src="images/client.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h4>
-                  Minim Veniam
-                </h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="box">
-              <div class="img-box">
-                <img src="images/client.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h4>
-                  Minim Veniam
-                </h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="box">
-              <div class="img-box">
-                <img src="images/client.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h4>
-                  Minim Veniam
-                </h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="carousel_btn-box">
           <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -587,9 +520,10 @@
     </div>
   </section>
 
-  <!-- end client section -->
 
-  <!-- contact section -->
+  <!-- end contact section -->
+
+  <!-- team section -->
 
   <section class="contact_section layout_padding">
     <div class="contact_bg_box">
@@ -634,8 +568,7 @@
       </div>
     </div>
   </section>
-
-  <!-- end contact section -->
+  <!-- end team section -->
 
  <!-- info section -->
  <section class="info_section">
@@ -650,7 +583,7 @@
             </span>
           </a>
           <a href="index.html" class="img1">
-            <img id="img1" src="images/favicon - Copy.jpg" alt="BR-Tech Logo">
+            <img id="img1" src="/images/favicon - Copy.jpg" alt="BR-Tech Logo">
           </a>
           </div>
         </div>
@@ -672,13 +605,18 @@
               </a>
             </li>
             <li>
+              <a href="portfolio.html" class="inf">
+                Portfolio
+              </a>
+            </li>
+            <li>
               <a href="service.html" class="inf">
                 Services
               </a>
             </li>
             <li>
               <a href="guard.html" class="inf">
-                Guards
+                Contact
               </a>
             </li>
           </ul>
@@ -700,7 +638,7 @@
           <a href="tel:+639506849848" class="inf">
             <i class="fa fa-phone" aria-hidden="true"></i>
             <span class="inf">
-              Call: +639506849848
+              Call: +63 9506 849 848
             </span>
           </a>
           <a href="mailto:realizanbernie6@gmail.com" class="inf">
