@@ -540,25 +540,24 @@
       <div class="">
         <div class="row">
           <div class="col-md-7 mx-auto">
-            <form action="https://formspree.io/f/mwpedbzo" method="POST" >
+             <form action="https://formspree.io/f/mwpedbzo" method="POST">
               <div class="contact_form-container">
                 <div>
                   <div>
-                    <input type="text" placeholder="Full Name" />
+                    <input type="text" name="name" placeholder="Full Name" required>
                   </div>
                   <div>
-                    <input type="email" placeholder="Email " />
+                    <input type="email" name="_replyto" placeholder="Your email" required>
                   </div>
                   <div>
-                    <input type="text" placeholder="Phone Number" />
+                    <input type="number" name="number" placeholder="Phone Number"  required>
                   </div>
-                  <div class="">
-                    <input type="text" placeholder="Message" class="message_input" />
+                  <div class="message_input" >
+                    <input type="text" name="message" placeholder="Message" required>
                   </div>
                   <div class="btn-box ">
                     <button type="submit">
-                      Send
-                    </button>
+		    </button>
                   </div>
                 </div>
               </div>
@@ -655,7 +654,7 @@
             Newsletter
           </h5>
           <form action="https://formspree.io/f/mwpedbzo" method="POST">
-            <input type="email" placeholder="Enter your email" required>
+            <input type="email" name="email" placeholder="Enter your email" required>
             <div  class="btn-box">
             <button class="subscribe-btn">
               Subscribe
