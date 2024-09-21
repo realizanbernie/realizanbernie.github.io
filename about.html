@@ -13,21 +13,20 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>Guarder</title>
+  <title>BR-Website</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
   <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
-
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+  <!-- modify css -->
+  <link href="css/costume.css" rel="stylesheet" />
 </head>
-
-<body class="sub_page">
+<body class="sub_page fade-in">
   <div class="hero_area">
     <!-- header section strats -->
     <div class="hero_bg_box">
@@ -40,22 +39,22 @@
       <div class="header_top">
         <div class="container-fluid">
           <div class="contact_link-container">
-            <a href="" class="contact_link1">
+            <a href="https://maps.app.goo.gl/9bp281MXdJbpZ1jg8" class="contact_link1">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
-                Lorem ipsum dolor sit amet,
+                4426 Canayonan, Tinambac, Camarines Sur, Philippines
               </span>
             </a>
-            <a href="" class="contact_link2">
+            <a href="tel:+639506849848" class="contact_link2">
               <i class="fa fa-phone" aria-hidden="true"></i>
               <span>
-                Call : +01 1234567890
+                Call : +63 9506 849 848
               </span>
             </a>
-            <a href="" class="contact_link3">
+            <a href="mailto:realizanbernie6@gmail.com" target="_blank" class="contact_link3">
               <i class="fa fa-envelope" aria-hidden="true"></i>
               <span>
-                demo@gmail.com
+                realizanbernie6@gmail.com
               </span>
             </a>
           </div>
@@ -66,10 +65,11 @@
           <nav class="navbar navbar-expand-lg custom_nav-container">
             <a class="navbar-brand" href="index.html">
               <span>
-                Guarder
+                BR-Tech
               </span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class=""></span>
             </button>
 
@@ -79,16 +79,16 @@
                   <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="about.html"> About</a>
+                  <a class="nav-link" href="about me.html"> About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="portfolio.html"> Portfolio </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="service.html"> Services </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="guard.html"> Guards </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="contact.html">Contact us</a>
+                  <a class="nav-link" href="contact.html">Contact</a>
                 </li>
               </ul>
             </div>
@@ -115,22 +115,33 @@
           <div class="detail-box">
             <div class="heading_container ">
               <h2>
-                Who Are We?
+                Hello! I’m Bernie Realizan,
               </h2>
             </div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-              in reprehenderit in voluptate velit
+              As someone who thrives on creativity, I find inspiration in the everyday moments that spark joy and
+              innovation. Whether I’m brainstorming new ideas, crafting engaging stories, or exploring artistic
+              endeavors, I love to express myself and inspire others to do the same.
             </p>
+            <div id="moreContent" style="display:none;">
+              But beyond my creative pursuits, I pride myself on being a trustworthy friend and collaborator. People
+              often describe me as someone they can rely on, whether it’s for a listening ear, a helping hand, or a
+              thoughtful piece of advice. I believe that trust is the foundation of any meaningful relationship, and I
+              strive to build that with everyone I meet.
+              </p>
+              <p>
+                At my core, I am committed to making a positive impact in the lives of those around me. I believe in
+                kindness, empathy, and the importance of uplifting others. My goal is to create a supportive environment
+                where everyone feels valued and empowered to express their unique selves.
+              </p>
+              
+            </div>
             <div class="btn-box">
-              <a href="">
-                Read More
-              </a>
+              <a href="javascript:void(0);" id="toggleLink" onclick="toggleContent()">Read More</a>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -139,45 +150,52 @@
   <!-- end about section -->
 
   <!-- info section -->
-  <section class="info_section ">
+  <section class="info_section">
     <div class="container">
       <div class="row">
         <div class="col-md-3">
           <div class="info_logo">
-            <a class="navbar-brand" href="index.html">
+            <div class="navbar-brand">
+            <a  href="index.html">
               <span>
-                Guarder
+                BR-Tech
               </span>
             </a>
-            <p>
-              dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quisdotempor incididunt r
-            </p>
+            <a href="index.html" class="img1">
+              <img id="img1" src="/images/favicon - Copy.jpg" alt="BR-Tech Logo">
+            </a>
+            </div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="info_links">
             <h5>
-              Useful Link
+              Quick Links
             </h5>
-            <ul>
+            <ul >
               <li>
-                <a href="">
-                  dolor sit amet, consectetur
+                <a href="index.html" class="inf">
+                  Home
                 </a>
               </li>
               <li>
-                <a href="">
-                  magna aliqua. Ut enim ad
+                <a href="about me.html" class="inf">
+                  About
                 </a>
               </li>
               <li>
-                <a href="">
-                  minim veniam,
+                <a href="portfolio.html" class="inf">
+                  Portfolio
                 </a>
               </li>
               <li>
-                <a href="">
-                  quisdotempor incididunt r
+                <a href="service.html" class="inf">
+                  Services
+                </a>
+              </li>
+              <li>
+                <a href="contact.html" class="inf">
+                  Contact
                 </a>
               </li>
             </ul>
@@ -190,22 +208,22 @@
             </h5>
           </div>
           <div class="info_contact">
-            <a href="" class="">
+            <a href="https://maps.app.goo.gl/9bp281MXdJbpZ1jg8" class="inf" target="_blank" >
               <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>
-                Lorem ipsum dolor sit amet,
+              <span class="inf">
+                4426, Zone 4 Canayonan Tinambac Camarines Sur,
               </span>
             </a>
-            <a href="" class="">
+            <a href="tel:+639506849848" class="inf">
               <i class="fa fa-phone" aria-hidden="true"></i>
-              <span>
-                Call : +01 1234567890
+              <span class="inf">
+                Call: +63 9506 849 848
               </span>
             </a>
-            <a href="" class="">
+            <a href="mailto:realizanbernie6@gmail.com" class="inf">
               <i class="fa fa-envelope" aria-hidden="true"></i>
-              <span>
-                demo@gmail.com
+              <span class="inf">
+                realizanbernie6@gmail.com
               </span>
             </a>
           </div>
@@ -216,23 +234,28 @@
               Newsletter
             </h5>
             <form action="#">
-              <input type="email" placeholder="Enter your email">
-              <button>
+              <input type="email" placeholder="Enter your email" required>
+              <div  class="btn-box">
+              <button class="subscribe-btn">
                 Subscribe
               </button>
+            </div>
             </form>
             <div class="social_box">
-              <a href="">
+              <a href="https://www.facebook.com/realizanb" target="_blank" class="icon-link">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://x.com/BernieRealizan" id="icon" target="_blank" class="icon-link">
                 <i class="fa fa-twitter" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://www.youtube.com/@user-ic1on4lt8q" target="_blank" class="icon-link">
                 <i class="fa fa-youtube" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://www.instagram.com/realizanb/" target="_blank" class="icon-link">
                 <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.tiktok.com/@bernierealizan" target="_blank" class="icon-link">
+                <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
               </a>
             </div>
           </div>
@@ -240,24 +263,24 @@
       </div>
     </div>
   </section>
-
+  
   <!-- end info_section -->
-
-
-
-
+  
+  
+  
+  
   <!-- footer section -->
   <footer class="container-fluid footer_section">
     <p>
-      &copy; <span id="currentYear"></span> All Rights Reserved. Design by
-      <a href="https://html.design/">Free Html Templates</a>
+      <a href="/try.html" class="inf">
+      &copy; <span id="currentYear" ></span> All Rights Reserved. Design & Powered by
+      BR.dev</a>
     </p>
   </footer>
   <!-- footer section -->
-
+  <script src="https://kit.fontawesome.com/3f5449ca59.js" crossorigin="anonymous"></script>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/custom.js"></script>
-</body>
-
-</html>
+  </body>
+  </html>
