@@ -415,8 +415,16 @@
       <a href="https://html.design/">Free Html Templates</a>
     </p>
   </footer>
-  <!-- footer section -->
-
+   <script>
+ document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+document.addEventListener('keydown', function(e) {
+if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+ e.preventDefault();
+    }
+});
+</script>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/custom.js"></script>
