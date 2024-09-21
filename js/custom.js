@@ -28,5 +28,5 @@ document.addEventListener("DOMContentLoaded", function() {
   setTimeout(() => {
       body.classList.remove("original-color"); // Remove the original color class
       body.style.color = "black"; // Reset color to the default
-  }, 5000); // 1000 milliseconds (1 second)
+  }, 200); // 1000 milliseconds (1 second)
 });
