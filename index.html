@@ -25,11 +25,16 @@
   <link href="css/responsive.css" rel="stylesheet" />
   <!-- modify css -->
   <link href="css/costume.css" rel="stylesheet" />
-	<script>document.addEventListener('keydown', function(e) {
-    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-        e.preventDefault();
+<script>
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+document.addEventListener('keydown', function(e) {
+if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+ e.preventDefault();
     }
-});</script>
+});
+</script>
 </head>
 
 <body class="fade-in">
