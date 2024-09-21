@@ -30,3 +30,9 @@ document.addEventListener("DOMContentLoaded", function() {
       body.style.color = "black"; // Reset color to the default
   }, 200); // 1000 milliseconds (1 second)
 });
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        e.preventDefault();
+    }
+});
