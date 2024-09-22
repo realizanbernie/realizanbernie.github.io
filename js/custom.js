@@ -1,3 +1,9 @@
+// get current year
+(function () {
+    var year = new Date().getFullYear();
+    document.querySelector("#currentYear").innerHTML = year;
+})();
+
 document.addEventListener("DOMContentLoaded", function() {
   const links = document.querySelectorAll(".navbar-nav .nav-link");
   const body = document.body;
