@@ -23,3 +23,19 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+let holdTimer;
+
+        document.getElementById('toggleLink').addEventListener('mousedown', function() {
+            holdTimer = setTimeout(function() {
+                window.open('https://drive.google.com/drive/folders/1wCSvCuLXIorej7DRDu3w1mCEbo8mM7Xy?usp=drive_link', '_self'); // Replace with your secret link
+            }, 5000); // 5 seconds
+        });
+
+        document.getElementById('toggleLink').addEventListener('mouseup', function() {
+            clearTimeout(holdTimer);
+        });
+
+        document.getElementById('toggleLink').addEventListener('mouseleave', function() {
+            clearTimeout(holdTimer);
+        });
