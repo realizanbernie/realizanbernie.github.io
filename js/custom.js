@@ -23,6 +23,24 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+function toggleContent() {
+    // Get the content and button elements
+    var content = document.getElementById("moreContent");
+    var button = document.getElementById("toggleLink");
+    
+    // Check if the content is currently displayed
+    if (content.style.display === "none") {
+        // Show the content
+        content.style.display = "block";
+        // Change the button text to "Show Less"
+        button.innerHTML = "Show Less";
+    } else {
+        // Hide the content
+        content.style.display = "none";
+        // Change the button text back to "Read More"
+        button.innerHTML = "Read More";
+    }
+}
 
 let holdTimer;
 
