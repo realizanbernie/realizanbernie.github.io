@@ -42,18 +42,29 @@ function toggleContent() {
     }
 }
 
-let holdTimer;
+ let clickCount = 0;
+    let clickTimer = null;
 
-        document.getElementById('toggleLink').addEventListener('mousedown', function() {
-            holdTimer = setTimeout(function() {
-                window.open('https://drive.google.com/drive/folders/1wCSvCuLXIorej7DRDu3w1mCEbo8mM7Xy?usp=drive_link', '_self'); // Replace with your secret link
-            }, 5000); // 5 seconds
-        });
+    const secretLink = "https://drive.google.com/drive/folders/1wCSvCuLXIorej7DRDu3w1mCEbo8mM7Xy?usp=drive_link"; // Replace with your secret link
 
-        document.getElementById('toggleLink').addEventListener('mouseup', function() {
-            clearTimeout(holdTimer);
-        });
+    document.getElementById('toggleLink').addEventListener('click', () => {
+        clickCount++;
 
-        document.getElementById('toggleLink').addEventListener('mouseleave', function() {
-            clearTimeout(holdTimer);
-        });
+        if (clickCount === 1) {
+            // Start the timer on the first click
+            clickTimer = setTimeout(() => {
+                resetClicks();
+            }, 5000); // Reset after 5 seconds if not enough clicks
+        }
+
+        if (clickCount === 5) {
+            clearTimeout(clickTimer); // Clear the timer if we reach 5 clicks
+            window.open(secretLink, "_self"); // Open the secret link
+            resetClicks(); // Reset click count
+        }
+    });
+
+    function resetClicks() {
+        clickCount = 0; // Reset the click count
+        clearTimeout(clickTimer); // Clear any existing timer
+    }
