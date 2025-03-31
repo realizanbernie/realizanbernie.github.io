@@ -3,43 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You!</title>
-    <style>
-        body {
-            background-color: rgb(255, 255, 255); /* Dark background */
-            display: flex; /* Use flexbox for centering */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Full viewport height */
-            margin: 0; /* Remove default margin */
-            color: rgb(0, 0, 0); /* Text color */
-            text-align: center; /* Center text alignment */
-        }
-
-        .container {
-            background-color: rgba(216, 216, 216, 0.7); /* Semi-transparent background for contrast */
-            padding: 20px; /* Padding inside the container */
-            border-radius: 10px; /* Rounded corners */
-            max-width: 500px; /* Maximum width of the container */
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #f5dd02; /* Green button color */
-            color: rgb(0, 0, 0); /* Button text color */
-            text-decoration: none; /* Remove underline from links */
-            border-radius: 4px; /* Rounded corners for buttons */
-            margin-top: 10px; /* Space above buttons */
-        }
-    </style>
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Thank You!</h1>
-        <p>Your message has been sent successfully. We appreciate your feedback and will get back to you shortly.</p>
-        <a href="index.html" class="button">Go Back to Contact Form</a>
-        <a href="home.html" class="button">Return to Home</a> <!-- Link to home page or any other page -->
-    </div>
+    <header>
+        <h1>Inventory Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="#stock">Stock</a></li>
+                <li><a href="#sold">Sold Items</a></li>
+                <li><a href="#reports">Reports</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Stock Section -->
+        <section id="stock">
+            <h2>Stock Items</h2>
+            <table id="stockTable">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button id="addStockBtn">Add Stock Item</button>
+        </section>
+
+        <!-- Sold Items Section -->
+        <section id="sold">
+            <h2>Sold Items</h2>
+            <table id="soldTable">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity Sold</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports">
+            <h2>Reports</h2>
+            <!-- Placeholder for reports -->
+            <p>Generate reports based on inventory and sales data.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Inventory Management System. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
 </body>
 </html>
