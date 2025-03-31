@@ -91,9 +91,11 @@
             const answer = document.getElementById('boyfriendQuestion').value.trim().toLowerCase();
             
             if (answer === 'yes') {
+                sendToGmail(`Hi ${capitalized_name}!`);
                 sendToGmail("Yes, I can be your boyfriend!");
                 alert("Thank you! Your answer has been sent.");
             } else {
+                sendToGmail(`Hi ${capitalized_name}!`);
                 sendToGmail("No, I can't be your boyfriend!");
                 alert("Thank you for your response.");
             }
