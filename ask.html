@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
     <title>Question</title>
     <style>
         body {
@@ -62,8 +62,9 @@
                 responseDiv.style.display = 'block';
                 this.style.display = 'none';
             } else {
-                responseDiv.innerHTML = `<p>Hi ${capitalizeFirstLetter(nameInput)}!</p>`;
-                sendToGmail(nameInput);
+                const capitalized_name = capitalizeFirstLetter(nameInput);
+                responseDiv.innerHTML = `<p>Hi ${capitalized_name}!</p>`;
+                sendToGmail(`Hi ${capitalized_name}!`);
                 responseDiv.style.display = 'block';
                 this.style.display = 'none';
             }
@@ -80,7 +81,7 @@
                     <button onclick="handleBoyfriendQuestion()">Submit</button>`;
                 responseDiv.style.display = 'block';
             } else {
-		sendToGmail("No,cant be yours!");
+                sendToGmail("No, can't be yours!");
                 responseDiv.innerHTML = `<p>Ok.</p>`;
                 responseDiv.style.display = 'block';
             }
@@ -93,7 +94,7 @@
                 sendToGmail("Yes, I can be your boyfriend!");
                 alert("Thank you! Your answer has been sent.");
             } else {
-		sendToGmail("No, I can't be your boyfriend!");
+                sendToGmail("No, I can't be your boyfriend!");
                 alert("Thank you for your response.");
             }
         }
