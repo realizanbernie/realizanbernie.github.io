@@ -1,233 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome Conversation</title>
-  <style>
-    /* Reset and base styles */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e0f0ff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      color: #222;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Personal Verification Chat</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f8ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  .container {
+    background: white;
+    max-width: 400px;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  .chat {
+    margin-top: 1rem;
+    min-height: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fafafa;
+  }
+  .message {
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+  .message.bot {
+    color: #004080;
+  }
+  .message.user {
+    color: #008000;
+    text-align: right;
+  }
+  form {
+    margin-top: 1rem;
+    display: flex;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  button {
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+  @media (max-width: 480px) {
     .container {
-      background: white;
-      max-width: 400px;
-      width: 90%;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
+      padding: 1rem;
     }
-    h1 {
-      color: #0077cc;
-      margin-bottom: 1rem;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: 2px solid #0077cc;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      transition: border-color 0.3s;
-    }
-    input[type="text"]:focus {
-      border-color: #005fa3;
-      outline: none;
-    }
-    button {
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    button:hover:not(:disabled) {
-      background-color: #005fa3;
-    }
-    button:disabled {
-      background-color: #a0c4ff;
-      cursor: not-allowed;
-    }
-    #response p {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-    #response input[type="text"] {
-      margin-bottom: 1rem;
-    }
-    @media (max-width: 480px) {
-      .container {
-        padding: 1.5rem;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <form id="nameForm">
-      <h1>Welcome!</h1>
-      <label for="name">What's your name?</label>
-      <input type="text" id="name" name="name" required autocomplete="off" />
-      <button type="submit">Submit</button>
+  <div class="container" role="main" aria-live="polite">
+    <h1>Welcome!</h1>
+    <div class="chat" id="chat" aria-label="Chat conversation"></div>
+    <form id="inputForm" autocomplete="off" aria-label="User input form">
+      <input type="text" id="userInput" placeholder="Type your answer here..." aria-required="true" />
+      <button type="submit" id="submitBtn">Send</button>
     </form>
-    <div id="response" style="display:none;"></div>
   </div>
 
-  <script>
-    (function() {
-      let capitalized_name = '';
+<script>
+  const chat = document.getElementById('chat');
+  const form = document.getElementById('inputForm');
+  const input = document.getElementById('userInput');
+  const submitBtn = document.getElementById('submitBtn');
 
-      const nameForm = document.getElementById('nameForm');
-      const responseDiv = document.getElementById('response');
+  // Names to verify (case insensitive)
+  const validNames = [
+    'tin', 'justine', 'justin', 'justine riva', 'justin riva'
+  ];
 
-      // Helper: Capitalize first letter
-      function capitalizeFirstLetter(string) {
-        if (!string) return '';
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
+  // Expected birthday string normalized
+  const expectedBirthday = 'april 26 2001';
 
-      // Helper: Send message to Gmail via Formspree
-      function sendToGmail(message) {
-        fetch("https://formspree.io/f/mwpedbzo", {
-          method: "POST",
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email: "realizanbernie6@gmail.com", message })
-        }).then(response => {
-          if (response.ok) {
-            console.log("Email sent successfully.");
-          } else {
-            console.error("Error sending email.");
-          }
-        }).catch(error => {
-          console.error("Fetch error:", error);
-        });
-      }
+  // State machine for conversation
+  let state = 'askName';
+  let visitorName = '';
+  let verified = false;
+  let answers = {};
 
-      // Handle form submission for name
-      nameForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+  // Helper: append message to chat
+  function appendMessage(text, sender = 'bot') {
+    const msg = document.createElement('div');
+    msg.classList.add('message', sender);
+    msg.textContent = text;
+    chat.appendChild(msg);
+    chat.scrollTop = chat.scrollHeight;
+  }
 
-        const nameInput = document.getElementById('name').value.trim().toLowerCase();
-        capitalized_name = capitalizeFirstLetter(nameInput);
+  // Helper: normalize strings for comparison
+  function normalize(str) {
+    return str.trim().toLowerCase();
+  }
 
-        if (nameInput === 'justine riva' || nameInput === 'justine') {
-          // Known visitor - ask first question
-          showCanBeMineQuestion();
+  // Send data to Gmail via provided function
+  function sendToGmail(message) {
+    fetch("https://formspree.io/f/mwpedbzo", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: "realizanbernie6@gmail.com", message })
+    }).then(response => {
+      if (response.ok) console.log("Email sent successfully.");
+      else console.log("Error sending email.");
+    });
+  }
+
+  // Start conversation
+  function startConversation() {
+    appendMessage("Hi! What's your name?");
+  }
+
+  // Process input based on current state
+  function processInput(inputText) {
+    const text = normalize(inputText);
+    switch(state) {
+      case 'askName':
+        visitorName = inputText.trim();
+        answers.name = visitorName;
+        if (validNames.includes(text)) {
+          appendMessage(`Are you ${visitorName}? Please verify your birthday (e.g. April 26 2001).`);
+          state = 'askBirthday';
         } else {
-          // Unknown visitor - greet and send email
-          responseDiv.innerHTML = `<p>Hi ${capitalized_name}!</p>`;
-          responseDiv.style.display = 'block';
-          nameForm.style.display = 'none';
-          sendToGmail(`Hi ${capitalized_name}!`);
+          appendMessage("Thanks!");
+          sendToGmail(`Name: ${visitorName}\nResponse: Name not recognized.`);
+          state = 'end';
+          form.querySelector('input').disabled = true;
+          submitBtn.disabled = true;
         }
-      });
+        break;
 
-      // Show "Can you be mine?" question
-      function showCanBeMineQuestion() {
-        responseDiv.innerHTML = `
-          <p>Can you be mine? (yes/no)</p>
-          <input type="text" id="canBeMine" autocomplete="off" required />
-          <button id="submitCanBeMine" disabled>Submit</button>
-        `;
-        responseDiv.style.display = 'block';
-        nameForm.style.display = 'none';
-
-        const input = document.getElementById('canBeMine');
-        const btn = document.getElementById('submitCanBeMine');
-
-        input.focus();
-
-        // Enable button only if input not empty
-        input.addEventListener('input', () => {
-          btn.disabled = input.value.trim() === '';
-        });
-
-        btn.addEventListener('click', handleCanBeMine);
-      }
-
-      // Handle answer to "Can you be mine?"
-      function handleCanBeMine() {
-        const answer = document.getElementById('canBeMine').value.trim().toLowerCase();
-        if (answer !== 'yes' && answer !== 'no') {
-          alert('Please answer with "yes" or "no".');
-          return;
-        }
-
-        sendToGmail(`Can you be mine? Answer: ${answer}`);
-
-        if (answer === 'yes') {
-          showBoyfriendQuestion();
+      case 'askBirthday':
+        answers.birthday = inputText.trim();
+        if (text === expectedBirthday) {
+          verified = true;
+          appendMessage("I know you, you're the only one I love ❤️. How are you?");
+          state = 'askHowAreYou';
         } else {
-          responseDiv.innerHTML = `<p>Ok.</p>`;
+          appendMessage("Birthday doesn't match. Verification failed. Thanks!");
+          sendToGmail(`Name: ${visitorName}\nBirthday entered: ${inputText.trim()}\nVerification: Failed`);
+          state = 'end';
+          form.querySelector('input').disabled = true;
+          submitBtn.disabled = true;
         }
-      }
+        break;
 
-      // Show "Can I be your boyfriend?" question
-      function showBoyfriendQuestion() {
-        responseDiv.innerHTML = `
-          <p>Can I be your boyfriend? (yes/no)</p>
-          <input type="text" id="boyfriendQuestion" autocomplete="off" required />
-          <button id="submitBoyfriendQuestion" disabled>Submit</button>
-        `;
-
-        const input = document.getElementById('boyfriendQuestion');
-        const btn = document.getElementById('submitBoyfriendQuestion');
-
-        input.focus();
-
-        input.addEventListener('input', () => {
-          btn.disabled = input.value.trim() === '';
-        });
-
-        btn.addEventListener('click', handleBoyfriendQuestion);
-      }
-
-      // Handle answer to "Can I be your boyfriend?"
-      function handleBoyfriendQuestion() {
-        const answer = document.getElementById('boyfriendQuestion').value.trim().toLowerCase();
-        if (answer !== 'yes' && answer !== 'no') {
-          alert('Please answer with "yes" or "no".');
-          return;
-        }
-
-        sendToGmail(`Can I be your boyfriend? Answer: ${answer}`);
-
-        if (answer === 'yes') {
-          responseDiv.innerHTML = `<p>Yay! Thank you! 💖</p>`;
-          alert("Thank you! Your answer has been sent.");
+      case 'askHowAreYou':
+        answers.howAreYou = inputText.trim();
+        if (text === 'ok' || text === 'okay' || text === 'fine' || text === 'good') {
+          appendMessage("God.");
+          sendToGmail(formatAnswers());
+          state = 'end';
+          form.querySelector('input').disabled = true;
+          submitBtn.disabled = true;
         } else {
-          responseDiv.innerHTML = `<p>Ok, thanks for letting me know.</p>`;
-          alert("Thank you for your response.");
+          appendMessage("Why?");
+          state = 'askWhyNotOk';
         }
-      }
-    })();
-  </script>
+        break;
+
+      case 'askWhyNotOk':
+        answers.whyNotOk = inputText.trim();
+        appendMessage("Did you miss me?");
+        state = 'askMissMe';
+        break;
+
+      case 'askMissMe':
+        answers.missMe = inputText.trim();
+        if (text === 'no' || text === 'nah' || text === 'nope') {
+          appendMessage("How sad 😢");
+          sendToGmail(formatAnswers());
+          state = 'end';
+          form.querySelector('input').disabled = true;
+          submitBtn.disabled = true;
+        } else {
+          appendMessage("Do you still love me?");
+          state = 'askStillLove';
+        }
+        break;
+
+      case 'askStillLove':
+        answers.stillLove = inputText.trim();
+        if (text === 'no' || text === 'nah' || text === 'nope') {
+          appendMessage("😞");
+          sendToGmail(formatAnswers());
+          state = 'end';
+          form.querySelector('input').disabled = true;
+          submitBtn.disabled = true;
+        } else {
+          appendMessage("Can we be together again? 🥺❤️");
+          state = 'askTogetherAgain';
+        }
+        break;
+
+      case 'askTogetherAgain':
+        answers.togetherAgain = inputText.trim();
+        if (text === 'no' || text === 'nah' || text === 'nope') {
+          appendMessage("Why?");
+          state = 'askWhyNoTogether';
+        } else {
+          appendMessage("😊💖 So happy to hear that! Let's make it happen!");
+          sendToGmail(formatAnswers());
+          state = 'end';
+          form.querySelector('input').disabled = true;
+          submitBtn.disabled = true;
+        }
+        break;
+
+      case 'askWhyNoTogether':
+        answers.whyNoTogether = inputText.trim();
+        appendMessage("Thanks for sharing. Take care!");
+        sendToGmail(formatAnswers());
+        state = 'end';
+        form.querySelector('input').disabled = true;
+        submitBtn.disabled = true;
+        break;
+
+      case 'end':
+        // Do nothing, conversation ended.
+        break;
+    }
+  }
+
+  // Format all answers into a message string
+  function formatAnswers() {
+    let msg = `Conversation with ${visitorName}:\n`;
+    for (const [key, value] of Object.entries(answers)) {
+      msg += `${key}: ${value}\n`;
+    }
+    return msg;
+  }
+
+  // Event listener for form submission
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const userText = input.value.trim();
+    if (!userText) return;
+    appendMessage(userText, 'user');
+    processInput(userText);
+    input.value = '';
+    input.focus();
+  });
+
+  // Initialize
+  startConversation();
+  input.focus();
+</script>
 </body>
 </html>
