@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome</title>
+  <title>Welcome Conversation</title>
   <style>
-    /* Reset and base */
+    /* Reset and base styles */
     * {
       box-sizing: border-box;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
+      background: #e0f0ff;
       margin: 0;
       padding: 0;
       display: flex;
       min-height: 100vh;
       align-items: center;
       justify-content: center;
-      color: #333;
+      color: #222;
     }
     .container {
       background: white;
@@ -30,12 +30,13 @@
       text-align: center;
     }
     h1 {
-      margin-bottom: 0.5rem;
       color: #0077cc;
+      margin-bottom: 1rem;
     }
-    p {
-      margin-top: 0;
-      margin-bottom: 1.5rem;
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
       font-size: 1.1rem;
     }
     input[type="text"] {
@@ -61,11 +62,19 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-    button:hover {
+    button:hover:not(:disabled) {
       background-color: #005fa3;
     }
-    .hidden {
-      display: none;
+    button:disabled {
+      background-color: #a0c4ff;
+      cursor: not-allowed;
+    }
+    #response p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    #response input[type="text"] {
+      margin-bottom: 1rem;
     }
     @media (max-width: 480px) {
       .container {
@@ -78,231 +87,146 @@
   </style>
 </head>
 <body>
-  <div class="container" id="chat-container">
-    <h1>Welcome!</h1>
-    <p>Hi! What's your name?</p>
-    <input type="text" id="name-input" placeholder="Enter your name" autocomplete="off" />
-    <button id="submit-name">Submit</button>
+  <div class="container">
+    <form id="nameForm">
+      <h1>Welcome!</h1>
+      <label for="name">What's your name?</label>
+      <input type="text" id="name" name="name" required autocomplete="off" />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="response" style="display:none;"></div>
   </div>
 
   <script>
     (function() {
-      const knownNames = ['justine', 'justinriva', 'tinriva', 'tin'];
-      const container = document.getElementById('chat-container');
-      const nameInput = document.getElementById('name-input');
-      const submitBtn = document.getElementById('submit-name');
+      let capitalized_name = '';
 
-      let visitorName = '';
-      let step = 0;
+      const nameForm = document.getElementById('nameForm');
+      const responseDiv = document.getElementById('response');
 
-      function sanitizeName(name) {
-        return name.trim().toLowerCase();
+      // Helper: Capitalize first letter
+      function capitalizeFirstLetter(string) {
+        if (!string) return '';
+        return string.charAt(0).toUpperCase() + string.slice(1);
       }
 
-      function clearContainer() {
-        container.innerHTML = '';
-      }
-
-      function createMessage(text) {
-        const p = document.createElement('p');
-        p.textContent = text;
-        return p;
-      }
-
-      function createInput(placeholder = '', id = '', type = 'text') {
-        const input = document.createElement('input');
-        input.type = type;
-        input.id = id;
-        input.placeholder = placeholder;
-        input.autocomplete = 'off';
-        input.style.marginBottom = '1rem';
-        input.style.padding = '0.75rem';
-        input.style.fontSize = '1rem';
-        input.style.width = '100%';
-        input.style.border = '2px solid #0077cc';
-        input.style.borderRadius = '8px';
-        input.addEventListener('focus', () => {
-          input.style.borderColor = '#005fa3';
-        });
-        input.addEventListener('blur', () => {
-          input.style.borderColor = '#0077cc';
-        });
-        return input;
-      }
-
-      function createButton(text, onClick) {
-        const btn = document.createElement('button');
-        btn.textContent = text;
-        btn.style.backgroundColor = '#0077cc';
-        btn.style.color = 'white';
-        btn.style.border = 'none';
-        btn.style.padding = '0.75rem 1.5rem';
-        btn.style.fontSize = '1rem';
-        btn.style.borderRadius = '8px';
-        btn.style.cursor = 'pointer';
-        btn.style.transition = 'background-color 0.3s';
-        btn.addEventListener('mouseenter', () => {
-          btn.style.backgroundColor = '#005fa3';
-        });
-        btn.addEventListener('mouseleave', () => {
-          btn.style.backgroundColor = '#0077cc';
-        });
-        btn.addEventListener('click', onClick);
-        return btn;
-      }
-
-      function askHowAreYou() {
-        clearContainer();
-        const h1 = document.createElement('h1');
-        h1.textContent = `I remember you, ${visitorName}! You are my only love one.`;
-        container.appendChild(h1);
-
-        const p = createMessage('How are you?');
-        container.appendChild(p);
-
-        const input = createInput('Type your answer here', 'howareyou-input');
-        container.appendChild(input);
-
-        const btn = createButton('Submit', () => {
-          const answer = input.value.trim();
-          if (!answer) {
-            alert('Please enter your answer.');
-            return;
-          }
-          askDidYouMissMe();
-        });
-        container.appendChild(btn);
-      }
-
-      function askDidYouMissMe() {
-        clearContainer();
-
-        const h1 = document.createElement('h1');
-        h1.textContent = `How are you, ${visitorName}?`;
-        container.appendChild(h1);
-
-        const p = createMessage('Did you miss me? (yes/no)');
-        container.appendChild(p);
-
-        const input = createInput('yes or no', 'missme-input');
-        container.appendChild(input);
-
-        const btn = createButton('Submit', () => {
-          const answer = input.value.trim().toLowerCase();
-          if (answer !== 'yes' && answer !== 'no') {
-            alert('Please answer with "yes" or "no".');
-            return;
-          }
-          if (answer === 'no') {
-            sadReply();
+      // Helper: Send message to Gmail via Formspree
+      function sendToGmail(message) {
+        fetch("https://formspree.io/f/mwpedbzo", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email: "realizanbernie6@gmail.com", message })
+        }).then(response => {
+          if (response.ok) {
+            console.log("Email sent successfully.");
           } else {
-            askStillLoveMe();
+            console.error("Error sending email.");
           }
+        }).catch(error => {
+          console.error("Fetch error:", error);
         });
-        container.appendChild(btn);
       }
 
-      function sadReply() {
-        clearContainer();
+      // Handle form submission for name
+      nameForm.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-        const h1 = document.createElement('h1');
-        h1.textContent = `Oh no...`;
-        container.appendChild(h1);
+        const nameInput = document.getElementById('name').value.trim().toLowerCase();
+        capitalized_name = capitalizeFirstLetter(nameInput);
 
-        const p = createMessage('Sad... How sad...');
-        container.appendChild(p);
-      }
+        if (nameInput === 'justine riva' || nameInput === 'justine') {
+          // Known visitor - ask first question
+          showCanBeMineQuestion();
+        } else {
+          // Unknown visitor - greet and send email
+          responseDiv.innerHTML = `<p>Hi ${capitalized_name}!</p>`;
+          responseDiv.style.display = 'block';
+          nameForm.style.display = 'none';
+          sendToGmail(`Hi ${capitalized_name}!`);
+        }
+      });
 
-      function askStillLoveMe() {
-        clearContainer();
+      // Show "Can you be mine?" question
+      function showCanBeMineQuestion() {
+        responseDiv.innerHTML = `
+          <p>Can you be mine? (yes/no)</p>
+          <input type="text" id="canBeMine" autocomplete="off" required />
+          <button id="submitCanBeMine" disabled>Submit</button>
+        `;
+        responseDiv.style.display = 'block';
+        nameForm.style.display = 'none';
 
-        const h1 = document.createElement('h1');
-        h1.textContent = `I missed you too, ${visitorName}!`;
-        container.appendChild(h1);
+        const input = document.getElementById('canBeMine');
+        const btn = document.getElementById('submitCanBeMine');
 
-        const p = createMessage('Do you still love me? (yes/no)');
-        container.appendChild(p);
+        input.focus();
 
-        const input = createInput('yes or no', 'loveme-input');
-        container.appendChild(input);
-
-        const btn = createButton('Submit', () => {
-          const answer = input.value.trim().toLowerCase();
-          if (answer !== 'yes' && answer !== 'no') {
-            alert('Please answer with "yes" or "no".');
-            return;
-          }
-          if (answer === 'no') {
-            thanksForAnswering();
-          } else {
-            askBeMyGF();
-          }
-        });
-        container.appendChild(btn);
-      }
-
-      function thanksForAnswering() {
-        clearContainer();
-
-        const h1 = document.createElement('h1');
-        h1.textContent = `Thanks for answering.`;
-        container.appendChild(h1);
-      }
-
-      function askBeMyGF() {
-        clearContainer();
-
-        const h1 = document.createElement('h1');
-        h1.textContent = `Can you be my girlfriend again?`;
-        container.appendChild(h1);
-
-        const btnYes = createButton('Yes 💖', () => {
-          clearContainer();
-          const h1 = document.createElement('h1');
-          h1.textContent = `Yay! I'm so happy! 💕`;
-          container.appendChild(h1);
+        // Enable button only if input not empty
+        input.addEventListener('input', () => {
+          btn.disabled = input.value.trim() === '';
         });
 
-        const btnNo = createButton('No 😢', () => {
-          clearContainer();
-          const h1 = document.createElement('h1');
-          h1.textContent = `Oh, I understand. Thank you for being honest.`;
-          container.appendChild(h1);
-        });
-
-        btnYes.style.marginRight = '1rem';
-
-        container.appendChild(btnYes);
-        container.appendChild(btnNo);
+        btn.addEventListener('click', handleCanBeMine);
       }
 
-      function startConversation() {
-        visitorName = sanitizeName(nameInput.value);
-        if (!visitorName) {
-          alert('Please enter your name.');
+      // Handle answer to "Can you be mine?"
+      function handleCanBeMine() {
+        const answer = document.getElementById('canBeMine').value.trim().toLowerCase();
+        if (answer !== 'yes' && answer !== 'no') {
+          alert('Please answer with "yes" or "no".');
           return;
         }
 
-        if (knownNames.includes(visitorName)) {
-          askHowAreYou();
-        } else {
-          clearContainer();
-          const h1 = document.createElement('h1');
-          h1.textContent = `Hi, ${nameInput.value}! Welcome!`;
-          container.appendChild(h1);
+        sendToGmail(`Can you be mine? Answer: ${answer}`);
 
-          const p = createMessage(`Nice to meet you!`);
-          container.appendChild(p);
+        if (answer === 'yes') {
+          showBoyfriendQuestion();
+        } else {
+          responseDiv.innerHTML = `<p>Ok.</p>`;
         }
       }
 
-      submitBtn.addEventListener('click', startConversation);
+      // Show "Can I be your boyfriend?" question
+      function showBoyfriendQuestion() {
+        responseDiv.innerHTML = `
+          <p>Can I be your boyfriend? (yes/no)</p>
+          <input type="text" id="boyfriendQuestion" autocomplete="off" required />
+          <button id="submitBoyfriendQuestion" disabled>Submit</button>
+        `;
 
-      nameInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          startConversation();
+        const input = document.getElementById('boyfriendQuestion');
+        const btn = document.getElementById('submitBoyfriendQuestion');
+
+        input.focus();
+
+        input.addEventListener('input', () => {
+          btn.disabled = input.value.trim() === '';
+        });
+
+        btn.addEventListener('click', handleBoyfriendQuestion);
+      }
+
+      // Handle answer to "Can I be your boyfriend?"
+      function handleBoyfriendQuestion() {
+        const answer = document.getElementById('boyfriendQuestion').value.trim().toLowerCase();
+        if (answer !== 'yes' && answer !== 'no') {
+          alert('Please answer with "yes" or "no".');
+          return;
         }
-      });
+
+        sendToGmail(`Can I be your boyfriend? Answer: ${answer}`);
+
+        if (answer === 'yes') {
+          responseDiv.innerHTML = `<p>Yay! Thank you! 💖</p>`;
+          alert("Thank you! Your answer has been sent.");
+        } else {
+          responseDiv.innerHTML = `<p>Ok, thanks for letting me know.</p>`;
+          alert("Thank you for your response.");
+        }
+      }
     })();
   </script>
 </body>
