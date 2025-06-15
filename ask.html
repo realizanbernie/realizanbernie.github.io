@@ -1,123 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <title>Question</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 400px;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+    }
+    .container {
+      background: white;
+      max-width: 400px;
+      width: 90%;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+      color: #0077cc;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 2px solid #0077cc;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus {
+      border-color: #005fa3;
+      outline: none;
+    }
+    button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <form id="nameForm">
-            <label for="name">What's your name?</label>
-            <input type="text" id="name" required>
-            <button type="submit">Submit</button>
-        </form>
-        <div id="response" style="display:none;"></div>
-    </div>
+  <div class="container" id="chat-container">
+    <h1>Welcome!</h1>
+    <p>Hi! What's your name?</p>
+    <input type="text" id="name-input" placeholder="Enter your name" autocomplete="off" />
+    <button id="submit-name">Submit</button>
+  </div>
 
-    <script>
-        document.getElementById('nameForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const nameInput = document.getElementById('name').value.trim().toLowerCase();
-            const responseDiv = document.getElementById('response');
-            
-            if (nameInput === 'justine riva' || nameInput === 'justine') {
-                responseDiv.innerHTML = `
-                    <p>Can you be mine? (yes/no)</p>
-                    <input type="text" id="canBeMine" required>
-                    <button onclick="handleCanBeMine()">Submit</button>`;
-                responseDiv.style.display = 'block';
-                this.style.display = 'none';
-            } else {
-                const capitalized_name = capitalizeFirstLetter(nameInput);
-                responseDiv.innerHTML = `<p>Hi ${capitalized_name}!</p>`;
-                sendToGmail(`Hi ${capitalized_name}!`);
-                responseDiv.style.display = 'block';
-                this.style.display = 'none';
-            }
+  <script>
+    (function() {
+      const knownNames = ['justine', 'justinriva', 'tinriva', 'tin'];
+      const container = document.getElementById('chat-container');
+      const nameInput = document.getElementById('name-input');
+      const submitBtn = document.getElementById('submit-name');
+
+      let visitorName = '';
+      let step = 0;
+
+      function sanitizeName(name) {
+        return name.trim().toLowerCase();
+      }
+
+      function clearContainer() {
+        container.innerHTML = '';
+      }
+
+      function createMessage(text) {
+        const p = document.createElement('p');
+        p.textContent = text;
+        return p;
+      }
+
+      function createInput(placeholder = '', id = '', type = 'text') {
+        const input = document.createElement('input');
+        input.type = type;
+        input.id = id;
+        input.placeholder = placeholder;
+        input.autocomplete = 'off';
+        input.style.marginBottom = '1rem';
+        input.style.padding = '0.75rem';
+        input.style.fontSize = '1rem';
+        input.style.width = '100%';
+        input.style.border = '2px solid #0077cc';
+        input.style.borderRadius = '8px';
+        input.addEventListener('focus', () => {
+          input.style.borderColor = '#005fa3';
+        });
+        input.addEventListener('blur', () => {
+          input.style.borderColor = '#0077cc';
+        });
+        return input;
+      }
+
+      function createButton(text, onClick) {
+        const btn = document.createElement('button');
+        btn.textContent = text;
+        btn.style.backgroundColor = '#0077cc';
+        btn.style.color = 'white';
+        btn.style.border = 'none';
+        btn.style.padding = '0.75rem 1.5rem';
+        btn.style.fontSize = '1rem';
+        btn.style.borderRadius = '8px';
+        btn.style.cursor = 'pointer';
+        btn.style.transition = 'background-color 0.3s';
+        btn.addEventListener('mouseenter', () => {
+          btn.style.backgroundColor = '#005fa3';
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.backgroundColor = '#0077cc';
+        });
+        btn.addEventListener('click', onClick);
+        return btn;
+      }
+
+      function askHowAreYou() {
+        clearContainer();
+        const h1 = document.createElement('h1');
+        h1.textContent = `I remember you, ${visitorName}! You are my only love one.`;
+        container.appendChild(h1);
+
+        const p = createMessage('How are you?');
+        container.appendChild(p);
+
+        const input = createInput('Type your answer here', 'howareyou-input');
+        container.appendChild(input);
+
+        const btn = createButton('Submit', () => {
+          const answer = input.value.trim();
+          if (!answer) {
+            alert('Please enter your answer.');
+            return;
+          }
+          askDidYouMissMe();
+        });
+        container.appendChild(btn);
+      }
+
+      function askDidYouMissMe() {
+        clearContainer();
+
+        const h1 = document.createElement('h1');
+        h1.textContent = `How are you, ${visitorName}?`;
+        container.appendChild(h1);
+
+        const p = createMessage('Did you miss me? (yes/no)');
+        container.appendChild(p);
+
+        const input = createInput('yes or no', 'missme-input');
+        container.appendChild(input);
+
+        const btn = createButton('Submit', () => {
+          const answer = input.value.trim().toLowerCase();
+          if (answer !== 'yes' && answer !== 'no') {
+            alert('Please answer with "yes" or "no".');
+            return;
+          }
+          if (answer === 'no') {
+            sadReply();
+          } else {
+            askStillLoveMe();
+          }
+        });
+        container.appendChild(btn);
+      }
+
+      function sadReply() {
+        clearContainer();
+
+        const h1 = document.createElement('h1');
+        h1.textContent = `Oh no...`;
+        container.appendChild(h1);
+
+        const p = createMessage('Sad... How sad...');
+        container.appendChild(p);
+      }
+
+      function askStillLoveMe() {
+        clearContainer();
+
+        const h1 = document.createElement('h1');
+        h1.textContent = `I missed you too, ${visitorName}!`;
+        container.appendChild(h1);
+
+        const p = createMessage('Do you still love me? (yes/no)');
+        container.appendChild(p);
+
+        const input = createInput('yes or no', 'loveme-input');
+        container.appendChild(input);
+
+        const btn = createButton('Submit', () => {
+          const answer = input.value.trim().toLowerCase();
+          if (answer !== 'yes' && answer !== 'no') {
+            alert('Please answer with "yes" or "no".');
+            return;
+          }
+          if (answer === 'no') {
+            thanksForAnswering();
+          } else {
+            askBeMyGF();
+          }
+        });
+        container.appendChild(btn);
+      }
+
+      function thanksForAnswering() {
+        clearContainer();
+
+        const h1 = document.createElement('h1');
+        h1.textContent = `Thanks for answering.`;
+        container.appendChild(h1);
+      }
+
+      function askBeMyGF() {
+        clearContainer();
+
+        const h1 = document.createElement('h1');
+        h1.textContent = `Can you be my girlfriend again?`;
+        container.appendChild(h1);
+
+        const btnYes = createButton('Yes 💖', () => {
+          clearContainer();
+          const h1 = document.createElement('h1');
+          h1.textContent = `Yay! I'm so happy! 💕`;
+          container.appendChild(h1);
         });
 
-        function handleCanBeMine() {
-            const answer = document.getElementById('canBeMine').value.trim().toLowerCase();
-            const responseDiv = document.getElementById('response');
-            
-            if (answer === 'yes') {
-                responseDiv.innerHTML = `
-                    <p>Can I be your boyfriend? (yes/no)</p>
-                    <input type="text" id="boyfriendQuestion" required>
-                    <button onclick="handleBoyfriendQuestion()">Submit</button>`;
-                responseDiv.style.display = 'block';
-            } else {
-                sendToGmail("No, can't be yours!");
-                responseDiv.innerHTML = `<p>Ok.</p>`;
-                responseDiv.style.display = 'block';
-            }
+        const btnNo = createButton('No 😢', () => {
+          clearContainer();
+          const h1 = document.createElement('h1');
+          h1.textContent = `Oh, I understand. Thank you for being honest.`;
+          container.appendChild(h1);
+        });
+
+        btnYes.style.marginRight = '1rem';
+
+        container.appendChild(btnYes);
+        container.appendChild(btnNo);
+      }
+
+      function startConversation() {
+        visitorName = sanitizeName(nameInput.value);
+        if (!visitorName) {
+          alert('Please enter your name.');
+          return;
         }
 
-        function handleBoyfriendQuestion() {
-            const answer = document.getElementById('boyfriendQuestion').value.trim().toLowerCase();
-            
-            if (answer === 'yes') {
-                sendToGmail(`Hi ${capitalized_name}!`);
-                sendToGmail("Yes, I can be your boyfriend!");
-                alert("Thank you! Your answer has been sent.");
-            } else {
-                sendToGmail(`Hi ${capitalized_name}!`);
-                sendToGmail("No, I can't be your boyfriend!");
-                alert("Thank you for your response.");
-            }
-        }
+        if (knownNames.includes(visitorName)) {
+          askHowAreYou();
+        } else {
+          clearContainer();
+          const h1 = document.createElement('h1');
+          h1.textContent = `Hi, ${nameInput.value}! Welcome!`;
+          container.appendChild(h1);
 
-        function sendToGmail(message) {
-            fetch("https://formspree.io/f/mwpedbzo", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email: "realizanbernie6@gmail.com", message })
-            }).then(response => {
-                if (response.ok) console.log("Email sent successfully.");
-                else console.log("Error sending email.");
-            });
+          const p = createMessage(`Nice to meet you!`);
+          container.appendChild(p);
         }
+      }
 
-        function capitalizeFirstLetter(string) {
-          return string.charAt(0).toUpperCase() + string.slice(1);
+      submitBtn.addEventListener('click', startConversation);
+
+      nameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          startConversation();
         }
-    </script>
+      });
+    })();
+  </script>
 </body>
 </html>
