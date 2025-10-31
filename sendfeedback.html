@@ -1,138 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Customer Feedback with Image Upload & Music</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #222;
-      color: #eee;
-      margin: 0;
-      padding: 3em;
-    }
-    .form-container {
-      background: #333;
-      padding: 2em;
-      border-radius: 8px;
-      max-width: 420px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin-top: 1em;
-    }
-    input,
-    textarea {
-      width: 100%;
-      padding: 0.6em;
-      margin-top: 0.3em;
-      border-radius: 6px;
-      border: 1px solid #444;
-      background: #222;
-      color: #eee;
-    }
-    button {
-      margin-top: 1em;
-      background: #009688;
-      color: #fff;
-      border: none;
-      padding: 0.8em 1.5em;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .success {
-      color: #7ed957;
-      margin-top: 1em;
-    }
-    .error {
-      color: #ff5252;
-      margin-top: 1em;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Customer Feedback with Background Music</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #eee;
+    margin: 0;
+    padding: 3em;
+  }
+  .form-container {
+    background: #333;
+    padding: 2em;
+    border-radius: 8px;
+    max-width: 420px;
+    margin: auto;
+  }
+  label {
+    display: block;
+    margin-top: 1em;
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.6em;
+    margin-top: 0.3em;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #222;
+    color: #eee;
+  }
+  button {
+    margin-top: 1em;
+    background: #009688;
+    color: #fff;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .success {
+    color: #7ed957;
+    margin-top: 1em;
+  }
+  .error {
+    color: #ff5252;
+    margin-top: 1em;
+  }
+</style>
 </head>
 <body>
-  <!-- Background Music -->
-  <audio id="backgroundMusic" autoplay loop>
-    <source src="wwd.mp3juice.blog - Sayfalse Nulteex - AL NACER (Ultra Slowed) (192 KBps).mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
-  </audio>
 
-  <div class="form-container">
-    <h2>Send us your feedback!</h2>
-    <form id="feedbackForm" enctype="multipart/form-data">
-      <label for="name">Name (optional):</label>
-      <input type="text" id="name" name="name" />
-      <label for="email">Your Email:</label>
-      <input type="email" id="email" name="email" required />
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
-      <label for="image">Upload Screenshot or Image (optional):</label>
-      <input type="file" id="image" name="image" accept="image/*" />
-      <button type="submit">Submit</button>
-      <div id="status"></div>
-    </form>
-  </div>
+<!-- Background Music, starts muted for autoplay policies -->
+<audio id="bgMusic" autoplay muted loop>
+  <source src="wwd.mp3juice.blog - Sayfalse Nulteex - AL NACER (Ultra Slowed) (192 KBps).mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
 
-  <script>
-    // Play music after user interaction if autoplay is blocked
-    window.addEventListener('click', () => {
-      const music = document.getElementById('backgroundMusic');
-      if (music.paused) {
-        music.play();
-      }
-    });
+<div class="form-container">
+  <h2>Send us your feedback!</h2>
+  <form id="feedbackForm" enctype="multipart/form-data">
+    <label for="name">Name (optional):</label>
+    <input type="text" id="name" name="name" />
+    
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" name="email" required />
+    
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+    
+    <label for="image">Upload Screenshot or Image (optional):</label>
+    <input type="file" id="image" name="image" accept="image/*" />
+    
+    <button type="submit">Submit</button>
+    <div id="status"></div>
+  </form>
+</div>
 
-    document.getElementById('feedbackForm').addEventListener('submit', function (e) {
-      e.preventDefault();
+<script>
+// Attempt to auto-unmute music on user interaction
+window.addEventListener('click', () => {
+  const music = document.getElementById('bgMusic');
+  if (music.muted) {
+    music.muted = false;
+    music.play();
+  }
+});
 
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-      const imageFile = document.getElementById('image').files[0];
+// Handle form submission
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+  e.preventDefault();
 
-      const chat_id = '6901776323'; // Replace with your Telegram chat ID
-      const bot_token = '8365276963:AAFaxEw-7oYe-wNduSXLIboJW85xu9YHhw0'; // Replace with your bot token
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const imageFile = document.getElementById('image').files[0];
 
-      const text = `New Feedback:\nName: ${name || 'N/A'}\nEmail: ${email}\nMessage: ${message}`;
+  const chat_id = '6901776323'; // Replace with your Telegram chat ID
+  const bot_token = '8365276963:AAFaxEw-7oYe-wNduSXLIboJW85xu9YHhw0'; // Replace with your Telegram bot token
 
-      // Send text first
-      fetch(`https://api.telegram.org/bot${bot_token}/sendMessage`, {
+  const text = `Feedback:\nName: ${name || 'N/A'}\nEmail: ${email}\nMessage: ${message}`;
+
+  // Send text message
+  fetch(`https://api.telegram.org/bot${bot_token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chat_id, text: text }),
+  }).then(response => {
+    if (!response.ok) throw new Error('Failed to send message');
+
+    // Send photo if available
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('chat_id', chat_id);
+      formData.append('photo', imageFile);
+      return fetch(`https://api.telegram.org/bot${bot_token}/sendPhoto`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chat_id,
-          text: text,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) throw new Error('Failed to send message.');
-          if (imageFile) {
-            // Send photo if exists
-            const formData = new FormData();
-            formData.append('chat_id', chat_id);
-            formData.append('photo', imageFile);
+        body: formData,
+      });
+    } else {
+      return null;
+    }
+  }).then(photoResponse => {
+    if (photoResponse && !photoResponse.ok) throw new Error('Failed to send image');
+    document.getElementById('status').innerHTML = '<div class="success">Thanks for your feedback!</div>';
+    document.getElementById('feedbackForm').reset();
+  }).catch(error => {
+    document.getElementById('status').innerHTML = '<div class="error">' + error.message + '</div>';
+  });
+});
+</script>
 
-            return fetch(`https://api.telegram.org/bot${bot_token}/sendPhoto`, {
-              method: 'POST',
-              body: formData,
-            });
-          } else {
-            return null; // no image to send
-          }
-        })
-        .then((photoResponse) => {
-          if (photoResponse && !photoResponse.ok) {
-            throw new Error('Failed to send image.');
-          }
-          document.getElementById('status').innerHTML = '<div class="success">Thanks for your feedback!</div>';
-          e.target.reset();
-        })
-        .catch((error) => {
-          document.getElementById('status').innerHTML = `<div class="error">${error.message}</div>`;
-        });
-    });
-  </script>
 </body>
 </html>
