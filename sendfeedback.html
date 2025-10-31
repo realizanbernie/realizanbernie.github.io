@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Customer Feedback with Image Upload</title>
+  <title>Customer Feedback with Image Upload & Music</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -53,6 +53,12 @@
   </style>
 </head>
 <body>
+  <!-- Background Music -->
+  <audio id="backgroundMusic" autoplay loop>
+    <source src="wwd.mp3juice.blog - Sayfalse Nulteex - AL NACER (Ultra Slowed) (192 KBps).mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="form-container">
     <h2>Send us your feedback!</h2>
     <form id="feedbackForm" enctype="multipart/form-data">
@@ -70,6 +76,14 @@
   </div>
 
   <script>
+    // Play music after user interaction if autoplay is blocked
+    window.addEventListener('click', () => {
+      const music = document.getElementById('backgroundMusic');
+      if (music.paused) {
+        music.play();
+      }
+    });
+
     document.getElementById('feedbackForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
