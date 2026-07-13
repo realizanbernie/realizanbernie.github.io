@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya QR</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:radial-gradient(circle at top,#1a1404 0%,#090909 45%,#000 100%);
+  color:#fff;
+}
+.container{
+  width:min(92vw, 440px);
+  background:linear-gradient(145deg,#111111,#1a1a1a 55%,#0d0d0d);
+  border:1px solid rgba(255,215,0,.55);
+  border-radius:28px;
+  padding:28px 22px 24px;
+  text-align:center;
+  box-shadow:0 0 0 1px rgba(255,215,0,.08),0 18px 50px rgba(0,0,0,.7),0 0 42px rgba(255,215,0,.14);
+  position:relative;
+  overflow:hidden;
+}
+.container::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,215,0,.08),transparent 35%,rgba(255,255,255,.02));
+  pointer-events:none;
+}
+.top-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,215,0,.08);
+  border:1px solid rgba(255,215,0,.25);
+  color:#ffd84d;
+  font-size:12px;
+  letter-spacing:.3px;
+  margin-bottom:16px;
+}
+.title{
+  color:#ffd84d;
+  font-size:26px;
+  margin-bottom:10px;
+}
+.sub{
+  color:#f3f3f3;
+  font-size:14px;
+  line-height:1.55;
+  margin-bottom:18px;
+}
+.qr-wrap{
+  background:linear-gradient(135deg,#1b1608 0%,#2b2107 50%,#3d2e06 100%);
+  border:1px solid rgba(255,215,0,.35);
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.qr-link{
+  display:block;
+  text-decoration:none;
+}
+.qr-img{
+  width:100%;
+  max-width:300px;
+  border-radius:14px;
+  display:block;
+  margin:0 auto;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
+}
+.qr-link:hover .qr-img{
+  transform:scale(1.04);
+  filter:brightness(1.04);
+  box-shadow:0 16px 36px rgba(0,0,0,.52),0 0 18px rgba(255,215,0,.16);
+}
+.open-app{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  min-width:140px;
+  min-height:40px;
+  margin-top:12px;
+  padding:0 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#d4af37 0%,#b8860b 48%,#7a5a00 100%);
+  color:#111;
+  text-decoration:none;
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:.2px;
+  border:1px solid rgba(255,215,0,.35);
+  box-shadow:0 10px 22px rgba(0,0,0,.35);
+  transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
+  cursor:pointer;
+}
+.open-app:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+  box-shadow:0 14px 28px rgba(0,0,0,.45),0 0 22px rgba(255,215,0,.18);
+}
+.open-app:active{
+  transform:translateY(0) scale(.99);
+}
+.info{
+  margin-top:16px;
+  color:#fff;
+  font-size:13px;
+  line-height:1.5;
+}
+.info span{
+  color:#ffd84d;
+  font-weight:700;
+}
+.btn-row{
+  display:flex;
+  gap:12px;
+  margin-top:18px;
+  flex-wrap:nowrap;
+}
+.btn{
+  flex:1;
+  min-height:52px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:800;
+  letter-spacing:.2px;
+  transition:transform .25s ease,box-shadow .25s ease,filter .25s ease,border-color .25s ease;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,215,0,.2);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+}
+.btn::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  left:-120%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);
+  transition:left .6s ease;
+}
+.btn:hover::before{left:120%}
+.btn:hover{
+  transform:translateY(-3px);
+  filter:saturate(1.08);
+  box-shadow:0 14px 28px rgba(0,0,0,.45),0 0 22px rgba(255,215,0,.14);
+  border-color:rgba(255,215,0,.45);
+}
+.btn:active{transform:translateY(-1px) scale(.99)}
+.back{
+  background:linear-gradient(135deg,#2a2a2a 0%,#4a3a1a 45%,#7d5f0b 100%);
+  color:#fff;
+}
+.home{
+  background:linear-gradient(135deg,#d4af37 0%,#b8860b 48%,#7a5a00 100%);
+  color:#111;
+}
+.footer{
+  margin-top:16px;
+  font-size:12px;
+  color:#ffd84d;
+  opacity:.9;
+}
+@media (max-width:480px){
+  .container{
+    padding:24px 16px 20px;
+    border-radius:24px;
+  }
+  .btn-row{
+    flex-wrap:nowrap;
+  }
+  .btn{
+    min-width:0;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-badge">Maya Payment QR</div>
+    <h1 class="title">Maya QR</h1>
+    <p class="sub">Scan this QR to continue your payment and renew access.</p>
+
+    <div class="qr-wrap">
+      <a href="maya.jpg" class="qr-link" target="_blank" rel="noopener noreferrer">
+        <img src="maya.jpg" alt="Maya QR Code" class="qr-img">
+      </a>
+
+      <a href="#" class="open-app" onclick="openApp(); return false;">Open App</a>
+    </div>
+
+    <div class="info">
+      Contact Number: <span>09506849848</span><br>
+      Facebook: <span>Ber Eal Izan</span>
+    </div>
+
+    <div class="btn-row">
+      <a href="index.html" class="btn back">Back</a>
+      <a href="toturial.html" class="btn home">Open Tutorial</a>
+    </div>
+
+    <div class="footer">Use Maya for fast and secure payment.</div>
+  </div>
+
+<script>
+function openApp() {
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isAndroid) {
+    window.location.href = 'intent://open#Intent;scheme=maya;package=com.paymaya;end';
+    setTimeout(() => {
+      window.location.href = 'maya://';
+    }, 500);
+    return;
+  }
+
+  if (isIOS) {
+    window.location.href = 'maya://';
+    return;
+  }
+
+  window.location.href = 'maya.jpg';
+}
+</script>
+</body>
+</html>
