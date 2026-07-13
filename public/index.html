@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+<title>GCash QR</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:radial-gradient(circle at top,#1a1404 0%,#090909 45%,#000 100%);
+  color:#fff;
+}
+.container{
+  width:min(92vw, 440px);
+  background:linear-gradient(145deg,#111111,#1a1a1a 55%,#0d0d0d);
+  border:1px solid rgba(255,215,0,.55);
+  border-radius:28px;
+  padding:28px 22px 24px;
+  text-align:center;
+  box-shadow:0 0 0 1px rgba(255,215,0,.08),0 18px 50px rgba(0,0,0,.7),0 0 42px rgba(255,215,0,.14);
+  position:relative;
+  overflow:hidden;
+}
+.container::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,215,0,.08),transparent 35%,rgba(255,255,255,.02));
+  pointer-events:none;
+}
+.top-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,215,0,.08);
+  border:1px solid rgba(255,215,0,.25);
+  color:#ffd84d;
+  font-size:12px;
+  letter-spacing:.3px;
+  margin-bottom:16px;
+}
+.title{
+  color:#ffd84d;
+  font-size:26px;
+  margin-bottom:10px;
+}
+.sub{
+  color:#f3f3f3;
+  font-size:14px;
+  line-height:1.55;
+  margin-bottom:18px;
+}
+.qr-wrap{
+  background:linear-gradient(135deg,#1b1608 0%,#2b2107 50%,#3d2e06 100%);
+  border:1px solid rgba(255,215,0,.35);
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.qr-link{
+  display:block;
+  text-decoration:none;
+}
+.qr-img{
+  width:100%;
+  max-width:300px;
+  border-radius:14px;
+  display:block;
+  margin:0 auto;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
+}
+.qr-link:hover .qr-img{
+  transform:scale(1.04);
+  filter:brightness(1.04);
+  box-shadow:0 16px 36px rgba(0,0,0,.52),0 0 18px rgba(255,215,0,.16);
+}
+.open-app{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  min-width:140px;
+  min-height:40px;
+  margin-top:12px;
+  padding:0 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#d4af37 0%,#b8860b 48%,#7a5a00 100%);
+  color:#111;
+  text-decoration:none;
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:.2px;
+  border:1px solid rgba(255,215,0,.35);
+  box-shadow:0 10px 22px rgba(0,0,0,.35);
+  transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
+  cursor:pointer;
+}
+.open-app:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+  box-shadow:0 14px 28px rgba(0,0,0,.45),0 0 22px rgba(255,215,0,.18);
+}
+.open-app:active{
+  transform:translateY(0) scale(.99);
+}
+.info{
+  margin-top:16px;
+  color:#fff;
+  font-size:13px;
+  line-height:1.5;
+}
+.info span{
+  color:#ffd84d;
+  font-weight:700;
+}
+.btn-row{
+  display:flex;
+  gap:12px;
+  margin-top:18px;
+  flex-wrap:nowrap;
+}
+.btn{
+  flex:1;
+  min-height:52px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:800;
+  letter-spacing:.2px;
+  transition:transform .25s ease,box-shadow .25s ease,filter .25s ease,border-color .25s ease;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,215,0,.2);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+}
+.btn::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  left:-120%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);
+  transition:left .6s ease;
+}
+.btn:hover::before{left:120%}
+.btn:hover{
+  transform:translateY(-3px);
+  filter:saturate(1.08);
+  box-shadow:0 14px 28px rgba(0,0,0,.45),0 0 22px rgba(255,215,0,.14);
+  border-color:rgba(255,215,0,.45);
+}
+.btn:active{transform:translateY(-1px) scale(.99)}
+.back{
+  background:linear-gradient(135deg,#2a2a2a 0%,#4a3a1a 45%,#7d5f0b 100%);
+  color:#fff;
+}
+.home{
+  background:linear-gradient(135deg,#d4af37 0%,#b8860b 48%,#7a5a00 100%);
+  color:#111;
+}
+.footer{
+  margin-top:16px;
+  font-size:12px;
+  color:#ffd84d;
+  opacity:.9;
+}
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  backdrop-filter:blur(4px);
+}
+.popup{
+  width:min(100%, 430px);
+  background:linear-gradient(145deg,#111111,#1b1b1b 60%,#0d0d0d);
+  border:1px solid rgba(255,215,0,.5);
+  border-radius:22px;
+  padding:20px 16px 18px;
+  box-shadow:0 0 40px rgba(255,215,0,.16),0 18px 40px rgba(0,0,0,.7);
+  position:relative;
+  animation:popupIn .22s ease-out;
+  text-align:left;
+}
+@keyframes popupIn{
+  from{transform:scale(.92);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.popup h2{
+  color:#ffd84d;
+  margin-bottom:10px;
+  font-size:22px;
+  text-align:center;
+}
+.popup p{
+  color:#f3f3f3;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:12px;
+  text-align:center;
+}
+.close-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ffd84d,#d4af37);
+  color:#111;
+  font-size:22px;
+  font-weight:800;
+  cursor:pointer;
+}
+.field{
+  margin-bottom:10px;
+}
+.field label{
+  display:block;
+  color:#ffd84d;
+  font-size:12px;
+  margin-bottom:6px;
+}
+.field input, .field textarea{
+  width:100%;
+  background:#0f0f0f;
+  border:1px solid rgba(255,215,0,.25);
+  color:#fff;
+  border-radius:12px;
+  padding:12px;
+  outline:none;
+}
+.field textarea{
+  min-height:88px;
+  resize:vertical;
+}
+.file-wrap{
+  position:relative;
+}
+.file-wrap input[type="file"]{
+  width:100%;
+  background:#0f0f0f;
+  border:1px solid rgba(255,215,0,.25);
+  color:#fff;
+  border-radius:12px;
+  padding:12px 46px 12px 12px;
+  outline:none;
+}
+.cam-icon{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:32px;
+  height:32px;
+  border:none;
+  background:transparent;
+  color:#ddd;
+  font-size:18px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:.8;
+}
+.cam-icon:hover{opacity:1}
+.cam-icon:active{transform:translateY(-50%) scale(.95)}
+.submit-btn{
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:14px;
+  margin-top:10px;
+  font-weight:800;
+  color:#111;
+  background:linear-gradient(135deg,#ffd84d 0%,#d4af37 48%,#8a6500 100%);
+  cursor:pointer;
+}
+.small-note{
+  color:#ccc;
+  font-size:12px;
+  text-align:center;
+  margin-top:8px;
+}
+.error-box{
+  display:none;
+  margin-top:14px;
+  background:rgba(220,38,38,0.12);
+  border:1px solid rgba(220,38,38,0.6);
+  color:#fee2e2;
+  padding:12px;
+  border-radius:12px;
+  font-size:14px;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+@media (max-width:480px){
+  .container{padding:24px 16px 20px;border-radius:24px}
+  .btn-row{flex-wrap:nowrap}
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-badge">GCash Payment QR</div>
+    <h1 class="title">GCash QR</h1>
+    <p class="sub">Scan this QR to continue your payment and renew access.</p>
+
+    <div class="qr-wrap">
+      <a href="gcash.jpg" class="qr-link" target="_blank" rel="noopener noreferrer">
+        <img src="gcash.jpg" alt="GCash QR Code" class="qr-img">
+      </a>
+
+      <a href="#" class="open-app" onclick="openApp(); return false;">Open App</a>
+    </div>
+
+    <div class="info">
+      Contact Number: <span>09506849848</span><br>
+      Facebook: <span>Ber Eal Izan</span>
+    </div>
+
+    <div class="btn-row">
+      <a href="index.html" class="btn back">Back</a>
+      <a href="javascript:void(0)" class="btn home" onclick="openReceiptPopup()">Send Receipt</a>
+    </div>
+
+    <div class="footer">Use GCash for fast and secure payment.</div>
+
+    <div class="error-box" id="errorBox">No internet connection. Please connect to the internet first.</div>
+  </div>
+
+  <div class="overlay" id="receiptOverlay" onclick="closeReceiptPopup(event)">
+    <div class="popup">
+      <button class="close-btn" onclick="closeReceiptPopup()">×</button>
+      <h2>Send Receipt</h2>
+      <p>Fill out the details and upload your receipt image before sending.</p>
+
+      <form id="receiptForm">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="field">
+          <label for="amount">Amount</label>
+          <input type="text" id="amount" name="amount" required>
+        </div>
+
+        <div class="field">
+          <label for="reference">Reference No.</label>
+          <input type="text" id="reference" name="reference">
+        </div>
+
+        <div class="field">
+          <label for="receipt">Receipt Image</label>
+          <div class="file-wrap">
+            <input type="file" id="receipt" name="receipt" accept="image/*" required>
+            <button type="button" class="cam-icon" onclick="openCamera()" aria-label="Capture receipt">📷</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="note">Note</label>
+          <textarea id="note" name="note" placeholder="Optional message"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send to Telegram</button>
+      </form>
+
+      <div class="small-note">Time will be added automatically.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script>
+const SEND_ENDPOINT = 'send_receipt.php';
+
+function showNoInternet() {
+  const box = document.getElementById('errorBox');
+  box.style.display = 'block';
+  box.textContent = 'No internet connection. Please connect to the internet first.';
+}
+function hideNoInternet() {
+  document.getElementById('errorBox').style.display = 'none';
+}
+function openApp() {
+  if (!navigator.onLine) return showNoInternet();
+  hideNoInternet();
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isAndroid) {
+    window.location.href = 'intent://open#Intent;scheme=gcash;package=com.globe.gcash.android;end';
+    setTimeout(() => { window.location.href = 'gcash://'; }, 500);
+    return;
+  }
+  if (isIOS) {
+    window.location.href = 'gcash://';
+    return;
+  }
+  window.location.href = 'gcash.jpg';
+}
+function openReceiptPopup() {
+  if (!navigator.onLine) return showNoInternet();
+  hideNoInternet();
+  document.getElementById('receiptOverlay').style.display = 'flex';
+}
+function closeReceiptPopup(event) {
+  const overlay = document.getElementById('receiptOverlay');
+  if (!event || event.target === overlay || event.target.classList.contains('close-btn')) {
+    overlay.style.display = 'none';
+  }
+}
+function currentTimeString() {
+  return new Date().toLocaleString('en-PH', {
+    year: 'numeric', month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
+}
+function getLocationText() {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) return resolve('Location not supported');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve(`Lat: ${pos.coords.latitude.toFixed(6)}, Lon: ${pos.coords.longitude.toFixed(6)}`),
+      () => resolve('Location permission denied or unavailable'),
+      { enableHighAccuracy: false, timeout: 10000 }
+    );
+  });
+}
+function extractReference(text) {
+  const cleaned = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+  const patterns = [
+    /(?:ref(?:erence)?(?:\s*no\.?)?\s*[:#-]?\s*)([A-Z0-9-]{5,})/i,
+    /(?:transaction(?:\s*no\.?)?\s*[:#-]?\s*)([A-Z0-9-]{5,})/i,
+    /(?:trace(?:\s*no\.?)?\s*[:#-]?\s*)([A-Z0-9-]{5,})/i,
+    /\b([A-Z0-9-]{10,})\b/
+  ];
+  for (const p of patterns) {
+    const m = cleaned.match(p);
+    if (m && m[1]) return m[1];
+  }
+  return '';
+}
+async function autoExtractReference(file) {
+  try {
+    const result = await Tesseract.recognize(file, 'eng');
+    const text = result.data.text || '';
+    const ref = extractReference(text);
+    if (ref) document.getElementById('reference').value = ref;
+  } catch (err) {}
+}
+function openCamera() {
+  document.getElementById('cameraCapture').click();
+}
+
+document.getElementById('cameraCapture').addEventListener('change', async function () {
+  const file = this.files[0];
+  if (!file) return;
+  const receiptInput = document.getElementById('receipt');
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  receiptInput.files = dt.files;
+  await autoExtractReference(file);
+});
+
+window.addEventListener('offline', showNoInternet);
+window.addEventListener('online', hideNoInternet);
+if (!navigator.onLine) showNoInternet();
+
+document.getElementById('receiptForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!navigator.onLine) return showNoInternet();
+
+  const file = document.getElementById('receipt').files[0];
+  const name = document.getElementById('name').value.trim();
+  const amount = document.getElementById('amount').value.trim();
+  const reference = document.getElementById('reference').value.trim();
+  const note = document.getElementById('note').value.trim();
+  const time = currentTimeString();
+  const location = await getLocationText();
+
+  if (!file) {
+    alert('Please choose a receipt image.');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('receipt', file);
+  formData.append('name', name);
+  formData.append('amount', amount);
+  formData.append('reference', reference);
+  formData.append('note', note);
+  formData.append('time', time);
+  formData.append('location', location);
+
+  try {
+    const res = await fetch(SEND_ENDPOINT, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.ok) {
+      alert('Receipt sent successfully.');
+      this.reset();
+      document.getElementById('receiptOverlay').style.display = 'none';
+    } else {
+      alert('Failed to send receipt: ' + (data.message || 'unknown'));
+    }
+  } catch (err) {
+    alert('Error sending receipt.');
+  }
+});
+  </script>
+
+  <input type="file" id="cameraCapture" accept="image/*" capture="environment" style="display:none">
+</body>
+</html>
