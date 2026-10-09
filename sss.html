@@ -1,0 +1,462 @@
+<!-- PISO WIFI.br | Christmas Animated Footer -->
+<footer class="pw-christmas-footer">
+
+  <style>
+    .pw-christmas-footer {
+      --gold: #ffcc00;
+      --green: #00ed75;
+      --purple: #a45cff;
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 12px 18px;
+      overflow: hidden;
+      box-sizing: border-box;
+      background:
+        radial-gradient(ellipse at 50% 0%,
+          rgba(255, 204, 0, .10), transparent 65%),
+        #050505;
+      color: #fff;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      isolation: isolate;
+    }
+
+    .pw-christmas-footer *,
+    .pw-christmas-footer *::before,
+    .pw-christmas-footer *::after {
+      box-sizing: border-box;
+    }
+
+    /* Animated festive light strand */
+    .pw-light-string {
+      height: 17px;
+      position: relative;
+      margin: -8px 8px 18px;
+      border-top: 1px solid #b99831;
+      border-radius: 50%;
+      opacity: .9;
+    }
+
+    .pw-light-string span {
+      position: absolute;
+      top: -4px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 9px currentColor;
+      animation: pw-twinkle 1.5s infinite alternate;
+    }
+
+    .pw-light-string span:nth-child(1) { left: 5%; color: #ffca00; }
+    .pw-light-string span:nth-child(2) { left: 18%; color: #00ed75; animation-delay: .3s; }
+    .pw-light-string span:nth-child(3) { left: 31%; color: #ff4545; animation-delay: .6s; }
+    .pw-light-string span:nth-child(4) { left: 44%; color: #a45cff; animation-delay: .2s; }
+    .pw-light-string span:nth-child(5) { left: 57%; color: #ffca00; animation-delay: .8s; }
+    .pw-light-string span:nth-child(6) { left: 70%; color: #00ed75; animation-delay: .4s; }
+    .pw-light-string span:nth-child(7) { left: 83%; color: #ff4545; animation-delay: .7s; }
+    .pw-light-string span:nth-child(8) { left: 96%; color: #a45cff; animation-delay: .1s; }
+
+    @keyframes pw-twinkle {
+      from { opacity: .4; transform: scale(.8); }
+      to {
+        opacity: 1;
+        transform: scale(1.2);
+        box-shadow: 0 0 12px currentColor;
+      }
+    }
+
+    /* Main footer feature card */
+    .pw-footer-card {
+      position: relative;
+      z-index: 1;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 18px 14px;
+      border: 1px solid rgba(255, 204, 0, .75);
+      border-radius: 17px;
+      background:
+        linear-gradient(135deg,
+          rgba(0, 237, 117, .10),
+          rgba(164, 92, 255, .10) 60%,
+          rgba(255, 204, 0, .10)),
+        rgba(15, 17, 21, .95);
+      box-shadow:
+        0 0 18px rgba(255, 204, 0, .09),
+        inset 0 0 15px rgba(255, 255, 255, .025);
+      animation: pw-card-glow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pw-card-glow {
+      from { box-shadow: 0 0 10px #ffcc0015; }
+      to {
+        box-shadow: 0 0 22px #ffcc0035,
+                    inset 0 0 16px #00ed7510;
+      }
+    }
+
+    .pw-footer-brand {
+      color: var(--gold);
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px #ffcc0050;
+    }
+
+    .pw-footer-tagline {
+      margin-top: 5px;
+      color: #b7c0d0;
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    .pw-footer-divider {
+      height: 1px;
+      margin: 15px 0;
+      background: linear-gradient(
+        90deg, transparent, #ffcc00, #00ed75, #a45cff, transparent
+      );
+    }
+
+    .pw-footer-message {
+      color: #f4f4f4;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .pw-footer-message strong {
+      color: var(--green);
+    }
+
+    .pw-footer-countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+      margin: 17px 0 12px;
+    }
+
+    .pw-time-unit {
+      min-width: 0;
+      padding: 10px 2px;
+      border: 1px solid #ffffff20;
+      border-radius: 9px;
+      background: #00000045;
+    }
+
+    .pw-time-value {
+      display: block;
+      color: var(--gold);
+      font-size: clamp(18px, 5vw, 25px);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .pw-time-label {
+      display: block;
+      margin-top: 5px;
+      color: #d5d5d5;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    .pw-footer-promo {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 600;
+      animation: pw-promo-glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pw-promo-glow {
+      from { text-shadow: 0 0 2px #00ed7540; }
+      to { text-shadow: 0 0 10px #00ed7590; }
+    }
+
+    /* Compact replacement for the old buttons */
+    .pw-footer-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      max-width: 440px;
+      margin: 15px auto 0;
+    }
+
+    .pw-footer-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 42px;
+      padding: 10px 5px;
+      border: 1px solid var(--purple);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #17121f, #101a18);
+      color: #d5aaff;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+
+    .pw-footer-link:last-child {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .pw-footer-link:hover,
+    .pw-footer-link:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      box-shadow: 0 0 14px #ffcc0035;
+      outline: none;
+    }
+
+    .pw-footer-version {
+      margin-top: 17px;
+      color: #8496bd;
+      font-size: 11px;
+    }
+
+    .pw-footer-version span {
+      color: var(--gold);
+    }
+
+    /* Lightweight decorative snow */
+    .pw-snow {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .pw-snowflake {
+      position: absolute;
+      top: -15px;
+      color: #fff;
+      opacity: .65;
+      font-size: 10px;
+      animation: pw-snow-fall linear infinite;
+    }
+
+    @keyframes pw-snow-fall {
+      0% { transform: translate3d(0, -15px, 0) rotate(0); }
+      100% { transform: translate3d(20px, 340px, 0) rotate(180deg); }
+    }
+
+    @media (max-width: 360px) {
+      .pw-christmas-footer { padding: 20px 8px 14px; }
+      .pw-footer-card { padding: 15px 9px; }
+      .pw-footer-countdown { gap: 4px; }
+      .pw-time-label { font-size: 8px; }
+      .pw-footer-links { gap: 6px; }
+      .pw-footer-link { font-size: 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pw-christmas-footer *,
+      .pw-christmas-footer *::before,
+      .pw-christmas-footer *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+
+  <div class="pw-snow" id="pwSnow" aria-hidden="true"></div>
+
+  <div class="pw-light-string" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <section class="pw-footer-card">
+    <div class="pw-footer-brand">✦ PISO WIFI.br ✦</div>
+    <div class="pw-footer-tagline">FAST • RELIABLE • AFFORDABLE INTERNET</div>
+
+    <div class="pw-footer-divider"></div>
+
+    <div class="pw-footer-message">
+       <strong>Merry Christmas!</strong> <br>
+      Stay connected and enjoy the holidays.<br>
+      <span style="color:#ffcc00">Earn more points. Get a chance to win!</span>
+    </div>
+
+    <div class="pw-footer-countdown" aria-label="Countdown to Christmas 2026">
+      <div class="pw-time-unit">
+        <span class="pw-time-value" id="pwDays">--</span>
+        <span class="pw-time-label">DAYS</span>
+      </div>
+      <div class="pw-time-unit">
+        <span class="pw-time-value" id="pwHours">--</span>
+        <span class="pw-time-label">HOURS</span>
+      </div>
+      <div class="pw-time-unit">
+        <span class="pw-time-value" id="pwMinutes">--</span>
+        <span class="pw-time-label">MINUTES</span>
+      </div>
+      <div class="pw-time-unit">
+        <span class="pw-time-value" id="pwSeconds">--</span>
+        <span class="pw-time-label">SECONDS</span>
+      </div>
+    </div>
+
+    <div
+    class="pw-footer-promo" id="pwPromo">
+       Christmas Voucher Countdown 
+    </div>
+  </section>
+
+  <!-- Replace #redeem and #voucher with your actual portal URLs -->
+  <nav class="pw-footer-links" aria-label="PISO WIFI.br links">
+    <a class="pw-footer-link" href="#redeem">
+       Redeem Points
+    </a>
+    <a class="pw-footer-link" href="#voucher">
+       Extend via Voucher
+    </a>
+  </nav>
+
+  <div class="pw-footer-version">
+    Powered by <span>PISO WIFI.br</span> · Version: 3.5.90-rc4
+  </div>
+
+  <script>
+  (function () {
+    const root = document.querySelector(".pw-christmas-footer");
+    if (!root) return;
+
+    // Christmas Day 2026, using the visitor's local time.
+    const target = new Date(2026, 11, 25, 0, 0, 0).getTime();
+
+    const days = root.querySelector("#pwDays");
+    const hours = root.querySelector("#pwHours");
+    const minutes = root.querySelector("#pwMinutes");
+    const seconds = root.querySelector("#pwSeconds");
+    const promo = root.querySelector("#pwPromo");
+
+    function updateCountdown() {
+      let diff = Math.max(0, target - Date.now());
+      const d = Math.floor(diff / 86400000);
+      diff %= 86400000;
+      const h = Math.floor(diff / 3600000);
+      diff %= 3600000;
+      const m = Math.floor(diff / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      days.textContent = String(d);
+      hours.textContent = String(h).padStart(2, "0");
+      minutes.textContent = String(m).padStart(2, "0");
+      seconds.textContent = String(s).padStart(2, "0");
+
+      if (target <= Date.now()) {
+        promo.textContent = " Merry Christmas 2026! ";
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Create a small, bounded number of snowflakes.
+    const snow = root.querySelector("#pwSnow");
+    if (window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    for (let i = 0; i < 16; i++) {
+      const flake = document.createElement("span");
+      flake.className = "pw-snowflake";
+      flake.textContent = i % 3 === 0 ? "" : "·";
+      flake.style.left = (Math.random() * 98) + "%";
+      flake.style.animationDuration = (5 + Math.random() * 7) + "s";
+      flake.style.animationDelay = (-Math.random() * 10) + "s";
+      flake.style.fontSize = (7 + Math.random() * 7) + "px";
+      snow.appendChild(flake);
+    }
+  })();
+  </script>
+
+</footer>
+
+
+
+<!-- PISO WIFI.br CHRISTMAS FOOTER BUTTON -->
+<style>
+
+.pw-xmas-footer {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 15px 3px;
+    background: #000;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.pw-xmas-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 17px 10px 14px;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    text-decoration: none;
+    color: #fff;
+
+    background:
+        radial-gradient(ellipse at top, #173c2b, transparent 75%),
+        linear-gradient(135deg, #07150e, #15101e 60%, #35120e);
+
+    border: 1px solid #e5bb35;
+    border-radius: 13px;
+
+    box-shadow:
+        0 0 12px #ffcc0030,
+        inset 0 0 18px #00e67612;
+
+    transition: transform .25s, box-shadow .25s;
+    isolation: isolate;
+}
+
+/* Gold animated border glow */
+.pw-xmas-btn::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -2px;
+    background: conic-gradient(
+        from 0deg,
+        #ffcc00, #00e676, #a45cff,
+        #ff4444, #ffcc00
+    );
+    animation: pw-xmas-spin 5s linear infinite;
+}
+
+.pw-xmas-btn::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 2px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #102a1b, #100d17 65%, #29100d);
+}
+
+@keyframes pw-xmas-spin {
+    to { transform: rotate(360deg); }
+}
+
+.pw-xmas-btn:hover,
+.pw-xmas-btn:focus-visible {
+    transform: translateY(-3px) scale(1.015);
+    box-shadow: 0 0 23px #ffcc0060,
+                0 0 35px #00e67620;
+    outline: 1px solid #ffcc00;
+    outline-offset: 3px;
+}
+
+.pw-xmas-lights {
