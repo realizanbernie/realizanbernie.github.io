@@ -1,0 +1,1248 @@
+```html
+<style>
+.pw-xmas-footer,
+.pw-xmas-footer * {
+    box-sizing: border-box;
+}
+
+.pw-xmas-footer {
+    width: 100%;
+    margin: 0;
+    padding: 8px 6px 10px;
+    background: #000;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    overflow: hidden;
+}
+
+.pw-mini-brand {
+    margin: 0 0 5px;
+    color: #ffcf27;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    animation: pw-brand-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pw-brand-glow {
+    from { opacity: .7; text-shadow: 0 0 3px #ffcc0030; }
+    to { opacity: 1; text-shadow: 0 0 11px #ffcc0090; }
+}
+
+/* COUNTDOWN BOXES */
+.pw-xmas-units {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 8px 5px;
+    border: 1px solid #c9a52b;
+    border-radius: 15px;
+    background: linear-gradient(130deg, #103c2a, #11101c 70%, #481c21);
+    box-shadow: 0 0 12px #ffcc0025;
+    animation: pw-hide-seek 4s ease-in-out infinite;
+}
+
+@keyframes pw-hide-seek {
+    0%, 100% {
+        box-shadow: 0 0 5px #ffcc0020;
+        border-color: #8b762a;
+    }
+    50% {
+        box-shadow: 0 0 17px #ffcc0060, 0 0 8px #00ed7530;
+        border-color: #ffcf27;
+    }
+}
+
+.pw-xmas-unit {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 80px;
+    padding: 7px 1px;
+    border: 1px solid #ffffff30;
+    border-radius: 8px;
+    background: #0005;
+}
+
+.pw-xmas-number {
+    display: block;
+    color: #ffcf27;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.15;
+}
+
+.pw-xmas-label {
+    display: block;
+    margin-top: 4px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: bold;
+    letter-spacing: .4px;
+}
+
+/* ANIMATED HOLIDAY JOURNEY */
+.pw-road-panel {
+    width: 100%;
+    max-width: 360px;
+    margin: 10px auto 0;
+    padding: 10px 9px 9px;
+    border: 1px solid #ffffff22;
+    border-radius: 13px;
+    background: radial-gradient(
+        ellipse at top,
+        #102b22 0%,
+        #101019 58%,
+        #080808 100%
+    );
+    box-shadow: inset 0 0 16px #00ed7508, 0 0 13px #000;
+}
+
+.pw-road-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.pw-road-kicker {
+    font-size: 8px;
+    letter-spacing: 1.4px;
+    color: #9ee8bd;
+    font-weight: 800;
+}
+
+.pw-road-status {
+    font-size: 9px;
+    color: #ffcf27;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.pw-road-scene {
+    position: relative;
+    height: 91px;
+    overflow: hidden;
+    border-radius: 9px;
+    background: linear-gradient(
+        #081a28 0%,
+        #122d35 58%,
+        #163a29 59%,
+        #10231c 100%
+    );
+    border: 1px solid #ffffff12;
+}
+
+.pw-road-scene:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 29px;
+    height: 1px;
+    background: #9be8bd40;
+    box-shadow: 0 0 8px #00ed7520;
+}
+
+.pw-sky-glow {
+    position: absolute;
+    top: 8px;
+    right: 13%;
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    background: #ffcf2730;
+    box-shadow: 0 0 20px #ffcf2720;
+}
+
+.pw-stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(#fff 1px, transparent 1.5px),
+        radial-gradient(#b7ffe1 1px, transparent 1.5px);
+    background-size: 31px 23px, 47px 31px;
+    background-position: 2px 3px, 15px 10px;
+    opacity: .55;
+    animation: pw-stars 5s linear infinite;
+}
+
+@keyframes pw-stars {
+    from { background-position: 2px 3px, 15px 10px; }
+    to { background-position: 33px 26px, 62px 41px; }
+}
+
+/* ROAD SURFACE */
+.pw-road {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 30px;
+    background: linear-gradient(#3b4147, #202329);
+    border-top: 2px solid #b4a36d55;
+    z-index: 4;
+}
+
+.pw-road:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 13px;
+    height: 2px;
+    background: repeating-linear-gradient(
+        90deg,
+        #f7e7a8 0 14px,
+        transparent 14px 26px
+    );
+    opacity: .7;
+    animation: pw-road-dashes 1.1s linear infinite;
+}
+
+@keyframes pw-road-dashes {
+    from { background-position: 0 0; }
+    to { background-position: -26px 0; }
+}
+
+/* LOADING-STYLE JOURNEY PROGRESS */
+.pw-road-track {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: 31px;
+    height: 3px;
+    background: #ffffff20;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+.pw-road-progress {
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #00ed75, #ffcf27);
+    box-shadow: 0 0 8px #00ed7570;
+    transition: width 1s linear;
+}
+
+.pw-road-stop {
+    position: absolute;
+    bottom: 26px;
+    transform: translateX(-50%);
+    font-size: 15px;
+    filter: drop-shadow(0 0 5px #ffcf2770);
+    z-index: 3;
+    transition: filter .3s;
+}
+
+.pw-road-stop:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    height: 9px;
+    width: 1px;
+    background: #fff7;
+}
+
+/* WALKING CHARACTER */
+.pw-walker {
+    position: absolute;
+    left: 5%;
+    bottom: 29px;
+    width: 30px;
+    height: 44px;
+    transform: translateX(-50%);
+    z-index: 5;
+    filter: drop-shadow(0 0 6px #00ed7560);
+    transition: left 1s linear;
+}
+
+.pw-walker-emoji {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 27px;
+    line-height: 1;
+    animation: pw-walk-bob .55s ease-in-out infinite alternate;
+}
+
+@keyframes pw-walk-bob {
+    from { transform: translateY(0) rotate(-5deg); }
+    to { transform: translateY(-3px) rotate(5deg); }
+}
+
+.pw-walker-shadow {
+    position: absolute;
+    bottom: -2px;
+    left: 5px;
+    width: 20px;
+    height: 4px;
+    background: #0009;
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.pw-destination {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    max-width: 75%;
+    padding: 4px 7px;
+    border: 1px solid #ffffff22;
+    border-radius: 6px;
+    background: #0008;
+    font-size: 9px;
+    font-weight: 800;
+    color: #fff;
+    text-align: right;
+    z-index: 6;
+}
+
+.pw-road-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 7px;
+    font-size: 9px;
+    color: #d6d6d6;
+    text-align: left;
+}
+
+.pw-road-caption strong {
+    color: #ffcf27;
+}
+
+.pw-road-percent {
+    color: #00ed75;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.pw-road-note {
+    margin-top: 5px;
+    font-size: 8px;
+    color: #a8b8ae;
+    letter-spacing: .25px;
+}
+
+/* PROMO BUTTON */
+.pw-xmas-action {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    margin: 9px auto 0;
+    padding: 11px 10px;
+    border: 1px solid #00ed75;
+    border-radius: 9px;
+    background: linear-gradient(90deg, #10291c, #171020);
+    color: #00ed75;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 0 9px #00ed7520;
+    transition: background .25s, color .25s, box-shadow .25s;
+}
+
+.pw-xmas-action:hover,
+.pw-xmas-action:focus-visible {
+    background: #00ed75;
+    color: #07150e;
+    box-shadow: 0 0 17px #00ed7560;
+    outline: none;
+}
+
+/* MOBILE */
+@media (max-width: 360px) {
+    .pw-xmas-footer {
+        padding-right: 2px;
+        padding-left: 2px;
+    }
+
+    .pw-xmas-units {
+        gap: 3px;
+        padding: 7px 3px;
+    }
+
+    .pw-xmas-number {
+        font-size: 18px;
+    }
+
+    .pw-xmas-label {
+        font-size: 7px;
+    }
+
+    .pw-road-panel {
+        padding: 8px 6px;
+    }
+
+    .pw-road-scene {
+        height: 85px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pw-mini-brand,
+    .pw-xmas-units,
+    .pw-stars,
+    .pw-road:after,
+    .pw-walker-emoji {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+</style>
+
+<div class="pw-xmas-footer" id="pwXmasPromo">
+
+    <div class="pw-mini-brand">
+        PISO WIFI.br · HOLIDAY JOURNEY
+    </div>
+
+    <!-- LIVE CHRISTMAS COUNTDOWN -->
+    <div class="pw-xmas-units" aria-label="Christmas countdown">
+        <div class="pw-xmas-unit">
+            <span class="pw-xmas-number" id="pwDays">--</span>
+            <span class="pw-xmas-label">DAYS LEFT</span>
+        </div>
+
+        <div class="pw-xmas-unit">
+            <span class="pw-xmas-number" id="pwHours">--</span>
+            <span class="pw-xmas-label">HOURS</span>
+        </div>
+
+        <div class="pw-xmas-unit">
+            <span class="pw-xmas-number" id="pwMinutes">--</span>
+            <span class="pw-xmas-label">MINUTES</span>
+        </div>
+
+        <div class="pw-xmas-unit">
+            <span class="pw-xmas-number" id="pwSeconds">--</span>
+            <span class="pw-xmas-label">SECONDS</span>
+        </div>
+    </div>
+
+    <!-- ANIMATED ROAD DIRECTLY UNDER THE COUNTDOWN -->
+    <div class="pw-road-panel">
+
+        <div class="pw-road-heading">
+            <span class="pw-road-kicker">YOUR HOLIDAY JOURNEY</span>
+            <span class="pw-road-status" id="pwRoadStatus">
+                Loading journey…
+            </span>
+        </div>
+
+        <div
+            class="pw-road-scene"
+            role="img"
+            aria-label="Animated character walking along a holiday road toward the next calendar event"
+        >
+            <div class="pw-stars"></div>
+            <div class="pw-sky-glow"></div>
+
+            <div class="pw-road-track">
+                <div class="pw-road-progress" id="pwRoadProgress"></div>
+            </div>
+
+            <div class="pw-destination" id="pwDestination">
+                🎄 Christmas Road
+            </div>
+
+            <div class="pw-road-stop" id="pwStop1" style="left:18%">
+                🕯️
+            </div>
+
+            <div class="pw-road-stop" id="pwStop2" style="left:53%">
+                🎄
+            </div>
+
+            <div class="pw-road-stop" id="pwStop3" style="left:87%">
+                🎆
+            </div>
+
+            <div class="pw-walker" id="pwWalker">
+                <span class="pw-walker-emoji" id="pwWalkerEmoji">🚶</span>
+                <span class="pw-walker-shadow"></span>
+            </div>
+
+            <div class="pw-road"></div>
+        </div>
+
+        <div class="pw-road-caption">
+            <span id="pwNextEvent">
+                Preparing your next holiday stop…
+            </span>
+
+            <span class="pw-road-percent" id="pwJourneyPercent">
+                0%
+            </span>
+        </div>
+
+        <div class="pw-road-note" id="pwRoadNote">
+            Live calendar · The journey updates automatically
+        </div>
+
+    </div>
+
+    <!-- CHANGE #voucher TO YOUR REAL PROMO PAGE URL -->
+    <a class="pw-xmas-action" href="#voucher">
+        🎄 TAP HERE · CHRISTMAS PROMO 🎁
+    </a>
+
+</div>
+
+<script>
+(function () {
+    "use strict";
+
+    const $ = id => document.getElementById(id);
+
+    const el = {
+        days: $("pwDays"),
+        hours: $("pwHours"),
+        minutes: $("pwMinutes"),
+        seconds: $("pwSeconds"),
+        walker: $("pwWalker"),
+        walkerEmoji: $("pwWalkerEmoji"),
+        progress: $("pwRoadProgress"),
+        status: $("pwRoadStatus"),
+        destination: $("pwDestination"),
+        next: $("pwNextEvent"),
+        percent: $("pwJourneyPercent"),
+        note: $("pwRoadNote"),
+        stops: [
+            $("pwStop1"),
+            $("pwStop2"),
+            $("pwStop3")
+        ]
+    };
+
+    // Uses the visitor's local device time.
+    // For visitors in the Philippines, this will normally be Philippine time.
+    function localDate(year, month, day) {
+        return new Date(year, month - 1, day, 0, 0, 0, 0);
+    }
+
+    function upcomingEvents(now) {
+        const y = now.getFullYear();
+
+        const template = [
+            {
+                month: 11,
+                day: 1,
+                name: "All Saints’ Day",
+                short: "ALL SAINTS",
+                icon: "🕯️",
+                walker: "🚶",
+                description: "Remembering and honoring loved ones"
+            },
+            {
+                month: 11,
+                day: 2,
+                name: "All Souls’ Day",
+                short: "ALL SOULS",
+                icon: "🕯️",
+                walker: "🚶",
+                description: "A moment for remembrance"
+            },
+            {
+                month: 12,
+                day: 25,
+                name: "Christmas Day",
+                short: "CHRISTMAS",
+                icon: "🎄",
+                walker: "🎅",
+                description: "Christmas magic and festive rewards"
+            },
+            {
+                month: 12,
+                day: 31,
+                name: "New Year’s Eve",
+                short: "NEW YEAR",
+                icon: "🎆",
+                walker: "🎅",
+                description: "Counting down to a fresh beginning"
+            },
+            {
+                month: 1,
+                day: 1,
+                name: "New Year’s Day",
+                short: "NEW YEAR",
+                icon: "🎆",
+                walker: "🎉",
+                description: "Welcome a brand-new year"
+            }
+        ];
+
+        // Build three years so the road always has a previous
+        // milestone and a next milestone, including around New Year.
+        const events = [];
+
+        for (let yr = y - 1; yr <= y + 1; yr++) {
+            template.forEach(event => {
+                events.push({
+                    ...event,
+                    date: localDate(yr, event.month, event.day)
+                });
+            });
+        }
+
+        return events.sort((a, b) => a.date - b.date);
+    }
+
+    function formatRemaining(ms) {
+        if (ms <= 0) return "Arrived!";
+
+        const total = Math.floor(ms / 1000);
+        const days = Math.floor(total / 86400);
+        const hours = Math.floor((total % 86400) / 3600);
+        const mins = Math.floor((total % 3600) / 60);
+
+        if (days > 0) return days + "d " + hours + "h to go";
+        if (hours > 0) return hours + "h " + mins + "m to go";
+
+        return mins + "m to go";
+    }
+
+    function update() {
+        const now = new Date();
+        const year = now.getFullYear();
+
+        // Christmas countdown
+        let christmas = new Date(year, 11, 25, 0, 0, 0, 0);
+
+        if (now >= christmas) {
+            christmas.setFullYear(year + 1);
+        }
+
+        const remaining = Math.max(0, christmas - now);
+
+        el.days.textContent = Math.floor(
+            remaining / 86400000
+        );
+
+        el.hours.textContent = String(
+            Math.floor(remaining / 3600000) % 24
+        ).padStart(2, "0");
+
+        el.minutes.textContent = String(
+            Math.floor(remaining / 60000) % 60
+        ).padStart(2, "0");
+
+        el.seconds.textContent = String(
+            Math.floor(remaining / 1000) % 60
+        ).padStart(2, "0");
+
+        // Determine the next holiday milestone.
+        const events = upcomingEvents(now);
+
+        let nextIndex = events.findIndex(event => event.date > now);
+
+        if (nextIndex < 0) {
+            nextIndex = events.length - 1;
+        }
+
+        const next = events[nextIndex];
+        const previous = events[Math.max(0, nextIndex - 1)];
+
+        const start = previous.date.getTime();
+        const end = next.date.getTime();
+
+        let journey = end > start
+            ? (now.getTime() - start) / (end - start)
+            : 0;
+
+        journey = Math.max(0, Math.min(1, journey));
+
+        // Animate the character and progress bar.
+        const left = 5 + journey * 88;
+
+        el.walker.style.left = left + "%";
+        el.progress.style.width = (journey * 100) + "%";
+        el.percent.textContent = Math.round(journey * 100) + "%";
+
+        el.status.textContent = next.name.toUpperCase();
+        el.destination.textContent = next.icon + " " + next.short;
+        el.walkerEmoji.textContent = next.walker;
+
+        // Use textContent for safe display of event information.
+        el.next.textContent =
+            next.icon + " " + next.name + " · " +
+            formatRemaining(next.date - now);
+
+        el.note.textContent =
+            next.description + " · Live local time";
+
+        // Update seasonal milestone markers.
+        const markerEvents = [
+            { month: 11, day: 2, icon: "🕯️" },
+            { month: 12, day: 25, icon: "🎅" },
+            { month: 1, day: 1, icon: "🎆" }
+        ];
+
+        markerEvents.forEach((marker, index) => {
+            let date = new Date(
+                now.getFullYear(),
+                marker.month - 1,
+                marker.day
+            );
+
+            if (
+                date < new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    now.getDate()
+                )
+            ) {
+                date.setFullYear(date.getFullYear() + 1);
+            }
+
+            el.stops[index].textContent = marker.icon;
+            el.stops[index].title = date.toLocaleDateString(
+                undefined,
+                { month: "short", day: "numeric" }
+            );
+        });
+    }
+
+    // Initial display, followed by live one-second updates.
+    update();
+    window.setInterval(update, 1000);
+})();
+</script>
+```
+
+
+```html
+<style>
+/* HOLIDAY ROAD TIMELINE */
+.pw-road-panel,
+.pw-road-panel * {
+    box-sizing: border-box;
+}
+
+.pw-road-panel {
+    width: 100%;
+    max-width: 360px;
+    margin: 10px auto 0;
+    padding: 10px 9px;
+    overflow: hidden;
+    border: 1px solid #ffffff25;
+    border-radius: 13px;
+    background: radial-gradient(ellipse at top, #102b22, #101019 65%, #080808);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.pw-road-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 7px;
+}
+
+.pw-road-kicker {
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    color: #9ee8bd;
+}
+
+.pw-road-status {
+    font-size: 9px;
+    font-weight: bold;
+    color: #ffcf27;
+    text-align: right;
+}
+
+.pw-road-scene {
+    height: 92px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 9px;
+    border: 1px solid #ffffff18;
+    background: linear-gradient(
+        to bottom,
+        #071522 0%,
+        #142d38 55%,
+        #173b2a 56%,
+        #10231c 100%
+    );
+}
+
+.pw-road-stars {
+    position: absolute;
+    inset: 0;
+    opacity: .6;
+    background-image:
+        radial-gradient(#fff 1px, transparent 1.5px),
+        radial-gradient(#a5ffe0 1px, transparent 1.5px);
+    background-size: 31px 23px, 47px 31px;
+    background-position: 2px 3px, 15px 10px;
+    animation: pw-star-drift 8s linear infinite;
+}
+
+@keyframes pw-star-drift {
+    to {
+        background-position: 33px 26px, 62px 41px;
+    }
+}
+
+.pw-road-moon {
+    position: absolute;
+    right: 13%;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffcf2750;
+    box-shadow: 0 0 18px #ffcf2725;
+}
+
+/* Road surface */
+.pw-road-surface {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 29px;
+    border-top: 2px solid #d4c38b65;
+    background: linear-gradient(#42474c, #202329);
+}
+
+.pw-road-surface:after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 0;
+    width: 200%;
+    height: 2px;
+    background: repeating-linear-gradient(
+        90deg,
+        #f8e9ae 0 13px,
+        transparent 13px 25px
+    );
+    animation: pw-road-moving 1.2s linear infinite;
+}
+
+@keyframes pw-road-moving {
+    to { transform: translateX(-25px); }
+}
+
+/* Fixed person position */
+.pw-road-person {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    bottom: 26px;
+    width: 34px;
+    height: 46px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.pw-road-person span {
+    font-size: 28px;
+    line-height: 1;
+    filter: drop-shadow(0 0 5px #00ed7570);
+    animation: pw-person-breathe 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pw-person-breathe {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2px); }
+}
+
+/* Holiday marker moves toward the fixed person */
+.pw-moving-event {
+    position: absolute;
+    z-index: 4;
+    left: 0%;
+    bottom: 28px;
+    width: 34px;
+    text-align: center;
+    transform: translateX(-50%);
+    transition: left .8s linear;
+    filter: drop-shadow(0 0 6px #ffcf2770);
+}
+
+.pw-moving-event-icon {
+    display: block;
+    font-size: 23px;
+    line-height: 1.1;
+    animation: pw-event-glow 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes pw-event-glow {
+    from { filter: brightness(.85); }
+    to { filter: brightness(1.35); }
+}
+
+/* Timeline rail */
+.pw-timeline-rail {
+    position: relative;
+    height: 5px;
+    margin: 9px 7px 0;
+    border-radius: 5px;
+    background: #ffffff20;
+}
+
+.pw-timeline-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #00ed75, #ffcf27);
+    opacity: .65;
+}
+
+/* Calendar date markers */
+.pw-calendar {
+    display: flex;
+    justify-content: space-between;
+    gap: 3px;
+    margin-top: 5px;
+}
+
+.pw-calendar-item {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding: 4px 1px 5px;
+    border: 1px solid #ffffff20;
+    border-radius: 6px;
+    background: #ffffff08;
+    color: #b9c8bf;
+    font-size: 8px;
+    text-align: center;
+    transition: .25s ease;
+}
+
+.pw-calendar-item strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #ffcf27;
+    font-size: 12px;
+}
+
+.pw-calendar-item small {
+    display: block;
+    font-size: 7px;
+    letter-spacing: .2px;
+}
+
+.pw-calendar-item.is-next {
+    border-color: #00ed75;
+    background: #00ed7515;
+    color: white;
+    box-shadow: 0 0 8px #00ed7525;
+}
+
+.pw-calendar-item.is-passed {
+    opacity: .45;
+}
+
+.pw-calendar-item.is-next strong {
+    color: #00ed75;
+}
+
+.pw-road-caption {
+    margin-top: 9px;
+    color: #d9e5dc;
+    font-size: 9px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.pw-road-caption strong {
+    color: #ffcf27;
+}
+
+.pw-road-note {
+    margin-top: 3px;
+    color: #9aa99f;
+    font-size: 8px;
+    text-align: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pw-road-stars,
+    .pw-road-surface:after,
+    .pw-road-person span,
+    .pw-moving-event-icon {
+        animation: none !important;
+    }
+
+    .pw-moving-event {
+        transition: none !important;
+    }
+}
+</style>
+
+<!-- HOLIDAY ROAD -->
+<div class="pw-road-panel" id="pwHolidayRoad">
+
+    <div class="pw-road-heading">
+        <span class="pw-road-kicker">HOLIDAY JOURNEY</span>
+        <span class="pw-road-status" id="pwRoadStatus">Loading...</span>
+    </div>
+
+    <div class="pw-road-scene">
+        <div class="pw-road-stars"></div>
+        <div class="pw-road-moon"></div>
+
+        <!-- Moving holiday -->
+        <div class="pw-moving-event" id="pwMovingEvent">
+            <span class="pw-moving-event-icon" id="pwEventIcon">🕯️</span>
+        </div>
+
+        <!-- Fixed person -->
+        <div class="pw-road-person">
+            <span>🚶</span>
+        </div>
+
+        <!-- Road -->
+        <div class="pw-road-surface"></div>
+    </div>
+
+    <!-- Calendar milestone dates -->
+    <div class="pw-timeline-rail">
+        <div class="pw-timeline-line"></div>
+    </div>
+
+    <div class="pw-calendar" id="pwCalendar">
+        <div class="pw-calendar-item" data-event="souls">
+            <strong>01</strong>
+            <small>NOV</small>
+        </div>
+        <div class="pw-calendar-item" data-event="christmas">
+            <strong>25</strong>
+            <small>DEC</small>
+        </div>
+        <div class="pw-calendar-item" data-event="newyear">
+            <strong>01</strong>
+            <small>JAN</small>
+        </div>
+    </div>
+
+    <div class="pw-road-caption" id="pwRoadCaption">
+        Preparing the holiday journey...
+    </div>
+
+    <div class="pw-road-note" id="pwRoadNote">
+        Live countdown · Calendar-based movement
+    </div>
+
+</div>
+
+<script>
+(function () {
+    "use strict";
+
+    const root = document.getElementById("pwHolidayRoad");
+    if (!root || root.dataset.initialized === "true") return;
+    root.dataset.initialized = "true";
+
+    const $ = id => document.getElementById(id);
+
+    const movingEvent = $("pwMovingEvent");
+    const eventIcon = $("pwEventIcon");
+    const status = $("pwRoadStatus");
+    const caption = $("pwRoadCaption");
+    const note = $("pwRoadNote");
+    const calendarItems = Array.from(
+        root.querySelectorAll(".pw-calendar-item")
+    );
+
+    // Philippines local time, independent of the visitor's device timezone.
+    function phNow() {
+        const parts = new Intl.DateTimeFormat("en-CA", {
+            timeZone: "Asia/Manila",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hourCycle: "h23"
+        }).formatToParts(new Date());
+
+        const v = {};
+        parts.forEach(p => {
+            if (p.type !== "literal") v[p.type] = Number(p.value);
+        });
+
+        return {
+            year: v.year,
+            month: v.month,
+            day: v.day,
+            hour: v.hour,
+            minute: v.minute,
+            second: v.second,
+            // A UTC-like number representing Philippine wall-clock time.
+            wall: Date.UTC(
+                v.year, v.month - 1, v.day,
+                v.hour, v.minute, v.second
+            )
+        };
+    }
+
+    function makeDate(year, month, day) {
+        return Date.UTC(year, month - 1, day, 0, 0, 0);
+    }
+
+    function eventsFor(now) {
+        const y = now.year;
+
+        return [
+            {
+                id: "souls",
+                month: 11,
+                day: 1,
+                name: "All Saints’ Day",
+                short: "ALL SAINTS",
+                icon: "🕯️",
+                message: "Remembering loved ones"
+            },
+            {
+                id: "souls",
+                month: 11,
+                day: 2,
+                name: "All Souls’ Day",
+                short: "ALL SOULS",
+                icon: "🕯️",
+                message: "A day of remembrance"
+            },
+            {
+                id: "christmas",
+                month: 12,
+                day: 25,
+                name: "Christmas Day",
+                short: "CHRISTMAS",
+                icon: "🎅",
+                message: "Christmas magic is getting closer"
+            },
+            {
+                id: "newyear",
+                month: 1,
+                day: 1,
+                name: "New Year’s Day",
+                short: "NEW YEAR",
+                icon: "🎆",
+                message: "A fresh year, a fresh beginning"
+            }
+        ].map(e => {
+            let year = y;
+            let target = makeDate(year, e.month, e.day);
+
+            // Select the next occurrence of each annual event.
+            if (target <= now.wall) {
+                year++;
+                target = makeDate(year, e.month, e.day);
+            }
+
+            return { ...e, year, target };
+        }).sort((a, b) => a.target - b.target);
+    }
+
+    function durationText(ms) {
+        if (ms <= 0) return "Today!";
+
+        const seconds = Math.floor(ms / 1000);
+        const days = Math.floor(seconds / 86400);
+        const hours = Math.floor((seconds % 86400) / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+
+        if (days > 0) {
+            return days + "d " + hours + "h " + minutes + "m remaining";
+        }
+
+        if (hours > 0) {
+            return hours + "h " + minutes + "m " + secs + "s remaining";
+        }
+
+        return minutes + "m " + secs + "s remaining";
+    }
+
+    function update() {
+        const now = phNow();
+        const events = eventsFor(now);
+
+        // Upcoming event with the shortest remaining time.
+        const next = events[0];
+        const remaining = Math.max(0, next.target - now.wall);
+
+        /*
+         * REAL TIME POSITION:
+         * The marker starts at the left of the road when the event
+         * is far away, then approaches the fixed person as the date
+         * approaches. On the event date it reaches the person.
+         *
+         * The 90-day approach window is only the visual road scale.
+         * Remaining time itself is calculated from the actual calendar.
+         */
+        const approachWindow = 90 * 86400000;
+        const fraction = Math.max(
+            0,
+            Math.min(1, 1 - remaining / approachWindow)
+        );
+
+        // Road coordinate: 8% at the start, 50% on event day.
+        const position = 8 + fraction * 42;
+
+        movingEvent.style.left = position + "%";
+        eventIcon.textContent = next.icon;
+        status.textContent = next.short;
+
+        caption.innerHTML =
+            "<strong>" + next.icon + " " + next.name +
+            "</strong> · " + durationText(remaining);
+
+        note.textContent =
+            next.message + " · Philippine time (PHT)";
+
+        // Calendar shows the next date for each milestone.
+        calendarItems.forEach(item => {
+            const id = item.dataset.event;
+            const event = events.find(e => e.id === id);
+
+            item.classList.remove("is-next", "is-passed");
+
+            if (!event) return;
+
+            item.querySelector("strong").textContent =
+                String(event.day).padStart(2, "0");
+
+            item.querySelector("small").textContent =
+                ({
+                    1: "JAN",
+                    11: "NOV",
+                    12: "DEC"
+                })[event.month];
+
+            if (event.id === next.id) {
+                item.classList.add("is-next");
+            }
+        });
+    }
+
+    update();
+    window.setInterval(update, 1000);
+})();
+</script>
+```
