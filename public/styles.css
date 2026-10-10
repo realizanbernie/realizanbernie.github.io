@@ -1,0 +1,941 @@
+* {
+    box-sizing: border-box
+}
+
+:root {
+    color-scheme: dark
+}
+
+body {
+    margin: 0;
+    background: #070a08;
+    color: #f5f7f5;
+    font-family: Arial, sans-serif
+}
+
+.pw-app {
+    max-width: 900px;
+    margin: auto;
+    padding: 18px 14px 24px
+}
+
+.pw-header {
+    text-align: center;
+    margin-bottom: 18px
+}
+
+.pw-mini-brand {
+    color: #ffcf27;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px
+}
+
+.pw-header h1 {
+    margin: 7px 0 5px;
+    font-size: clamp(22px, 5vw, 32px)
+}
+
+.pw-header p {
+    margin: 0;
+    color: #a8b8ae;
+    font-size: 13px
+}
+
+.pw-dashboard {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(220px, .85fr);
+    gap: 12px
+}
+
+.pw-journey-card,
+.pw-info-card,
+.pw-selected-card,
+.pw-calendar-card {
+    border: 1px solid #ffffff20;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #101a14, #0b0e12);
+    padding: 12px;
+    box-shadow: 0 8px 28px #0006
+}
+
+.pw-scene-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #9ee8bd;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px
+}
+
+.pw-scene-heading span:last-child {
+    color: #ffcf27;
+    text-align: right
+}
+
+.pw-road-scene {
+    --sky1: #07152e;
+    --sky2: #16294a;
+    --ground1: #173326;
+    --ground2: #0b1b16;
+    --glow: #c4d9ff35;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    min-height: 230px;
+    max-height: 480px;
+    overflow: hidden;
+    border: 1px solid #ffffff20;
+    border-radius: 13px;
+    background: linear-gradient(to bottom, var(--sky1) 0%, var(--sky2) 58%, var(--ground1) 59%, var(--ground2) 100%);
+    transition: background 1.5s ease, filter 1s ease
+}
+
+.pw-road-scene:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 31%;
+    height: 1px;
+    background: #b8e9ce35
+}
+
+.pw-road-scene.pw-time-morning {
+    --sky1: #49345c;
+    --sky2: #e58f72;
+    --ground1: #49764a;
+    --ground2: #243d2d;
+    --glow: #ffd28d90
+}
+
+.pw-road-scene.pw-time-afternoon {
+    --sky1: #2588bd;
+    --sky2: #9ad8e9;
+    --ground1: #4d9b51;
+    --ground2: #245334;
+    --glow: #fff2a0a0
+}
+
+.pw-road-scene.pw-time-night {
+    --sky1: #07152e;
+    --sky2: #16294a;
+    --ground1: #173326;
+    --ground2: #0b1b16;
+    --glow: #c4d9ff35
+}
+
+.pw-road-scene.pw-time-midnight {
+    --sky1: #02040c;
+    --sky2: #090f20;
+    --ground1: #101b18;
+    --ground2: #060b09;
+    --glow: #a9c5ff25
+}
+
+.pw-stars {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: radial-gradient(#fff 1px, transparent 1.5px), radial-gradient(#b7ffe1 1px, transparent 1.5px);
+    background-size: 31px 23px, 47px 31px;
+    background-position: 2px 3px, 15px 10px;
+    opacity: .6;
+    animation: pw-stars 6s linear infinite;
+    pointer-events: none
+}
+
+.pw-time-morning .pw-stars,
+.pw-time-afternoon .pw-stars {
+    opacity: .12
+}
+
+.pw-time-midnight .pw-stars {
+    opacity: .9
+}
+
+@keyframes pw-stars {
+    to {
+        background-position: 33px 26px, 62px 41px
+    }
+}
+
+.pw-sky-glow {
+    position: absolute;
+    top: 9%;
+    right: 14%;
+    z-index: 1;
+    width: clamp(28px, 8vw, 52px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--glow);
+    box-shadow: 0 0 30px var(--glow);
+    transition: all 1.5s
+}
+
+.pw-weather-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none
+}
+
+.pw-rain {
+    position: absolute;
+    inset: -30px 0 0;
+    background-image: repeating-linear-gradient(105deg, transparent 0 12px, #d9efff90 13px, transparent 14px 25px);
+    background-size: 35px 55px;
+    opacity: 0
+}
+
+.pw-weather-rain .pw-rain {
+    opacity: .55;
+    animation: pw-rain .55s linear infinite
+}
+
+.pw-weather-heavy-rain .pw-rain {
+    opacity: .82;
+    background-size: 23px 42px;
+    animation: pw-rain .32s linear infinite
+}
+
+.pw-weather-storm .pw-rain {
+    opacity: .9;
+    background-size: 19px 38px;
+    animation: pw-rain .25s linear infinite
+}
+
+@keyframes pw-rain {
+    to {
+        background-position: -18px 55px;
+        transform: translateY(35px)
+    }
+}
+
+.pw-clouds {
+    position: absolute;
+    top: 8%;
+    left: -40%;
+    width: 42%;
+    height: 25px;
+    border-radius: 50%;
+    background: #c1cfdb70;
+    filter: blur(10px);
+    opacity: 0
+}
+
+.pw-weather-cloudy .pw-clouds,
+.pw-weather-rain .pw-clouds,
+.pw-weather-heavy-rain .pw-clouds,
+.pw-weather-storm .pw-clouds {
+    opacity: .8;
+    animation: pw-clouds 18s linear infinite
+}
+
+@keyframes pw-clouds {
+    to {
+        left: 110%
+    }
+}
+
+.pw-weather-sunny .pw-sky-glow {
+    background: #ffd34f;
+    box-shadow: 0 0 20px 7px #ffd34f70, 0 0 40px 15px #ffd34f30;
+    animation: pw-sun 3s ease-in-out infinite alternate
+}
+
+@keyframes pw-sun {
+    to {
+        transform: scale(1.1)
+    }
+}
+
+.pw-weather-cloudy {
+    filter: brightness(.88) saturate(.8)
+}
+
+.pw-weather-heavy-rain {
+    filter: brightness(.78) saturate(.8)
+}
+
+.pw-weather-storm {
+    animation: pw-flash 8s infinite
+}
+
+@keyframes pw-flash {
+
+    0%,
+    92%,
+    96%,
+    100% {
+        filter: brightness(.72)
+    }
+
+    93% {
+        filter: brightness(1.45)
+    }
+
+    94% {
+        filter: brightness(.72)
+    }
+
+    95% {
+        filter: brightness(1.2)
+    }
+}
+
+.pw-weather-lightning {
+    position: absolute;
+    inset: 0;
+    background: #e6f4ff;
+    opacity: 0
+}
+
+.pw-weather-storm .pw-weather-lightning {
+    animation: pw-lightning 8s infinite
+}
+
+@keyframes pw-lightning {
+
+    0%,
+    91%,
+    100% {
+        opacity: 0
+    }
+
+    92% {
+        opacity: .7
+    }
+
+    93%,
+    94% {
+        opacity: 0
+    }
+
+    95% {
+        opacity: .45
+    }
+
+    96% {
+        opacity: 0
+    }
+}
+
+.pw-road {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    height: 31%;
+    border-top: 3px solid #b4a36d70;
+    background: linear-gradient(#3b4147, #202329)
+}
+
+.pw-road:after {
+    content: "";
+    position: absolute;
+    top: 48%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, #f7e7a8 0 22px, transparent 22px 42px);
+    animation: pw-dashes .9s linear infinite
+}
+
+@keyframes pw-dashes {
+    to {
+        background-position: -42px 0
+    }
+}
+
+.pw-road-track {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: 31%;
+    height: 4px;
+    z-index: 3;
+    border-radius: 5px;
+    background: #ffffff30
+}
+
+.pw-road-progress {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #00ed75, #ffcf27);
+    transform: scaleX(0);
+    transform-origin: left
+}
+
+.pw-event-marker {
+    position: absolute;
+    left: 0;
+    bottom: 28%;
+    z-index: 6;
+    border: 0;
+    padding: 2px;
+    background: transparent;
+    font-size: clamp(18px, 4vw, 26px);
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px #ffcf2780);
+    transform: translateX(0)
+}
+
+.pw-event-marker:hover,
+.pw-event-marker:focus-visible {
+    outline: 2px solid #ffcf27;
+    border-radius: 8px
+}
+
+.pw-marker-left {
+    left: 15%
+}
+
+.pw-marker-right {
+    left: 85%
+}
+
+.pw-walker {
+    position: absolute;
+    left: 0;
+    bottom: 27%;
+    z-index: 7;
+    font-size: clamp(30px, 7vw, 45px);
+    line-height: 1;
+    transform-origin: center bottom;
+    will-change: transform
+}
+
+.pw-walker span {
+    display: block;
+    animation: pw-walk .38s ease-in-out infinite alternate
+}
+
+@keyframes pw-walk {
+    to {
+        transform: translateY(-3px) rotate(3deg)
+    }
+}
+
+.pw-destination {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    z-index: 8;
+    max-width: 55%;
+    padding: 6px 8px;
+    border: 1px solid #ffffff35;
+    border-radius: 8px;
+    background: #0008;
+    font-size: clamp(10px, 2.5vw, 14px);
+    font-weight: 800;
+    text-align: right
+}
+
+.pw-journey-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    color: #d6d6d6;
+    font-size: 11px
+}
+
+.pw-journey-caption span:last-child {
+    color: #00ed75;
+    font-weight: 900;
+    white-space: nowrap
+}
+
+.pw-countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 10px
+}
+
+.pw-countdown div {
+    text-align: center;
+    padding: 7px 3px;
+    border: 1px solid #c9a52b70;
+    border-radius: 8px;
+    background: #0005
+}
+
+.pw-countdown strong,
+.pw-countdown small {
+    display: block
+}
+
+.pw-countdown strong {
+    color: #ffcf27;
+    font-size: clamp(17px, 4vw, 24px)
+}
+
+.pw-countdown small {
+    margin-top: 3px;
+    color: #ddd;
+    font-size: 8px;
+    letter-spacing: .5px
+}
+
+.pw-info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.pw-info-label {
+    color: #9ee8bd;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px
+}
+
+.pw-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ffffff14;
+    font-size: 11px
+}
+
+.pw-info-row span {
+    color: #9da9a2
+}
+
+.pw-info-row strong {
+    text-align: right;
+    overflow-wrap: anywhere
+}
+
+.pw-button {
+    border: 1px solid #00ed75;
+    border-radius: 8px;
+    padding: 9px 11px;
+    background: #10291c;
+    color: #00ed75;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.pw-button:hover,
+.pw-button:focus-visible {
+    outline: none;
+    background: #00ed75;
+    color: #07150e
+}
+
+.pw-location-button {
+    width: 100%;
+    margin-top: auto
+}
+
+.pw-location-note {
+    color: #9da9a2;
+    font-size: 9px;
+    line-height: 1.5
+}
+
+.pw-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0
+}
+
+.pw-controls label,
+.pw-weather-controls label {
+    color: #9ee8bd;
+    font-size: 11px;
+    font-weight: bold
+}
+
+.pw-controls select,
+.pw-weather-controls input {
+    min-width: 0;
+    padding: 9px;
+    border: 1px solid #ffffff30;
+    border-radius: 8px;
+    background: #101613;
+    color: #fff;
+    font: inherit
+}
+
+.pw-controls select {
+    max-width: 100%;
+    flex: 1
+}
+
+.pw-selected-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0
+}
+
+.pw-selected-icon {
+    font-size: 34px
+}
+
+.pw-selected-card h2 {
+    margin: 5px 0;
+    font-size: 17px
+}
+
+.pw-selected-card p {
+    margin: 0;
+    color: #b8c3bc;
+    font-size: 12px;
+    line-height: 1.5
+}
+
+.pw-calendar-card {
+    margin-top: 12px
+}
+
+.pw-calendar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.pw-calendar-heading h2 {
+    margin: 0;
+    font-size: 17px
+}
+
+.pw-calendar-nav,
+.pw-modal-close {
+    border: 1px solid #ffffff25;
+    border-radius: 8px;
+    background: #111a14;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer
+}
+
+.pw-calendar-nav {
+    width: 38px;
+    height: 36px
+}
+
+.pw-calendar-weekdays,
+.pw-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+    margin-top: 10px
+}
+
+.pw-calendar-weekdays span {
+    text-align: center;
+    color: #9da9a2;
+    font-size: 10px
+}
+
+.pw-day {
+    position: relative;
+    min-height: 38px;
+    border: 1px solid #ffffff12;
+    border-radius: 7px;
+    background: #0d120f;
+    color: #eee;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer
+}
+
+.pw-day:hover,
+.pw-day:focus-visible {
+    outline: 1px solid #00ed75
+}
+
+.pw-day.is-outside {
+    opacity: .32
+}
+
+.pw-day.is-today {
+    border-color: #5bb9ff
+}
+
+.pw-day.has-event:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ffcf27;
+    transform: translateX(-50%)
+}
+
+.pw-day.is-selected {
+    background: #14552f;
+    border-color: #00ed75;
+    color: white
+}
+
+.pw-calendar-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: #aeb8b1;
+    font-size: 10px
+}
+
+.pw-legend-dot,
+.pw-legend-selected {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ffcf27
+}
+
+.pw-legend-selected {
+    margin-left: 8px;
+    background: #00ed75
+}
+
+.pw-calendar-events {
+    display: grid;
+    gap: 6px;
+    margin-top: 12px
+}
+
+.pw-calendar-event {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ffffff15;
+    border-radius: 8px;
+    background: #0d120f;
+    color: #fff;
+    text-align: left;
+    cursor: pointer
+}
+
+.pw-calendar-event:hover {
+    border-color: #00ed75
+}
+
+.pw-calendar-event small {
+    color: #ffcf27
+}
+
+.pw-weather-controls {
+    max-width: 520px;
+    margin: 14px auto;
+    padding: 12px;
+    border: 1px solid #ffffff18;
+    border-radius: 12px;
+    background: #0d120f
+}
+
+.pw-search-row {
+    display: flex;
+    gap: 7px;
+    margin-top: 7px
+}
+
+.pw-search-row input {
+    flex: 1
+}
+
+.pw-contact-footer {
+    margin-top: 18px;
+    padding: 16px 10px;
+    border-top: 1px solid #00ed7530;
+    text-align: center
+}
+
+.pw-contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px
+}
+
+.pw-contact-link {
+    padding: 9px 11px;
+    border: 1px solid #ffffff24;
+    border-radius: 8px;
+    background: #101613;
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700
+}
+
+.pw-contact-link:hover,
+.pw-contact-link:focus-visible {
+    border-color: #00ed75;
+    outline: none
+}
+
+.pw-footer-note {
+    color: #87958d;
+    font-size: 9px
+}
+
+.pw-modal[hidden],
+.pw-calendar-card[hidden] {
+    display: none
+}
+
+.pw-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    padding: 16px
+}
+
+.pw-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: #000b
+}
+
+.pw-modal-content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 540px);
+    max-height: 90vh;
+    overflow: auto;
+    padding: 18px;
+    border: 1px solid #ffffff30;
+    border-radius: 14px;
+    background: #0e1511
+}
+
+.pw-modal-content h2 {
+    margin: 0 35px 6px 0
+}
+
+.pw-modal-content p {
+    color: #b8c3bc;
+    font-size: 12px
+}
+
+.pw-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px
+}
+
+.pw-modal-content .pw-calendar-card {
+    display: block;
+    padding: 0;
+    border: 0;
+    box-shadow: none
+}
+
+.pw-modal-content .pw-calendar-card[hidden] {
+    display: none
+}
+
+@media(max-width:650px) {
+    .pw-app {
+        padding: 14px 10px
+    }
+
+    .pw-dashboard {
+        grid-template-columns: 1fr
+    }
+
+    .pw-road-scene {
+        min-height: 260px;
+        max-height: 430px
+    }
+
+    .pw-info-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px
+    }
+
+    .pw-info-label {
+        grid-column: 1/-1
+    }
+
+    .pw-location-button,
+    .pw-location-note {
+        grid-column: 1/-1
+    }
+
+    .pw-info-row {
+        min-height: 42px
+    }
+
+    .pw-controls {
+        align-items: stretch
+    }
+
+    .pw-controls label {
+        align-self: center
+    }
+}
+
+@media(max-width:380px) {
+    .pw-road-scene {
+        min-height: 220px
+    }
+
+    .pw-info-card {
+        grid-template-columns: 1fr
+    }
+
+    .pw-info-label,
+    .pw-location-button,
+    .pw-location-note {
+        grid-column: auto
+    }
+
+    .pw-day {
+        min-height: 32px;
+        font-size: 10px
+    }
+
+    .pw-calendar-grid,
+    .pw-calendar-weekdays {
+        gap: 2px
+    }
+
+    .pw-search-row {
+        flex-wrap: wrap
+    }
+
+    .pw-search-row input {
+        flex-basis: 100%
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important
+    }
+}
