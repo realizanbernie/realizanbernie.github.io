@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="PISO WIFI.br holiday countdown and live weather journey">
+    <title>PISO WIFI.br Holiday Journey</title>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        .pw-xmas-footer {
+            width: 100%;
+            margin: 0;
+            padding: 8px 6px 10px;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            text-align: center;
+        }
+
+        .pw-mini-brand {
+            margin: 0 0 5px;
+            color: #ffcf27;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            animation: pw-brand-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pw-brand-glow {
+            from {
+                opacity: .7;
+                text-shadow: 0 0 3px #ffcc0030;
+            }
+            to {
+                opacity: 1;
+                text-shadow: 0 0 11px #ffcc0090;
+            }
+        }
+
+        /* Countdown */
+        .pw-xmas-units {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+            padding: 8px 5px;
+            border: 1px solid #c9a52b;
+            border-radius: 15px;
+            background: linear-gradient(130deg, #103c2a, #11101c 70%, #481c21);
+            box-shadow: 0 0 12px #ffcc0025;
+            animation: pw-countdown-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pw-countdown-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px #ffcc0020;
+                border-color: #8b762a;
+            }
+            50% {
+                box-shadow: 0 0 17px #ffcc0060, 0 0 8px #00ed7530;
+                border-color: #ffcf27;
+            }
+        }
+
+        .pw-xmas-unit {
+            flex: 1 1 0;
+            min-width: 0;
+            max-width: 80px;
+            padding: 7px 1px;
+            border: 1px solid #ffffff30;
+            border-radius: 8px;
+            background: #0005;
+        }
+
+        .pw-xmas-number {
+            display: block;
+            color: #ffcf27;
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.15;
+        }
+
+        .pw-xmas-label {
+            display: block;
+            margin-top: 4px;
+            color: #fff;
+            font-size: 8px;
+            font-weight: bold;
+            letter-spacing: .4px;
+        }
+
+        /* Holiday journey panel */
+        .pw-road-panel {
+            width: 100%;
+            max-width: 360px;
+            margin: 10px auto 0;
+            padding: 10px 9px 9px;
+            border: 1px solid #ffffff22;
+            border-radius: 13px;
+            background: radial-gradient(
+                ellipse at top,
+                #102b22 0%,
+                #101019 58%,
+                #080808 100%
+            );
+            box-shadow: inset 0 0 16px #00ed7508, 0 0 13px #000;
+        }
+
+        .pw-road-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .pw-road-kicker {
+            color: #9ee8bd;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+        }
+
+        .pw-road-status {
+            color: #ffcf27;
+            font-size: 9px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* Scene and time-of-day lighting */
+        .pw-road-scene {
+            --sky-top: #081a28;
+            --sky-bottom: #122d35;
+            --ground-top: #163a29;
+            --ground-bottom: #10231c;
+            --scene-glow: #ffcf2730;
+
+            position: relative;
+            height: 91px;
+            overflow: hidden;
+            border: 1px solid #ffffff12;
+            border-radius: 9px;
+            background: linear-gradient(
+                to bottom,
+                var(--sky-top) 0%,
+                var(--sky-bottom) 58%,
+                var(--ground-top) 59%,
+                var(--ground-bottom) 100%
+            );
+            transition: background 2s ease, filter 2s ease;
+        }
+
+        .pw-road-scene::before {
+            position: absolute;
+            right: 0;
+            bottom: 29px;
+            left: 0;
+            height: 1px;
+            background: #9be8bd40;
+            box-shadow: 0 0 8px #00ed7520;
+            content: "";
+        }
+
+        .pw-road-scene.pw-time-morning {
+            --sky-top: #49345c;
+            --sky-bottom: #e58f72;
+            --ground-top: #49764a;
+            --ground-bottom: #243d2d;
+            --scene-glow: #ffd28d80;
+        }
+
+        .pw-road-scene.pw-time-afternoon {
+            --sky-top: #2588bd;
+            --sky-bottom: #9ad8e9;
+            --ground-top: #4d9b51;
+            --ground-bottom: #245334;
+            --scene-glow: #fff2a080;
+        }
+
+        .pw-road-scene.pw-time-night {
+            --sky-top: #07152e;
+            --sky-bottom: #16294a;
+            --ground-top: #173326;
+            --ground-bottom: #0b1b16;
+            --scene-glow: #c4d9ff35;
+        }
+
+        .pw-road-scene.pw-time-midnight {
+            --sky-top: #02040c;
+            --sky-bottom: #090f20;
+            --ground-top: #101b18;
+            --ground-bottom: #060b09;
+            --scene-glow: #a9c5ff25;
+        }
+
+        .pw-sky-glow {
+            position: absolute;
+            top: 8px;
+            right: 13%;
+            z-index: 1;
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            background: var(--scene-glow);
+            box-shadow: 0 0 20px var(--scene-glow);
+            transition: background 2s ease, box-shadow 2s ease;
+        }
+
+        .pw-stars {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background-image:
+                radial-gradient(#fff 1px, transparent 1.5px),
+                radial-gradient(#b7ffe1 1px, transparent 1.5px);
+            background-size: 31px 23px, 47px 31px;
+            background-position: 2px 3px, 15px 10px;
+            opacity: .55;
+            animation: pw-stars 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pw-stars {
+            from { background-position: 2px 3px, 15px 10px; }
+            to { background-position: 33px 26px, 62px 41px; }
+        }
+
+        .pw-road-scene.pw-time-morning .pw-stars,
+        .pw-road-scene.pw-time-afternoon .pw-stars {
+            opacity: .12;
+        }
+
+        .pw-road-scene.pw-time-night .pw-stars {
+            opacity: .65;
+        }
+
+        .pw-road-scene.pw-time-midnight .pw-stars {
+            opacity: .9;
+        }
+
+        /* Weather visual effects */
+        .pw-weather-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .pw-rain {
+            position: absolute;
+            top: -35px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 40px);
+            background-image: repeating-linear-gradient(
+                105deg,
+                transparent 0 12px,
+                #d9efff90 13px,
+                transparent 14px 25px
+            );
+            background-size: 35px 55px;
+            opacity: 0;
+            transform: translateY(-35px);
+        }
+
+        .pw-road-scene.pw-weather-rain .pw-rain {
+            opacity: .55;
+            animation: pw-rain-fall .55s linear infinite;
+        }
+
+        .pw-road-scene.pw-weather-heavy-rain .pw-rain {
+            background-size: 23px 42px;
+            opacity: .78;
+            animation: pw-rain-fall .32s linear infinite;
+        }
+
+        .pw-road-scene.pw-weather-storm .pw-rain {
+            background-size: 19px 38px;
+            opacity: .88;
+            animation: pw-rain-fall .25s linear infinite;
+        }
+
+        @keyframes pw-rain-fall {
+            to {
+                background-position: -18px 55px;
+                transform: translateY(35px);
+            }
+        }
+
+        .pw-clouds {
+            position: absolute;
+            top: 6px;
+            left: -45%;
+            width: 45%;
+            height: 18px;
+            border-radius: 50%;
+            background: #b4c6d455;
+            filter: blur(7px);
+            opacity: 0;
+        }
+
+        .pw-road-scene.pw-weather-cloudy .pw-clouds,
+        .pw-road-scene.pw-weather-rain .pw-clouds,
+        .pw-road-scene.pw-weather-heavy-rain .pw-clouds,
+        .pw-road-scene.pw-weather-storm .pw-clouds {
+            opacity: .8;
+            animation: pw-cloud-drift 15s linear infinite;
+        }
+
+        @keyframes pw-cloud-drift {
+            from { left: -45%; }
+            to { left: 110%; }
+        }
+
+        .pw-road-scene.pw-weather-cloudy {
+            filter: brightness(.88) saturate(.8);
+        }
+
+        .pw-road-scene.pw-weather-heavy-rain {
+            filter: brightness(.82) saturate(.85);
+        }
+
+        .pw-road-scene.pw-weather-storm {
+            animation: pw-storm-flash 8s infinite;
+        }
+
+        @keyframes pw-storm-flash {
+            0%, 92%, 96%, 100% { filter: brightness(.72) saturate(.8); }
+            93% { filter: brightness(1.4); }
+            94% { filter: brightness(.72); }
+            95% { filter: brightness(1.2); }
+        }
+
+        .pw-weather-sunny {
+            position: absolute;
+            top: 8px;
+            right: 13%;
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            background: #ffd34f;
+            box-shadow: 0 0 13px 5px #ffd34f70, 0 0 24px 10px #ffd34f30;
+            opacity: 0;
+        }
+
+        .pw-road-scene.pw-weather-sunny .pw-weather-sunny {
+            opacity: 1;
+            animation: pw-sun-pulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pw-sun-pulse {
+            to { transform: scale(1.12); }
+        }
+
+        .pw-weather-lightning {
+            position: absolute;
+            inset: 0;
+            background: #e6f4ff;
+            opacity: 0;
+        }
+
+        .pw-road-scene.pw-weather-storm .pw-weather-lightning {
+            animation: pw-lightning 8s infinite;
+        }
+
+        @keyframes pw-lightning {
+            0%, 91%, 100% { opacity: 0; }
+            92% { opacity: .75; }
+            93% { opacity: 0; }
+            95% { opacity: .5; }
+            96% { opacity: 0; }
+        }
+
+        /* Road surface */
+        .pw-road {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 4;
+            height: 30px;
+            border-top: 2px solid #b4a36d55;
+            background: linear-gradient(#3b4147, #202329);
+        }
+
+        .pw-road::after {
+            position: absolute;
+            top: 13px;
+            right: 0;
+            left: 0;
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                #f7e7a8 0 14px,
+                transparent 14px 26px
+            );
+            opacity: .7;
+            animation: pw-road-dashes 1.1s linear infinite;
+            content: "";
+        }
+
+        @keyframes pw-road-dashes {
+            from { background-position: 0 0; }
+            to { background-position: -26px 0; }
+        }
+
+        /* Journey progress */
+        .pw-road-track {
+            position: absolute;
+            right: 5%;
+            bottom: 31px;
+            left: 5%;
+            z-index: 3;
+            height: 3px;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #ffffff20;
+        }
+
+        .pw-road-progress {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #00ed75, #ffcf27);
+            box-shadow: 0 0 8px #00ed7570;
+            transform: scaleX(0);
+            transform-origin: left center;
+            will-change: transform;
+        }
+
+        /* Holiday markers */
+        .pw-road-stop {
+            position: absolute;
+            bottom: 26px;
+            left: 0;
+            z-index: 5;
+            font-size: 15px;
+            filter: drop-shadow(0 0 5px #ffcf2770);
+            will-change: transform;
+        }
+
+        .pw-road-stop::after {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            width: 1px;
+            height: 9px;
+            background: #fff7;
+            content: "";
+        }
+
+        /* Walker */
+        .pw-walker {
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            z-index: 6;
+            transform: translate3d(0, 0, 0);
+            transform-origin: center bottom;
+            will-change: transform;
+        }
+
+        .pw-walker-emoji {
+            display: inline-block;
+            font-size: 27px;
+            line-height: 1;
+            transform-origin: center bottom;
+            animation: pw-walk-bob .38s ease-in-out infinite alternate;
+        }
+
+        @keyframes pw-walk-bob {
+            from { transform: translateY(0) rotate(-3deg); }
+            to { transform: translateY(-2px) rotate(3deg); }
+        }
+
+        .pw-walker-shadow {
+            position: absolute;
+            bottom: -2px;
+            left: 5px;
+            width: 20px;
+            height: 4px;
+            border-radius: 50%;
+            background: #0009;
+            filter: blur(2px);
+        }
+
+        .pw-destination {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            z-index: 7;
+            max-width: 75%;
+            padding: 4px 7px;
+            border: 1px solid #ffffff22;
+            border-radius: 6px;
+            background: #0008;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+            text-align: right;
+        }
+
+        .pw-road-caption {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 7px;
+            color: #d6d6d6;
+            font-size: 9px;
+            text-align: left;
+        }
+
+        .pw-road-percent {
+            color: #00ed75;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .pw-road-note {
+            margin-top: 5px;
+            color: #a8b8ae;
+            font-size: 8px;
+            letter-spacing: .25px;
+        }
+
+        /* Live weather location controls */
+        .pw-weather-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            max-width: 360px;
+            margin: 8px auto 0;
+            color: #d6d6d6;
+            font-size: 9px;
+        }
+
+        .pw-weather-controls label {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .pw-weather-controls input,
+        .pw-weather-controls button {
+            min-width: 0;
+            padding: 5px 7px;
+            border: 1px solid #00ed75;
+            border-radius: 6px;
+            background: #101019;
+            color: #fff;
+            font: inherit;
+        }
+
+        .pw-weather-controls input {
+            width: 120px;
+        }
+
+        .pw-weather-controls button {
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .pw-weather-controls button:hover,
+        .pw-weather-controls button:focus-visible {
+            outline: none;
+            background: #00ed75;
+            color: #07150e;
+        }
+
+        .pw-weather-status {
+            width: 100%;
+            max-width: 360px;
+            min-height: 12px;
+            margin: 5px auto 0;
+            color: #a8b8ae;
+            font-size: 8px;
+        }
+
+        /* Promo button */
+        .pw-xmas-action {
+            display: block;
+            width: 100%;
+            max-width: 360px;
+            margin: 9px auto 0;
+            padding: 11px 10px;
+            border: 1px solid #00ed75;
+            border-radius: 9px;
+            background: linear-gradient(90deg, #10291c, #171020);
+            box-shadow: 0 0 9px #00ed7520;
+            color: #00ed75;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: background .25s, color .25s, box-shadow .25s;
+        }
+
+        .pw-xmas-action:hover,
+        .pw-xmas-action:focus-visible {
+            outline: none;
+            background: #00ed75;
+            box-shadow: 0 0 17px #00ed7560;
+            color: #07150e;
+        }
+
+        /* Small screens */
+        @media (max-width: 360px) {
+            .pw-xmas-footer {
+                padding-right: 2px;
+                padding-left: 2px;
+            }
+
+            .pw-xmas-units {
+                gap: 3px;
+                padding: 7px 3px;
+            }
+
+            .pw-xmas-number {
+                font-size: 18px;
+            }
+
+            .pw-xmas-label {
+                font-size: 7px;
+            }
+
+            .pw-road-panel {
+                padding: 8px 6px;
+            }
+
+            .pw-road-scene {
+                height: 85px;
+            }
+
+            .pw-weather-controls {
+                gap: 4px;
+            }
+
+            .pw-weather-controls input {
+                width: 95px;
+            }
+        }
+
+        /* Respect the visitor's reduced-motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .pw-mini-brand,
+            .pw-xmas-units,
+            .pw-stars,
+            .pw-road::after,
+            .pw-walker-emoji,
+            .pw-rain,
+            .pw-clouds,
+            .pw-road-scene.pw-weather-storm,
+            .pw-weather-sunny,
+            .pw-weather-lightning {
+                animation: none !important;
+            }
+
+            .pw-road-scene,
+            .pw-sky-glow {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pw-xmas-footer" id="pwXmasPromo">
+        <div class="pw-mini-brand">
+            PISO WIFI.br · HOLIDAY JOURNEY
+        </div>
+
+        <div class="pw-xmas-units" aria-label="Christmas countdown">
+            <div class="pw-xmas-unit">
+                <span class="pw-xmas-number" id="pwDays">--</span>
+                <span class="pw-xmas-label">DAYS LEFT</span>
+            </div>
+            <div class="pw-xmas-unit">
+                <span class="pw-xmas-number" id="pwHours">--</span>
+                <span class="pw-xmas-label">HOURS</span>
+            </div>
+            <div class="pw-xmas-unit">
+                <span class="pw-xmas-number" id="pwMinutes">--</span>
+                <span class="pw-xmas-label">MINUTES</span>
+            </div>
+            <div class="pw-xmas-unit">
+                <span class="pw-xmas-number" id="pwSeconds">--</span>
+                <span class="pw-xmas-label">SECONDS</span>
+            </div>
+        </div>
+
+        <div class="pw-road-panel">
+            <div class="pw-road-heading">
+                <span class="pw-road-kicker">YOUR HOLIDAY JOURNEY</span>
+                <span class="pw-road-status" id="pwRoadStatus">
+                    Loading journey…
+                </span>
+            </div>
+
+            <div
+                class="pw-road-scene pw-time-night pw-weather-clear"
+                id="pwRoadScene"
+                role="img"
+                aria-label="Animated person walking toward the next holiday event"
+            >
+                <div class="pw-stars"></div>
+                <div class="pw-sky-glow"></div>
+
+                <div class="pw-weather-layer" aria-hidden="true">
+                    <div class="pw-clouds"></div>
+                    <div class="pw-rain"></div>
+                    <div class="pw-weather-sunny"></div>
+                    <div class="pw-weather-lightning"></div>
+                </div>
+
+                <div class="pw-road-track">
+                    <div class="pw-road-progress" id="pwRoadProgress"></div>
+                </div>
+
+                <div class="pw-destination" id="pwDestination">
+                    🎄 CHRISTMAS
+                </div>
+
+                <div class="pw-road-stop" id="pwStop1">🕯️</div>
+                <div class="pw-road-stop" id="pwStop2">🎄</div>
+                <div class="pw-road-stop" id="pwStop3">🎆</div>
+
+                <div class="pw-walker" id="pwWalker">
+                    <span class="pw-walker-emoji" id="pwWalkerEmoji">🚶</span>
+                    <span class="pw-walker-shadow"></span>
+                </div>
+
+                <div class="pw-road"></div>
+            </div>
+
+            <div class="pw-road-caption">
+                <span id="pwNextEvent">Preparing your next holiday stop…</span>
+                <span class="pw-road-percent" id="pwJourneyPercent">0%</span>
+            </div>
+
+            <div class="pw-road-note" id="pwRoadNote">
+                Local-time lighting · Live weather loading…
+            </div>
+        </div>
+
+        <div class="pw-weather-controls">
+            <label for="pwLocation">Location:</label>
+            <input
+                id="pwLocation"
+                type="text"
+                value="Cebu City"
+                placeholder="City or town"
+                autocomplete="address-level2"
+            >
+            <button id="pwWeatherRefresh" type="button">
+                Get weather
+            </button>
+        </div>
+
+        <div
+            class="pw-weather-status"
+            id="pwWeatherStatus"
+            aria-live="polite"
+        >
+            Loading current weather…
+        </div>
+
+        <!-- Replace #voucher with your actual promo or voucher page URL. -->
+        <a class="pw-xmas-action" href="#voucher">
+            🎄 TAP HERE · CHRISTMAS PROMO 🎁
+        </a>
+    </div>
+
+    <script>
+        (() => {
+            "use strict";
+
+            const $ = id => document.getElementById(id);
+
+            const el = {
+                days: $("pwDays"),
+                hours: $("pwHours"),
+                minutes: $("pwMinutes"),
+                seconds: $("pwSeconds"),
+                walker: $("pwWalker"),
+                walkerEmoji: $("pwWalkerEmoji"),
+                progress: $("pwRoadProgress"),
+                status: $("pwRoadStatus"),
+                destination: $("pwDestination"),
+                next: $("pwNextEvent"),
+                percent: $("pwJourneyPercent"),
+                note: $("pwRoadNote"),
+                scene: $("pwRoadScene"),
+                location: $("pwLocation"),
+                weatherRefresh: $("pwWeatherRefresh"),
+                weatherStatus: $("pwWeatherStatus"),
+                stops: [$("pwStop1"), $("pwStop2"), $("pwStop3")]
+            };
+
+            const reduceMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            );
+
+            const DAY_MS = 24 * 60 * 60 * 1000;
+            const WEATHER_REFRESH_MS = 15 * 60 * 1000;
+            const DEFAULT_LOCATION = "Cebu City";
+
+            let animationFrame = 0;
+            let lastSecond = -1;
+            let lastLighting = "";
+            let weatherRequestId = 0;
+
+            function localDate(year, month, day) {
+                return new Date(year, month - 1, day, 0, 0, 0, 0);
+            }
+
+            function getEvents(now) {
+                const currentYear = now.getFullYear();
+
+                const template = [
+                    {
+                        month: 11,
+                        day: 1,
+                        name: "All Saints’ Day",
+                        short: "ALL SAINTS",
+                        icon: "🕯️",
+                        walker: "🚶",
+                        description: "Remembering and honoring loved ones"
+                    },
+                    {
+                        month: 11,
+                        day: 2,
+                        name: "All Souls’ Day",
+                        short: "ALL SOULS",
+                        icon: "🕯️",
+                        walker: "🚶",
+                        description: "A moment for remembrance"
+                    },
+                    {
+                        month: 12,
+                        day: 25,
+                        name: "Christmas Day",
+                        short: "CHRISTMAS",
+                        icon: "🎄",
+                        walker: "🎅",
+                        description: "Christmas magic and festive rewards"
+                    },
+                    {
+                        month: 12,
+                        day: 31,
+                        name: "New Year’s Eve",
+                        short: "NEW YEAR",
+                        icon: "🎆",
+                        walker: "🎅",
+                        description: "Counting down to a fresh beginning"
+                    },
+                    {
+                        month: 1,
+                        day: 1,
+                        name: "New Year’s Day",
+                        short: "NEW YEAR",
+                        icon: "🎆",
+                        walker: "🎉",
+                        description: "Welcome a brand-new year"
+                    }
+                ];
+
+                const events = [];
+
+                for (let yearOffset = -1; yearOffset <= 2; yearOffset++) {
+                    for (const item of template) {
+                        events.push({
+                            ...item,
+                            date: localDate(
+                                currentYear + yearOffset,
+                                item.month,
+                                item.day
+                            )
+                        });
+                    }
+                }
+
+                return events.sort((a, b) => a.date - b.date);
+            }
+
+            function formatRemaining(milliseconds) {
+                if (milliseconds <= 0) return "Arrived!";
+
+                const totalSeconds = Math.floor(milliseconds / 1000);
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+                if (days > 0) return `${days}d ${hours}h to go`;
+                if (hours > 0) return `${hours}h ${minutes}m to go`;
+                return `${minutes}m to go`;
+            }
+
+            function easeInOut(value) {
+                return value * value * (3 - 2 * value);
+            }
+
+            function moveElement(element, x, scale = 1) {
+                element.style.transform =
+                    `translate3d(${x}px, 0, 0) scale(${scale})`;
+            }
+
+            function updateLighting(now) {
+                const hour = now.getHours();
+                let lighting;
+
+                if (hour >= 5 && hour < 10) {
+                    lighting = "morning";
+                } else if (hour >= 10 && hour < 17) {
+                    lighting = "afternoon";
+                } else if (hour >= 17 && hour < 22) {
+                    lighting = "night";
+                } else {
+                    lighting = "midnight";
+                }
+
+                if (lighting !== lastLighting) {
+                    el.scene.classList.remove(
+                        "pw-time-morning",
+                        "pw-time-afternoon",
+                        "pw-time-night",
+                        "pw-time-midnight"
+                    );
+                    el.scene.classList.add(`pw-time-${lighting}`);
+                    lastLighting = lighting;
+                }
+
+                const labels = {
+                    morning: "Early morning",
+                    afternoon: "Afternoon",
+                    night: "Night",
+                    midnight: "Midnight"
+                };
+
+                return labels[lighting];
+            }
+
+            function weatherFromCode(code, isDay, precipitation) {
+                if (code === 0) {
+                    return isDay ? "sunny" : "clear";
+                }
+
+                if ([1, 2, 3, 45, 48].includes(code)) {
+                    return "cloudy";
+                }
+
+                if ([51, 53, 55, 56, 57].includes(code)) {
+                    return "rain";
+                }
+
+                if ([61, 63, 66, 80, 81].includes(code)) {
+                    return precipitation >= 4 ? "heavy-rain" : "rain";
+                }
+
+                if ([65, 67, 82].includes(code)) {
+                    return "heavy-rain";
+                }
+
+                if ([95, 96, 99].includes(code)) {
+                    return "storm";
+                }
+
+                if ([71, 73, 75, 77, 85, 86].includes(code)) {
+                    return "rain";
+                }
+
+                return "cloudy";
+            }
+
+            function applyWeather(weather) {
+                const weatherClasses = [
+                    "pw-weather-clear",
+                    "pw-weather-sunny",
+                    "pw-weather-cloudy",
+                    "pw-weather-rain",
+                    "pw-weather-heavy-rain",
+                    "pw-weather-storm"
+                ];
+
+                el.scene.classList.remove(...weatherClasses);
+                el.scene.classList.add(`pw-weather-${weather}`);
+            }
+
+            async function loadLiveWeather(placeName) {
+                const requestId = ++weatherRequestId;
+                const place = placeName.trim();
+
+                if (!place) {
+                    el.weatherStatus.textContent =
+                        "Enter a city or town name.";
+                    return;
+                }
+
+                el.weatherStatus.textContent =
+                    `Looking up current weather for ${place}…`;
+
+                try {
+                    const geocodingUrl = new URL(
+                        "https://geocoding-api.open-meteo.com/v1/search"
+                    );
+
+                    geocodingUrl.search = new URLSearchParams({
+                        name: place,
+                        count: "1",
+                        language: "en",
+                        format: "json"
+                    });
+
+                    const geocodingResponse = await fetch(geocodingUrl);
+
+                    if (!geocodingResponse.ok) {
+                        throw new Error("Location lookup failed.");
+                    }
+
+                    const geocodingData = await geocodingResponse.json();
+
+                    if (requestId !== weatherRequestId) return;
+
+                    const location = geocodingData.results?.[0];
+
+                    if (!location) {
+                        el.weatherStatus.textContent =
+                            `No matching location found for "${place}". ` +
+                            "Try another nearby town or city.";
+                        return;
+                    }
+
+                    const forecastUrl = new URL(
+                        "https://api.open-meteo.com/v1/forecast"
+                    );
+
+                    forecastUrl.search = new URLSearchParams({
+                        latitude: String(location.latitude),
+                        longitude: String(location.longitude),
+                        current: "temperature_2m,precipitation,weather_code,is_day",
+                        timezone: "auto"
+                    });
+
+                    const forecastResponse = await fetch(forecastUrl);
+
+                    if (!forecastResponse.ok) {
+                        throw new Error("Weather request failed.");
+                    }
+
+                    const forecastData = await forecastResponse.json();
+
+                    if (requestId !== weatherRequestId) return;
+
+                    const current = forecastData.current;
+
+                    if (!current) {
+                        throw new Error("Current weather data is unavailable.");
+                    }
+
+                    const weather = weatherFromCode(
+                        Number(current.weather_code),
+                        Number(current.is_day) === 1,
+                        Number(current.precipitation || 0)
+                    );
+
+                    applyWeather(weather);
+
+                    const temperature = Math.round(
+                        Number(current.temperature_2m)
+                    );
+
+                    const updatedAt = current.time
+                        ? new Date(current.time).toLocaleTimeString([], {
+                            hour: "numeric",
+                            minute: "2-digit"
+                        })
+                        : "recently";
+
+                    const weatherLabels = {
+                        sunny: "Sunny",
+                        clear: "Clear",
+                        cloudy: "Cloudy",
+                        rain: "Rain",
+                        "heavy-rain": "Heavy rain",
+                        storm: "Thunderstorm"
+                    };
+
+                    const placeLabel = [
+                        location.name,
+                        location.admin1,
+                        location.country
+                    ].filter(Boolean).join(", ");
+
+                    el.weatherStatus.textContent =
+                        `${placeLabel}: ${weatherLabels[weather]}, ` +
+                        `${temperature}°C · Updated ${updatedAt}`;
+
+                    el.weatherStatus.title =
+                        "Weather provided by Open-Meteo. " +
+                        "Conditions are model-based; refreshes about every 15 minutes.";
+                } catch (error) {
+                    if (requestId !== weatherRequestId) return;
+
+                    el.weatherStatus.textContent =
+                        "Could not load live weather. Check the internet " +
+                        "connection and try again.";
+
+                    console.error("Weather update failed:", error);
+                }
+            }
+
+            function updateCountdown(now) {
+                const currentSecond = Math.floor(now.getTime() / 1000);
+
+                if (currentSecond === lastSecond) return;
+                lastSecond = currentSecond;
+
+                let christmas = localDate(now.getFullYear(), 12, 25);
+
+                if (now >= christmas) {
+                    christmas = localDate(now.getFullYear() + 1, 12, 25);
+                }
+
+                const remaining = Math.max(
+                    0,
+                    christmas.getTime() - now.getTime()
+                );
+
+                el.days.textContent = Math.floor(remaining / DAY_MS);
+                el.hours.textContent = String(
+                    Math.floor(remaining / 3600000) % 24
+                ).padStart(2, "0");
+                el.minutes.textContent = String(
+                    Math.floor(remaining / 60000) % 60
+                ).padStart(2, "0");
+                el.seconds.textContent = String(
+                    Math.floor(remaining / 1000) % 60
+                ).padStart(2, "0");
+            }
+
+            function render(now) {
+                const sceneWidth = el.scene.clientWidth;
+                const startX = Math.max(12, sceneWidth * 0.05);
+                const endX = sceneWidth - Math.max(18, sceneWidth * 0.07);
+                const travelWidth = Math.max(0, endX - startX);
+
+                const events = getEvents(now);
+                let nextIndex = events.findIndex(event => event.date > now);
+
+                if (nextIndex === -1) {
+                    nextIndex = events.length - 1;
+                }
+
+                const next = events[nextIndex];
+                const previous = events[Math.max(0, nextIndex - 1)];
+
+                const interval =
+                    next.date.getTime() - previous.date.getTime();
+                const elapsed = now.getTime() - previous.date.getTime();
+
+                const journey = interval > 0
+                    ? Math.max(0, Math.min(1, elapsed / interval))
+                    : 0;
+
+                const easedJourney = easeInOut(journey);
+                const walkerX = startX + travelWidth * easedJourney;
+                const approachingEventX = endX - travelWidth * easedJourney;
+                const scale = 1 + (0.35 * easedJourney);
+
+                // Person moves from A (left) to B (right).
+                const walkerHalfWidth = (el.walker.offsetWidth || 27) / 2;
+                moveElement(el.walker, walkerX - walkerHalfWidth, scale);
+
+                // The event marker moves from B toward A.
+                moveElement(el.stops[1], approachingEventX - 8);
+
+                el.progress.style.transform = `scaleX(${journey})`;
+                el.percent.textContent = `${Math.round(journey * 100)}%`;
+
+                el.status.textContent = next.name.toUpperCase();
+                el.destination.textContent = `${next.icon} ${next.short}`;
+                el.walkerEmoji.textContent = next.walker;
+                el.next.textContent =
+                    `${next.icon} ${next.name} · ` +
+                    `${formatRemaining(next.date.getTime() - now.getTime())}`;
+
+                const lightingLabel = updateLighting(now);
+                const weatherLabel =
+                    el.weatherStatus.dataset.weatherLabel || "weather loading";
+
+                el.note.textContent =
+                    `${lightingLabel} · ${weatherLabel} · Local device time`;
+
+                const markers = [
+                    { month: 11, day: 2, icon: "🕯️" },
+                    { month: 12, day: 25, icon: "🎄" },
+                    { month: 1, day: 1, icon: "🎆" }
+                ];
+
+                const markerPositions = [0.15, 0.50, 0.85];
+
+                markers.forEach((marker, index) => {
+                    // The middle marker follows the upcoming event.
+                    if (index !== 1) {
+                        const markerX =
+                            startX + travelWidth * markerPositions[index];
+
+                        moveElement(el.stops[index], markerX - 8);
+                    }
+
+                    let markerDate = localDate(
+                        now.getFullYear(),
+                        marker.month,
+                        marker.day
+                    );
+
+                    const today = localDate(
+                        now.getFullYear(),
+                        now.getMonth() + 1,
+                        now.getDate()
+                    );
+
+                    if (markerDate < today) {
+                        markerDate = localDate(
+                            now.getFullYear() + 1,
+                            marker.month,
+                            marker.day
+                        );
+                    }
+
+                    el.stops[index].textContent = marker.icon;
+                    el.stops[index].title = markerDate.toLocaleDateString(
+                        undefined,
+                        { month: "short", day: "numeric" }
+                    );
+                });
+
+                updateCountdown(now);
+            }
+
+            function animate() {
+                render(new Date());
+
+                if (!reduceMotion.matches) {
+                    animationFrame = window.requestAnimationFrame(animate);
+                }
+            }
+
+            function startAnimation() {
+                if (animationFrame) {
+                    window.cancelAnimationFrame(animationFrame);
+                    animationFrame = 0;
+                }
+
+                render(new Date());
+
+                if (!reduceMotion.matches) {
+                    animationFrame = window.requestAnimationFrame(animate);
+                }
+            }
+
+            el.weatherRefresh.addEventListener("click", () => {
+                loadLiveWeather(el.location.value);
+            });
+
+            el.location.addEventListener("keydown", event => {
+                if (event.key === "Enter") {
+                    loadLiveWeather(el.location.value);
+                }
+            });
+
+            window.addEventListener("online", () => {
+                loadLiveWeather(el.location.value);
+            });
+
+            window.addEventListener("resize", startAnimation);
+
+            if (reduceMotion.addEventListener) {
+                reduceMotion.addEventListener("change", startAnimation);
+            } else if (reduceMotion.addListener) {
+                reduceMotion.addListener(startAnimation);
+            }
+
+            // Load now, then refresh every 15 minutes.
+            loadLiveWeather(DEFAULT_LOCATION);
+
+            window.setInterval(() => {
+                loadLiveWeather(el.location.value);
+            }, WEATHER_REFRESH_MS);
+
+            startAnimation();
+        })();
+    </script>
+</body>
+</html>
