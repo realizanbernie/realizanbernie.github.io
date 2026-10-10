@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PISO WIFI.br holiday calendar, countdown and live weather">
+  <title>PISO WIFI.br Holiday Journey</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="pw-app">
+    <header class="pw-header">
+      <div class="pw-mini-brand">PISO WIFI.br · HOLIDAY JOURNEY</div>
+      <h1>Holiday Journey</h1>
+      <p>Choose a Philippine holiday, explore the calendar, and check current weather.</p>
+    </header>
+
+    <section class="pw-dashboard" aria-label="Holiday dashboard">
+      <div class="pw-journey-card">
+        <div class="pw-scene-heading">
+          <span id="pwSceneEvent">HOLIDAY JOURNEY</span>
+          <span id="pwSceneStatus">Loading…</span>
+        </div>
+        <div class="pw-road-scene pw-time-night pw-weather-clear" id="pwRoadScene" role="img" aria-label="Animated holiday road">
+          <div class="pw-stars"></div>
+          <div class="pw-sky-glow"></div>
+          <div class="pw-weather-layer" aria-hidden="true">
+            <div class="pw-clouds"></div><div class="pw-rain"></div>
+            <div class="pw-weather-sunny"></div><div class="pw-weather-lightning"></div>
+          </div>
+          <div class="pw-road-track"><div class="pw-road-progress" id="pwRoadProgress"></div></div>
+          <button class="pw-event-marker" id="pwEventMarker" type="button" aria-label="Select upcoming holiday">🎄</button>
+          <button class="pw-event-marker pw-marker-left" id="pwStop1" type="button" aria-label="Select All Saints’ Day">🕯️</button>
+          <button class="pw-event-marker pw-marker-right" id="pwStop3" type="button" aria-label="Select New Year’s Day">🎆</button>
+          <div class="pw-walker" id="pwWalker"><span id="pwWalkerEmoji">🚶</span></div>
+          <div class="pw-road"></div>
+        </div>
+        <div class="pw-journey-caption">
+          <span id="pwNextEvent">Choose a holiday to begin.</span>
+          <span id="pwJourneyPercent">0%</span>
+        </div>
+        <div class="pw-countdown" aria-live="polite">
+          <div><strong id="pwDays">--</strong><small>DAYS</small></div>
+          <div><strong id="pwHours">--</strong><small>HOURS</small></div>
+          <div><strong id="pwMinutes">--</strong><small>MINUTES</small></div>
+          <div><strong id="pwSeconds">--</strong><small>SECONDS</small></div>
+        </div>
+      </div>
+
+      <aside class="pw-info-card" aria-label="Current date, time and weather">
+        <div class="pw-info-label">YOUR LOCAL DETAILS</div>
+        <div class="pw-info-row"><span>Date</span><strong id="pwCurrentDate">--</strong></div>
+        <div class="pw-info-row"><span>Time</span><strong id="pwCurrentTime">--</strong></div>
+        <div class="pw-info-row"><span>Weather</span><strong id="pwWeatherSummary">Loading…</strong></div>
+        <div class="pw-info-row"><span>Location</span><strong id="pwLocationStatus">Cebu City</strong></div>
+        <button class="pw-button pw-location-button" id="pwLocateButton" type="button">⌖ Use my location</button>
+        <div class="pw-location-note" id="pwWeatherUpdated" aria-live="polite">Weather data loading…</div>
+      </aside>
+    </section>
+
+    <section class="pw-controls" aria-label="Holiday and calendar controls">
+      <label for="pwEventSelect">Countdown event</label>
+      <select id="pwEventSelect" aria-label="Choose a holiday event"></select>
+      <button class="pw-button" id="pwOpenCalendar" type="button">▦ Explore calendar</button>
+    </section>
+
+    <section class="pw-selected-card" aria-live="polite">
+      <div class="pw-selected-icon" id="pwSelectedIcon">🎉</div>
+      <div>
+        <div class="pw-info-label" id="pwSelectedType">SELECTED DATE</div>
+        <h2 id="pwSelectedTitle">Choose a holiday or calendar date</h2>
+        <p id="pwSelectedDetails">Select an event above, click a road marker, or explore the calendar.</p>
+      </div>
+    </section>
+
+    <section class="pw-calendar-card" id="pwCalendarCard" hidden>
+      <div class="pw-calendar-heading">
+        <button class="pw-calendar-nav" id="pwPrevMonth" type="button" aria-label="Previous month">‹</button>
+        <h2 id="pwCalendarTitle">Month Year</h2>
+        <button class="pw-calendar-nav" id="pwNextMonth" type="button" aria-label="Next month">›</button>
+      </div>
+      <div class="pw-calendar-weekdays" aria-hidden="true">
+        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+      </div>
+      <div class="pw-calendar-grid" id="pwCalendarGrid" role="grid" aria-label="Calendar dates"></div>
+      <div class="pw-calendar-legend"><span class="pw-legend-dot"></span> Philippine holiday/event <span class="pw-legend-selected"></span> Selected date</div>
+      <div class="pw-calendar-events" id="pwCalendarEvents"></div>
+    </section>
+
+    <section class="pw-weather-controls" aria-label="Weather search">
+      <label for="pwLocationSearch">Weather location</label>
+      <div class="pw-search-row">
+        <input id="pwLocationSearch" type="search" value="Cebu City" placeholder="Search city or town" autocomplete="off">
+        <button class="pw-button" id="pwSearchWeather" type="button">Search</button>
+      </div>
+    </section>
+
+    <footer class="pw-contact-footer">
+      <div class="pw-info-label">CONNECT WITH US</div>
+      <nav class="pw-contact-links" aria-label="Social media and contact links">
+        <a class="pw-contact-link" href="https://www.facebook.com/YOUR_PAGE" target="_blank" rel="noopener noreferrer" aria-label="Facebook">📘 Facebook</a>
+        <a class="pw-contact-link" href="https://www.tiktok.com/@YOUR_USERNAME" target="_blank" rel="noopener noreferrer" aria-label="TikTok">🎵 TikTok</a>
+        <a class="pw-contact-link" id="pwWhatsAppLink" href="https://wa.me/639XXXXXXXXX" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬 WhatsApp</a>
+        <a class="pw-contact-link" href="mailto:your-email@example.com?subject=PISO%20WIFI%20Inquiry" aria-label="Email us">✉️ Gmail</a>
+      </nav>
+      <p class="pw-footer-note">Replace the sample social profiles, WhatsApp number and email with your real contact details.</p>
+    </footer>
+  </main>
+
+  <div class="pw-modal" id="pwCalendarModal" hidden>
+    <div class="pw-modal-backdrop" data-close-calendar></div>
+    <section class="pw-modal-content" role="dialog" aria-modal="true" aria-labelledby="pwModalHeading">
+      <button class="pw-modal-close" id="pwCloseCalendar" type="button" aria-label="Close calendar">×</button>
+      <h2 id="pwModalHeading">Explore the calendar</h2>
+      <p>Holiday dates are highlighted. Select any day to make it the dashboard topic.</p>
+      <div id="pwCalendarMount"></div>
+    </section>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
