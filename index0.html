@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171713">
+  <meta name="description" content="Fiber Power Computing — FTTH optical budget and network planning prototype">
+  <title>Fiber Power Computing</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Fiber Power Computing home">
+        <span class="brand-mark">ϟ</span><span><strong>FIBER POWER</strong><small>COMPUTING</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="projects"><span>▤</span> Projects</button>
+        <button class="nav-item" data-view="topology"><span>⌘</span> Network topology</button>
+        <button class="nav-item" data-view="calculator"><span>∑</span> Power calculator</button>
+        <button class="nav-item" data-view="optimizer"><span>✧</span> Ratio optimizer</button>
+        <button class="nav-item" data-view="naps"><span>▣</span> NAP & ports</button>
+        <button class="nav-item" data-view="clients"><span>♙</span> Target clients</button>
+        <button class="nav-item" data-view="reports"><span>▧</span> Reports & export</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="demo-note"><span class="status-dot"></span><div><b>Prototype mode</b><small>Data saved on this device</small></div></div>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Open menu">☰</button>
+        <div class="crumb"><span>Workspace</span><b>/</b><strong id="pageTitle">Dashboard</strong></div>
+        <div class="top-actions">
+          <span class="today-label" id="todayLabel"></span>
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle color theme" title="Toggle light/dark mode">☾</button>
+          <button class="avatar" id="profileBtn" title="Profile options">BR</button>
+        </div>
+      </header>
+      <div class="content" id="viewRoot" tabindex="-1"></div>
+      <footer>FIBER POWER COMPUTING <span>•</span> Planning prototype — verify all optical designs before field deployment.</footer>
+    </main>
+  </div>
+
+  <dialog id="projectDialog" class="modal">
+    <form id="projectForm" method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">NEW WORKSPACE</p><h2>Create a project</h2></div><button type="button" class="icon-btn" data-close="projectDialog">×</button></div>
+      <label>Project name<input name="name" required maxlength="70" placeholder="e.g. Barangay Canayonan FTTH"></label>
+      <label>Location<input name="location" maxlength="100" placeholder="Town / barangay"></label>
+      <label>Target clients<input name="target" type="number" min="1" max="10000" value="64" required></label>
+      <label>PON technology<select name="pon"><option>GPON</option><option>EPON</option><option>XGS-PON</option><option>Mixed / undecided</option></select></label>
+      <div class="modal-actions"><button type="button" class="btn secondary" data-close="projectDialog">Cancel</button><button class="btn primary" type="submit">Create project</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="toastDialog" class="toast-dialog"><div id="toastMessage"></div><button class="btn small primary" data-close="toastDialog">OK</button></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
